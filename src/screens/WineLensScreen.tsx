@@ -47,6 +47,7 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
   const [result, setResult] = useState<WineResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const galleryRef = useRef<HTMLInputElement>(null);
 
   const handleCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -114,6 +115,7 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
     setResult(null);
     setError(null);
     if (fileRef.current) fileRef.current.value = "";
+    if (galleryRef.current) galleryRef.current.value = "";
   };
 
   return (
@@ -216,7 +218,7 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
               </div>
             )}
 
-            {/* Hidden file input */}
+            {/* Hidden file inputs */}
             <input
               ref={fileRef}
               type="file"
@@ -225,27 +227,52 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
               onChange={handleCapture}
               style={{ display: "none" }}
             />
+            <input
+              ref={galleryRef}
+              type="file"
+              accept="image/*"
+              onChange={handleCapture}
+              style={{ display: "none" }}
+            />
 
             {!photo ? (
-              <button
-                onClick={() => fileRef.current?.click()}
-                style={{
-                  width: "100%",
-                  padding: "16px",
-                  background:
-                    "linear-gradient(135deg, #a855f7, #7c3aed)",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 16,
-                  fontSize: 17,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  letterSpacing: "0.5px",
-                }}
-              >
-                Take Photo 📸
-              </button>
+              <div style={{ display: "flex", gap: 10 }}>
+                <button
+                  onClick={() => fileRef.current?.click()}
+                  style={{
+                    flex: 1,
+                    padding: "16px",
+                    background:
+                      "linear-gradient(135deg, #a855f7, #7c3aed)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 16,
+                    fontSize: 15,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  Take Photo 📸
+                </button>
+                <button
+                  onClick={() => galleryRef.current?.click()}
+                  style={{
+                    flex: 1,
+                    padding: "16px",
+                    background: "rgba(168,85,247,.12)",
+                    border: "1px solid rgba(168,85,247,.3)",
+                    borderRadius: 16,
+                    fontSize: 15,
+                    fontWeight: 700,
+                    color: "#c084fc",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  From Photos 🖼️
+                </button>
+              </div>
             ) : (
               <div style={{ display: "flex", gap: 10 }}>
                 <button
