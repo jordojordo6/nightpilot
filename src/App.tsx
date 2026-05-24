@@ -12,6 +12,7 @@ import { NightModeScreen } from "./screens/NightModeScreen";
 import { ResultsScreen } from "./screens/ResultsScreen";
 import { Toast } from "./components/Toast";
 import { DebugPanel } from "./components/DebugPanel";
+import { WineLensScreen } from "./screens/WineLensScreen";
 
 function getOrCreateSeed(): number {
   const existing = loadState<number | null>("seed", null);
@@ -166,6 +167,7 @@ export default function App() {
       {screen === "landing" && (
         <LandingScreen
           onStart={() => setScreen("swipe")}
+          onWineLens={() => setScreen("winelens")}
           swipeCount={swipeCount}
         />
       )}
@@ -199,6 +201,13 @@ export default function App() {
           onKeepSwiping={() => setScreen("swipe")}
           onReset={resetProfile}
           showToast={showToast}
+          tasteProfile={tasteProfile}
+        />
+      )}
+
+      {screen === "winelens" && (
+        <WineLensScreen
+          onBack={() => setScreen("landing")}
           tasteProfile={tasteProfile}
         />
       )}

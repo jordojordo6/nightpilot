@@ -1,9 +1,10 @@
 interface Props {
   onStart: () => void;
+  onWineLens: () => void;
   swipeCount: number;
 }
 
-export function LandingScreen({ onStart, swipeCount }: Props) {
+export function LandingScreen({ onStart, onWineLens, swipeCount }: Props) {
   return (
     <div
       style={{
@@ -109,6 +110,26 @@ export function LandingScreen({ onStart, swipeCount }: Props) {
             {swipeCount} spots rated · Taste profile active
           </p>
         )}
+
+        <button
+          onClick={onWineLens}
+          style={{
+            width: "100%",
+            marginTop: 14,
+            padding: "14px 32px",
+            background: "rgba(168,85,247,.12)",
+            border: "1px solid rgba(168,85,247,.3)",
+            borderRadius: 16,
+            fontSize: 15,
+            fontWeight: 600,
+            color: "#c084fc",
+            cursor: "pointer",
+            fontFamily: "inherit",
+            letterSpacing: "0.3px",
+          }}
+        >
+          Wine Lens 🍷
+        </button>
       </div>
 
       <div
