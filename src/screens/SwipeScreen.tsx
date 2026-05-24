@@ -15,6 +15,8 @@ interface Props {
   onNightMode: () => void;
   onBack: () => void;
   tasteProfile: TasteProfile;
+  canUndo?: boolean;
+  onUndo?: () => void;
 }
 
 export function SwipeScreen({
@@ -23,6 +25,8 @@ export function SwipeScreen({
   swipeCount,
   onNightMode,
   onBack,
+  canUndo,
+  onUndo,
 }: Props) {
   const [, forceRender] = useState(0);
   const [exiting, setExiting] = useState(false);
@@ -452,11 +456,36 @@ export function SwipeScreen({
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: 20,
+          alignItems: "center",
+          gap: 16,
           padding: "16px 20px 12px",
           flexShrink: 0,
         }}
       >
+        {/* Undo button */}
+        <button
+          onClick={canUndo ? onUndo : undefined}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: "50%",
+            border: `1.5px solid ${canUndo ? "rgba(255,255,255,.2)" : "rgba(255,255,255,.06)"}`,
+            background: canUndo ? "rgba(255,255,255,.06)" : "transparent",
+            color: canUndo ? "rgba(255,255,255,.5)" : "rgba(255,255,255,.12)",
+            fontSize: 16,
+            cursor: canUndo ? "pointer" : "default",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "all 0.2s",
+            flexShrink: 0,
+            fontFamily: "inherit",
+            padding: 0,
+          }}
+        >
+          ↩
+        </button>
+
         <SwipeButton
           color="#ef4444"
           icon="✕"

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import type { Venue, SwipeAction, TasteProfile, NightPrefs, Plan, Screen, UserSettings } from "./types";
 import { EMPTY_PROFILE, DEFAULT_SETTINGS } from "./types";
 import { CITIES, getCityByKey } from "./data/cities";
-import { updateTasteProfile, seededShuffle } from "./engine/taste";
+import { updateTasteProfile, undoTasteProfile, seededShuffle } from "./engine/taste";
 import { generateRecommendations } from "./engine/recommendations";
 import { loadState, saveState, clearNightPilotData } from "./engine/storage";
 import { logEvent } from "./engine/analytics";
@@ -71,6 +71,7 @@ export default function App() {
     loadState<UserSettings>("userSettings", { ...DEFAULT_SETTINGS })
   );
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [lastSwipe, setLastSwipe] = useState<{ venue: Venue; action: SwipeAction } | null>(null);
 
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -131,6 +132,7 @@ export default function App() {
         return next;
       });
       setSwipeCount((prev) => prev + 1);
+      setLastSwipe({ venue, action });
 
       if (action === "save") {
         setSavedIds((prev) => {
@@ -153,6 +155,31 @@ export default function App() {
     },
     [showToast]
   );
+
+  const handleUndo = useCallback(() => {
+    if (!lastSwipe) return;
+    const { venue, action } = lastSwipe;
+
+    setTasteProfile((prev) => undoTasteProfile(prev, venue, action));
+    setSwipedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(venue.id);
+      return next;
+    });
+    setSwipeCount((prev) => Math.max(0, prev - 1));
+
+    if (action === "save") {
+      setSavedIds((prev) => {
+        const next = new Set(prev);
+        next.delete(venue.id);
+        return next;
+      });
+    }
+
+    setLastSwipe(null);
+    showToast("Undo!");
+    logEvent("swipe_undone", { venueId: venue.id, venueName: venue.name });
+  }, [lastSwipe, showToast]);
 
   const handleNightMode = useCallback(
     (prefs: NightPrefs) => {
@@ -186,6 +213,7 @@ export default function App() {
     setSwipedIds(new Set());
     setSavedIds(new Set());
     setSwipeCount(0);
+    setLastSwipe(null);
     setPlans([]);
     setCurrentPlanIdx(0);
   }, []);
@@ -202,6 +230,7 @@ export default function App() {
     setNightPrefs({ occasion: null, budget: null, neighborhood: null, planType: "both" as const });
     setPlans([]);
     setCurrentPlanIdx(0);
+    setLastSwipe(null);
     setScreen("landing");
     showToast("Profile reset!");
   }, [showToast]);
@@ -274,6 +303,8 @@ export default function App() {
           onNightMode={() => setScreen("nightmode")}
           onBack={() => setScreen("landing")}
           tasteProfile={tasteProfile}
+          canUndo={!!lastSwipe}
+          onUndo={handleUndo}
         />
       )}
 

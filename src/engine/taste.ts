@@ -49,6 +49,54 @@ export function updateTasteProfile(
   return next;
 }
 
+/** Reverse a single swipe — exact inverse of updateTasteProfile. */
+export function undoTasteProfile(
+  profile: TasteProfile,
+  venue: Venue,
+  action: SwipeAction
+): TasteProfile {
+  const next: TasteProfile = {
+    likedTags: { ...profile.likedTags },
+    savedTags: { ...profile.savedTags },
+    rejectedTags: { ...profile.rejectedTags },
+    neighborhoods: { ...profile.neighborhoods },
+    prices: { ...profile.prices },
+    likeCount: profile.likeCount,
+    saveCount: profile.saveCount,
+    rejectCount: profile.rejectCount,
+  };
+
+  const priceKey = String(venue.price);
+
+  if (action === "like") {
+    for (const tag of venue.tags) {
+      next.likedTags[tag] = (next.likedTags[tag] ?? 0) - 1;
+    }
+    next.neighborhoods[venue.neighborhood] =
+      (next.neighborhoods[venue.neighborhood] ?? 0) - 2;
+    next.prices[priceKey] = (next.prices[priceKey] ?? 0) - 1;
+    next.likeCount = Math.max(0, next.likeCount - 1);
+  } else if (action === "save") {
+    for (const tag of venue.tags) {
+      next.savedTags[tag] = (next.savedTags[tag] ?? 0) - 1;
+    }
+    next.neighborhoods[venue.neighborhood] =
+      (next.neighborhoods[venue.neighborhood] ?? 0) - 3;
+    next.prices[priceKey] = (next.prices[priceKey] ?? 0) - 2;
+    next.saveCount = Math.max(0, next.saveCount - 1);
+  } else {
+    for (const tag of venue.tags) {
+      next.rejectedTags[tag] = (next.rejectedTags[tag] ?? 0) + 1;
+    }
+    next.neighborhoods[venue.neighborhood] =
+      (next.neighborhoods[venue.neighborhood] ?? 0) + 1;
+    next.prices[priceKey] = (next.prices[priceKey] ?? 0) + 1;
+    next.rejectCount = Math.max(0, next.rejectCount - 1);
+  }
+
+  return next;
+}
+
 // ─── Venue scoring ─────────────────────────────────────────────────
 
 const MOOD_KEYWORDS: Record<string, string[]> = {
