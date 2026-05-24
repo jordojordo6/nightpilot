@@ -154,7 +154,7 @@ export default function App() {
     setSwipedIds(new Set());
     setSavedIds(new Set());
     setSwipeCount(0);
-    setNightPrefs({ occasion: null, budget: null, neighborhood: null });
+    setNightPrefs({ occasion: null, budget: null, neighborhood: null, planType: "both" as const });
     setPlans([]);
     setCurrentPlanIdx(0);
     setScreen("landing");
