@@ -543,7 +543,7 @@ function FeedbackPrompt({
 
       {/* External feedback form link */}
       <a
-        href="https://forms.gle/REPLACE_WITH_YOUR_FORM_ID"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSeIMnxY-_gBGckzCc9rSPajOZGvK8AHwXP52yfi5uYq20Fl3Q/viewform"
         target="_blank"
         rel="noopener noreferrer"
         style={{
