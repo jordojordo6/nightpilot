@@ -17,6 +17,7 @@ export interface Venue {
   highlights: string[];
   gradient: [string, string];
   bestFor: string;
+  dietary?: string[]; // e.g. ["vegetarian","vegan","gluten-free"]
 }
 
 export interface ScoredVenue extends Venue {
@@ -109,3 +110,28 @@ export interface ProfileSummary {
   tasteWords: string[];
   topTags: string[];
 }
+
+export type DietaryRestriction =
+  | "vegetarian"
+  | "vegan"
+  | "gluten-free"
+  | "pescatarian"
+  | "halal"
+  | "dairy-free";
+
+export const DIETARY_OPTIONS: { key: DietaryRestriction; label: string; icon: string }[] = [
+  { key: "vegetarian", label: "Vegetarian", icon: "🥬" },
+  { key: "vegan", label: "Vegan", icon: "🌱" },
+  { key: "pescatarian", label: "Pescatarian", icon: "🐟" },
+  { key: "gluten-free", label: "Gluten-Free", icon: "🌾" },
+  { key: "halal", label: "Halal", icon: "🍖" },
+  { key: "dairy-free", label: "Dairy-Free", icon: "🥛" },
+];
+
+export interface UserSettings {
+  dietary: DietaryRestriction[];
+}
+
+export const DEFAULT_SETTINGS: UserSettings = {
+  dietary: [],
+};

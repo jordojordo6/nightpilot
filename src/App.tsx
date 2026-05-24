@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import type { Venue, SwipeAction, TasteProfile, NightPrefs, Plan, Screen } from "./types";
-import { EMPTY_PROFILE } from "./types";
+import type { Venue, SwipeAction, TasteProfile, NightPrefs, Plan, Screen, UserSettings } from "./types";
+import { EMPTY_PROFILE, DEFAULT_SETTINGS } from "./types";
 import { CITIES, getCityByKey } from "./data/cities";
 import { updateTasteProfile, seededShuffle } from "./engine/taste";
 import { generateRecommendations } from "./engine/recommendations";
@@ -13,6 +13,7 @@ import { ResultsScreen } from "./screens/ResultsScreen";
 import { Toast } from "./components/Toast";
 import { DebugPanel } from "./components/DebugPanel";
 import { WineLensScreen } from "./screens/WineLensScreen";
+import { SettingsModal } from "./components/SettingsModal";
 
 function getOrCreateSeed(): number {
   const existing = loadState<number | null>("seed", null);
@@ -66,6 +67,10 @@ export default function App() {
   const [currentPlanIdx, setCurrentPlanIdx] = useState(0);
   const [toast, setToast] = useState<string | null>(null);
   const [shuffleSeed, setShuffleSeed] = useState(() => getOrCreateSeed());
+  const [userSettings, setUserSettings] = useState<UserSettings>(() =>
+    loadState<UserSettings>("userSettings", { ...DEFAULT_SETTINGS })
+  );
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -86,15 +91,29 @@ export default function App() {
     saveState("swipeCount", swipeCount);
   }, [swipeCount]);
 
+  useEffect(() => {
+    saveState("userSettings", userSettings);
+  }, [userSettings]);
+
   // Stable shuffled venue list — re-shuffles when seed or city changes
   const shuffledVenues = useMemo(() => {
     return seededShuffle(venues, shuffleSeed);
   }, [venues, shuffleSeed]);
 
-  // Filter out already-swiped venues for the swipe screen
+  // Filter out already-swiped venues and dietary-incompatible restaurants
   const availableVenues = useMemo(
-    () => shuffledVenues.filter((v) => !swipedIds.has(v.id)),
-    [shuffledVenues, swipedIds]
+    () =>
+      shuffledVenues.filter((v) => {
+        if (swipedIds.has(v.id)) return false;
+        if (
+          userSettings.dietary.length > 0 &&
+          v.type === "restaurant" &&
+          !userSettings.dietary.every((d) => v.dietary?.includes(d))
+        )
+          return false;
+        return true;
+      }),
+    [shuffledVenues, swipedIds, userSettings.dietary]
   );
 
   const showToast = useCallback((msg: string) => {
@@ -143,13 +162,14 @@ export default function App() {
         prefs,
         swipedIds,
         savedIds,
-        venues
+        venues,
+        userSettings.dietary
       );
       setPlans(recs);
       setCurrentPlanIdx(0);
       setScreen("results");
     },
-    [tasteProfile, swipedIds, savedIds, venues]
+    [tasteProfile, swipedIds, savedIds, venues, userSettings.dietary]
   );
 
   const handleSelectCity = useCallback((key: string) => {
@@ -284,8 +304,46 @@ export default function App() {
         <WineLensScreen
           onBack={() => setScreen("landing")}
           tasteProfile={tasteProfile}
+          dietary={userSettings.dietary}
         />
       )}
+
+      {/* Settings gear — visible on all screens except city picker */}
+      {screen !== "city" && (
+        <button
+          onClick={() => setSettingsOpen(true)}
+          style={{
+            position: "fixed",
+            top: 16,
+            right: 16,
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            background: "rgba(255,255,255,.06)",
+            border: "1px solid rgba(255,255,255,.1)",
+            color: userSettings.dietary.length > 0
+              ? "#c084fc"
+              : "rgba(255,255,255,.4)",
+            fontSize: 18,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 100,
+            padding: 0,
+            transition: "all 0.2s",
+          }}
+        >
+          ⚙️
+        </button>
+      )}
+
+      <SettingsModal
+        open={settingsOpen}
+        settings={userSettings}
+        onClose={() => setSettingsOpen(false)}
+        onChange={setUserSettings}
+      />
 
       <Toast message={toast} />
       <DebugPanel profile={tasteProfile} />

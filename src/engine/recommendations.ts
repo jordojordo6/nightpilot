@@ -1,4 +1,4 @@
-import type { Venue, ScoredVenue, TasteProfile, NightPrefs, Plan } from "../types";
+import type { Venue, ScoredVenue, TasteProfile, NightPrefs, Plan, DietaryRestriction } from "../types";
 import { areNearby, estimateWalkTime } from "../data/neighborhoods";
 import { scoreVenue, normalizeScore, getDrivingTags, getNetTagScore } from "./taste";
 import { logEvent } from "./analytics";
@@ -315,12 +315,18 @@ export function generateRecommendations(
   prefs: NightPrefs,
   swiped: Set<number>,
   saved: Set<number>,
-  venues: Venue[]
+  venues: Venue[],
+  dietary: DietaryRestriction[] = []
 ): Plan[] {
   const planType = prefs.planType ?? "both";
 
+  const meetsdietary = (v: Venue) => {
+    if (dietary.length === 0 || v.type === "bar") return true;
+    return dietary.every((d) => v.dietary?.includes(d));
+  };
+
   const restaurants = venues.filter(
-    (v) => v.type === "restaurant" && (!swiped.has(v.id) || saved.has(v.id))
+    (v) => v.type === "restaurant" && (!swiped.has(v.id) || saved.has(v.id)) && meetsdietary(v)
   );
   const bars = venues.filter(
     (v) => v.type === "bar" && (!swiped.has(v.id) || saved.has(v.id))

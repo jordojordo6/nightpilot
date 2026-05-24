@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import type { TasteProfile, WineProfile, WineSelection } from "../types";
+import type { TasteProfile, WineProfile, WineSelection, DietaryRestriction } from "../types";
 import { getTopPositiveTags, getTopNegativeTags } from "../engine/taste";
 import { logEvent } from "../engine/analytics";
 import { loadWineProfile, saveWineSelection, buildWineTasteContext } from "../engine/wine";
@@ -32,6 +32,7 @@ interface WineResult {
 interface Props {
   onBack: () => void;
   tasteProfile: TasteProfile;
+  dietary?: DietaryRestriction[];
 }
 
 const REC_LABELS: Record<string, { label: string; color: string; icon: string }> = {
@@ -78,7 +79,7 @@ function compressImage(file: File): Promise<PhotoItem> {
   });
 }
 
-export function WineLensScreen({ onBack, tasteProfile }: Props) {
+export function WineLensScreen({ onBack, tasteProfile, dietary = [] }: Props) {
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<WineResult | null>(null);
@@ -190,9 +191,12 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
     const foodContext = foodPairing
       ? `They're eating: ${foodPairing}. Prioritize wines that pair well with this.`
       : "";
+    const dietaryContext = dietary.length > 0
+      ? `Dietary restrictions: ${dietary.join(", ")}. Only recommend wines compatible with these (e.g. check for fining agents if vegan).`
+      : "";
     const tasteContext =
-      moodContext || foodContext || wineTaste || venueTaste
-        ? [moodContext, foodContext, wineTaste, venueTaste].filter(Boolean).join(" ")
+      moodContext || foodContext || dietaryContext || wineTaste || venueTaste
+        ? [moodContext, foodContext, dietaryContext, wineTaste, venueTaste].filter(Boolean).join(" ")
         : undefined;
 
     try {
