@@ -104,13 +104,26 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
     }
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
-    recognition.interimResults = false;
+    recognition.interimResults = true;
+    recognition.continuous = true;
     recognition.maxAlternatives = 1;
 
+    // Store the text that existed before we started listening
+    const baseline = mood;
+
     recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      setMood((prev) => (prev ? `${prev} ${transcript}` : transcript));
-      setListening(false);
+      let interim = "";
+      let final = "";
+      for (let i = 0; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          final += transcript;
+        } else {
+          interim += transcript;
+        }
+      }
+      const prefix = baseline ? `${baseline} ` : "";
+      setMood(prefix + final + interim);
     };
     recognition.onerror = () => setListening(false);
     recognition.onend = () => setListening(false);
