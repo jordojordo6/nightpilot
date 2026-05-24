@@ -362,6 +362,7 @@ export function SwipeScreen({
               fontWeight: 700,
               cursor: "pointer",
               fontFamily: "inherit",
+              marginRight: 40,
             }}
           >
             Build My Night 🌙
