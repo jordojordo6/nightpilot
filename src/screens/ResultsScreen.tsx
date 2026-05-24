@@ -1,6 +1,8 @@
-import type { Plan } from "../types";
+import { useState } from "react";
+import type { Plan, TasteProfile } from "../types";
 import { RecommendationCard } from "../components/RecommendationCard";
 import { logEvent } from "../engine/analytics";
+import { getTopPositiveTags } from "../engine/taste";
 
 interface Props {
   plans: Plan[];
@@ -10,6 +12,7 @@ interface Props {
   onKeepSwiping: () => void;
   onReset: () => void;
   showToast: (msg: string) => void;
+  tasteProfile: TasteProfile;
 }
 
 export function ResultsScreen({
@@ -20,6 +23,7 @@ export function ResultsScreen({
   onKeepSwiping,
   onReset,
   showToast,
+  tasteProfile,
 }: Props) {
   if (plans.length === 0) {
     return (
@@ -354,6 +358,13 @@ export function ResultsScreen({
           Save This Night ♥
         </button>
 
+        {/* Feedback section */}
+        <FeedbackPrompt
+          plans={plans}
+          currentIdx={currentIdx}
+          tasteProfile={tasteProfile}
+        />
+
         {/* Bottom actions */}
         <div
           style={{
@@ -398,6 +409,129 @@ export function ResultsScreen({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+const FEEDBACK_OPTIONS = [
+  { label: "Yes, surprisingly accurate", value: "accurate", color: "#22c55e" },
+  { label: "Kind of", value: "kind_of", color: "#fbbf24" },
+  { label: "Not really", value: "not_really", color: "#ef4444" },
+] as const;
+
+function FeedbackPrompt({
+  plans,
+  currentIdx,
+  tasteProfile,
+}: {
+  plans: Plan[];
+  currentIdx: number;
+  tasteProfile: TasteProfile;
+}) {
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const handleFeedback = (value: string) => {
+    setSelected(value);
+    const plan = plans[currentIdx];
+    const topTags = getTopPositiveTags(tasteProfile, 5);
+    const venueIds = [plan.restaurant?.id, plan.bar?.id].filter(
+      (id): id is number => id !== undefined
+    );
+
+    logEvent("feedback_accuracy_selected", {
+      response: value,
+      topTasteTags: topTags,
+      recommendedVenueIds: venueIds,
+      planName: plan.name,
+      matchScore: plan.matchScore,
+    });
+  };
+
+  return (
+    <div
+      style={{
+        marginTop: 16,
+        padding: "16px",
+        background: "rgba(255,255,255,.03)",
+        border: "1px solid rgba(255,255,255,.08)",
+        borderRadius: 16,
+        animation: "fadeInUp 0.5s ease-out 0.45s both",
+      }}
+    >
+      <p
+        style={{
+          fontSize: 13,
+          fontWeight: 600,
+          color: "rgba(255,255,255,.6)",
+          textAlign: "center",
+          marginBottom: 12,
+        }}
+      >
+        Did these recommendations feel like you?
+      </p>
+      <div style={{ display: "flex", gap: 8 }}>
+        {FEEDBACK_OPTIONS.map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => handleFeedback(opt.value)}
+            style={{
+              flex: 1,
+              padding: "10px 6px",
+              background:
+                selected === opt.value
+                  ? `${opt.color}22`
+                  : "rgba(255,255,255,.05)",
+              border:
+                selected === opt.value
+                  ? `1.5px solid ${opt.color}66`
+                  : "1.5px solid rgba(255,255,255,.08)",
+              borderRadius: 10,
+              fontSize: 11,
+              fontWeight: 600,
+              color:
+                selected === opt.value
+                  ? opt.color
+                  : "rgba(255,255,255,.5)",
+              cursor: selected ? "default" : "pointer",
+              transition: "all .2s",
+              fontFamily: "inherit",
+            }}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+      {selected && (
+        <p
+          style={{
+            fontSize: 11,
+            color: "rgba(255,255,255,.3)",
+            textAlign: "center",
+            marginTop: 10,
+          }}
+        >
+          Thanks! Your feedback helps us improve.
+        </p>
+      )}
+
+      {/* External feedback form link */}
+      <a
+        href="https://forms.gle/REPLACE_WITH_YOUR_FORM_ID"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: "block",
+          marginTop: 12,
+          padding: "8px",
+          fontSize: 12,
+          fontWeight: 500,
+          color: "rgba(255,255,255,.35)",
+          textAlign: "center",
+          textDecoration: "none",
+        }}
+      >
+        Have more thoughts? Share detailed feedback →
+      </a>
     </div>
   );
 }

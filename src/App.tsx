@@ -199,6 +199,7 @@ export default function App() {
           onKeepSwiping={() => setScreen("swipe")}
           onReset={resetProfile}
           showToast={showToast}
+          tasteProfile={tasteProfile}
         />
       )}
 
