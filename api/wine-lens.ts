@@ -1,3 +1,11 @@
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
+};
+
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
 const SYSTEM_PROMPT = `You are an expert sommelier and wine advisor built into the NightPilot app. A user has photographed a wine list at a restaurant. Your job is to analyze the wine list and provide personalized recommendations.
@@ -118,8 +126,19 @@ export default async function handler(req: any, res: any) {
     const data = await response.json();
     const text = data.content?.[0]?.text ?? "";
 
-    const parsed = JSON.parse(text);
-    return res.status(200).json(parsed);
+    // Strip markdown code fences if present
+    const cleaned = text
+      .replace(/^```(?:json)?\s*/i, "")
+      .replace(/\s*```\s*$/, "")
+      .trim();
+
+    try {
+      const parsed = JSON.parse(cleaned);
+      return res.status(200).json(parsed);
+    } catch {
+      console.error("Failed to parse Claude response:", text);
+      return res.status(500).json({ error: "Failed to parse wine recommendations" });
+    }
   } catch (err) {
     console.error("Wine lens error:", err);
     return res.status(500).json({ error: "Failed to analyze wine list" });
