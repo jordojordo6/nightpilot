@@ -445,6 +445,25 @@ function FeedbackPrompt({
       planName: plan.name,
       matchScore: plan.matchScore,
     });
+
+    // Send to Google Sheet
+    fetch(
+      "https://script.google.com/macros/s/AKfycbxwtmbMlR8jBpE_QkvEkVmGNIO89u1JCTegtIU9_D0_I484SCY-Bf4Hql0jPl3kUr8-/exec",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          response: value,
+          planName: plan.name,
+          matchScore: plan.matchScore,
+          topTags,
+          venueIds,
+        }),
+      }
+    ).catch(() => {
+      // Silently fail — localStorage already has the data
+    });
   };
 
   return (
