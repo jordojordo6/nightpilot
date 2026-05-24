@@ -120,7 +120,7 @@ export default async function handler(req: any, res: any) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Anthropic API error:", errorText);
-      return res.status(response.status).json({ error: "AI service error" });
+      return res.status(response.status).json({ error: `AI error: ${errorText.slice(0, 200)}` });
     }
 
     const data = await response.json();
@@ -139,8 +139,8 @@ export default async function handler(req: any, res: any) {
       console.error("Failed to parse Claude response:", text);
       return res.status(500).json({ error: "Failed to parse wine recommendations" });
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error("Wine lens error:", err);
-    return res.status(500).json({ error: "Failed to analyze wine list" });
+    return res.status(500).json({ error: `Server error: ${err?.message || String(err)}` });
   }
 }
