@@ -4,8 +4,8 @@ import { VenueCard } from "../components/VenueCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { logEvent } from "../engine/analytics";
 
-const THRESHOLD = 80; // px distance to trigger swipe
-const VELOCITY_THRESHOLD = 0.5; // px/ms — fast flick triggers even below distance threshold
+const THRESHOLD = 55; // px distance to trigger swipe
+const VELOCITY_THRESHOLD = 0.4; // px/ms — fast flick triggers even below distance threshold
 const MIN_SWIPES = 8;
 
 interface Props {
@@ -201,19 +201,31 @@ export function SwipeScreen({
     d.active = false;
     cancelAnimationFrame(rafRef.current);
 
-    // Velocity-based: a fast flick in either direction triggers even below distance threshold
+    // Swipe detection: distance OR velocity OR combined (moderate distance + some velocity)
     const absVx = Math.abs(d.velocityX);
     const absVy = Math.abs(d.velocityY);
+    const elapsed = Date.now() - d.startTime;
+    // For very fast swipes with few events, compute average velocity as fallback
+    const avgVx = elapsed > 0 ? d.offsetX / elapsed : 0;
+    const avgVy = elapsed > 0 ? d.offsetY / elapsed : 0;
+    const effectiveVx = Math.abs(avgVx) > absVx ? avgVx : d.velocityX;
+    const effectiveVy = Math.abs(avgVy) > absVy ? avgVy : d.velocityY;
+    const absEvx = Math.abs(effectiveVx);
+    const absEvy = Math.abs(effectiveVy);
 
-    if (d.offsetY < -50 || (d.velocityY < -VELOCITY_THRESHOLD && absVy > absVx)) {
+    // Combined check: half the threshold + some velocity = commit
+    const comboX = Math.abs(d.offsetX) > THRESHOLD * 0.5 && absEvx > VELOCITY_THRESHOLD * 0.5;
+    const comboY = d.offsetY < -25 && effectiveVy < -VELOCITY_THRESHOLD * 0.5;
+
+    if (d.offsetY < -50 || (effectiveVy < -VELOCITY_THRESHOLD && absEvy > absEvx) || comboY) {
       processSwipe("save");
       return;
     }
-    if (d.offsetX > THRESHOLD || (d.velocityX > VELOCITY_THRESHOLD && absVx > absVy)) {
+    if (d.offsetX > THRESHOLD || (effectiveVx > VELOCITY_THRESHOLD && absEvx > absEvy) || (comboX && d.offsetX > 0)) {
       processSwipe("like");
       return;
     }
-    if (d.offsetX < -THRESHOLD || (d.velocityX < -VELOCITY_THRESHOLD && absVx > absVy)) {
+    if (d.offsetX < -THRESHOLD || (effectiveVx < -VELOCITY_THRESHOLD && absEvx > absEvy) || (comboX && d.offsetX < 0)) {
       processSwipe("nope");
       return;
     }
