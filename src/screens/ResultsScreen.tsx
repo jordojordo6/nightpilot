@@ -459,6 +459,14 @@ function FeedbackPrompt({
           matchScore: plan.matchScore,
           topTags,
           venueIds,
+          planType: plan.planType,
+          restaurantName: plan.restaurant?.name ?? null,
+          barName: plan.bar?.name ?? null,
+          swipeCount:
+            tasteProfile.likeCount +
+            tasteProfile.saveCount +
+            tasteProfile.rejectCount,
+          userAgent: navigator.userAgent,
         }),
       }
     ).catch(() => {
