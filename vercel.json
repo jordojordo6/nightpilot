@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/wine-lens.ts": {
+      "maxDuration": 30
+    }
+  }
+}

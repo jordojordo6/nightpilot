@@ -46,6 +46,37 @@ interface PhotoItem {
   preview: string; // data URL for thumbnail
 }
 
+/** Compress an image file to max 800px wide JPEG at 0.6 quality */
+function compressImage(file: File): Promise<PhotoItem> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const maxW = 800;
+      const scale = img.width > maxW ? maxW / img.width : 1;
+      const w = Math.round(img.width * scale);
+      const h = Math.round(img.height * scale);
+
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, 0, 0, w, h);
+
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.6);
+      const base64 = dataUrl.split(",")[1];
+
+      URL.revokeObjectURL(url);
+      resolve({
+        base64,
+        mediaType: "image/jpeg",
+        preview: dataUrl,
+      });
+    };
+    img.src = url;
+  });
+}
+
 export function WineLensScreen({ onBack, tasteProfile }: Props) {
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -54,27 +85,15 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const galleryRef = useRef<HTMLInputElement>(null);
 
-  const handleCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCapture = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const dataUrl = reader.result as string;
-        const base64 = dataUrl.split(",")[1];
-        setPhotos((prev) => [
-          ...prev,
-          {
-            base64,
-            mediaType: file.type || "image/jpeg",
-            preview: dataUrl,
-          },
-        ]);
-      };
-      reader.readAsDataURL(file);
-    });
+    const compressed = await Promise.all(
+      Array.from(files).map((f) => compressImage(f))
+    );
 
+    setPhotos((prev) => [...prev, ...compressed]);
     setResult(null);
     setError(null);
     // Reset input so the same file can be re-selected
@@ -110,10 +129,15 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
       });
 
       if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(
-          (errData as { error?: string }).error || "Failed to analyze"
-        );
+        const errText = await res.text().catch(() => "");
+        let msg = `Error ${res.status}`;
+        try {
+          const errData = JSON.parse(errText);
+          if (errData.error) msg = errData.error;
+        } catch {
+          if (errText) msg = errText.slice(0, 200);
+        }
+        throw new Error(msg);
       }
 
       const data = (await res.json()) as WineResult;
