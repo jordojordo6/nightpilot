@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import type { TasteProfile, WineProfile, WineSelection } from "../types";
-import { getTopPositiveTags } from "../engine/taste";
+import { getTopPositiveTags, getTopNegativeTags } from "../engine/taste";
 import { logEvent } from "../engine/analytics";
 import { loadWineProfile, saveWineSelection, buildWineTasteContext } from "../engine/wine";
 
@@ -89,6 +89,7 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
   const [mood, setMood] = useState("");
+  const [foodPairing, setFoodPairing] = useState<string | null>(null);
   const [listening, setListening] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const galleryRef = useRef<HTMLInputElement>(null);
@@ -162,18 +163,36 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
     setLoading(true);
     setError(null);
 
-    const topTags = getTopPositiveTags(tasteProfile, 5);
+    const topTags = getTopPositiveTags(tasteProfile, 6);
+    const negTags = getTopNegativeTags(tasteProfile, 4);
     const wineTaste = buildWineTasteContext(wineProfile);
-    const venueTaste =
-      topTags.length > 0
-        ? `Venue preferences: they tend to like ${topTags.join(", ")}.`
-        : "";
+
+    // Build richer venue taste context
+    const venueParts: string[] = [];
+    if (topTags.length > 0) {
+      venueParts.push(`They enjoy dining at places that are ${topTags.join(", ")}`);
+    }
+    if (negTags.length > 0) {
+      venueParts.push(`they tend to avoid ${negTags.join(", ")} spots`);
+    }
+    // Infer wine-relevant signals from venue tags
+    const hasUpscale = topTags.some((t) => ["upscale", "fine-dining", "romantic"].includes(t));
+    const hasCasual = topTags.some((t) => ["casual", "fun", "budget", "dive"].includes(t));
+    const hasAdventurous = topTags.some((t) => ["creative", "trendy", "fusion"].includes(t));
+    if (hasUpscale) venueParts.push("they appreciate quality and are open to spending more on a good bottle");
+    if (hasCasual && !hasUpscale) venueParts.push("they prefer approachable, good-value wines over showy labels");
+    if (hasAdventurous) venueParts.push("they're open to unusual or lesser-known varietals");
+    const venueTaste = venueParts.length > 0 ? venueParts.join("; ") + "." : "";
+
     const moodContext = mood.trim()
       ? `Right now they're in the mood for: ${mood.trim()}.`
       : "";
+    const foodContext = foodPairing
+      ? `They're eating: ${foodPairing}. Prioritize wines that pair well with this.`
+      : "";
     const tasteContext =
-      moodContext || wineTaste || venueTaste
-        ? [moodContext, wineTaste, venueTaste].filter(Boolean).join(" ")
+      moodContext || foodContext || wineTaste || venueTaste
+        ? [moodContext, foodContext, wineTaste, venueTaste].filter(Boolean).join(" ")
         : undefined;
 
     try {
@@ -260,6 +279,7 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
     setRatingSubmitted(false);
     setFeedbackSent(false);
     setMood("");
+    setFoodPairing(null);
   };
 
   const handleFeedback = (value: string) => {
@@ -376,6 +396,38 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
               recommendations based on your taste profile.
             </p>
 
+            {/* Taste profile indicator */}
+            {(tasteProfile.likeCount + tasteProfile.saveCount > 0 ||
+              wineProfile.selections.length > 0) && (
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "6px 14px",
+                  background: "rgba(34,197,94,.08)",
+                  border: "1px solid rgba(34,197,94,.2)",
+                  borderRadius: 20,
+                  marginBottom: 20,
+                }}
+              >
+                <span style={{ fontSize: 10, color: "#22c55e" }}>●</span>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,.45)", fontWeight: 500 }}>
+                  {[
+                    tasteProfile.likeCount + tasteProfile.saveCount > 0
+                      ? `${tasteProfile.likeCount + tasteProfile.saveCount} venues rated`
+                      : "",
+                    wineProfile.selections.length > 0
+                      ? `${wineProfile.selections.length} wines rated`
+                      : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}{" "}
+                  — personalizing picks
+                </span>
+              </div>
+            )}
+
             {/* Mood prompt */}
             <div
               style={{
@@ -459,6 +511,73 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
                   Listening...
                 </p>
               )}
+            </div>
+
+            {/* Food pairing chips */}
+            <div style={{ marginBottom: 20, textAlign: "left" }}>
+              <p
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color: "rgba(255,255,255,.4)",
+                  marginBottom: 8,
+                  textAlign: "center",
+                }}
+              >
+                Know what you're eating?
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 8,
+                  justifyContent: "center",
+                }}
+              >
+                {([
+                  { label: "🥩 Beef", value: "beef" },
+                  { label: "🍗 Chicken", value: "chicken" },
+                  { label: "🐟 Seafood", value: "seafood" },
+                  { label: "🍝 Pasta", value: "pasta" },
+                  { label: "🥗 Salad", value: "salad / vegetables" },
+                  { label: "🧀 Cheese", value: "cheese" },
+                  { label: "🍕 Pizza", value: "pizza" },
+                  { label: "🍣 Sushi", value: "sushi / raw fish" },
+                  { label: "🌶️ Spicy", value: "spicy food" },
+                ] as const).map((item) => (
+                  <button
+                    key={item.value}
+                    onClick={() =>
+                      setFoodPairing((prev) =>
+                        prev === item.value ? null : item.value
+                      )
+                    }
+                    style={{
+                      padding: "7px 12px",
+                      background:
+                        foodPairing === item.value
+                          ? "rgba(168,85,247,.2)"
+                          : "rgba(255,255,255,.05)",
+                      border:
+                        foodPairing === item.value
+                          ? "1.5px solid rgba(168,85,247,.5)"
+                          : "1.5px solid rgba(255,255,255,.08)",
+                      borderRadius: 20,
+                      color:
+                        foodPairing === item.value
+                          ? "#c084fc"
+                          : "rgba(255,255,255,.5)",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      fontFamily: "inherit",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Photo thumbnails */}
