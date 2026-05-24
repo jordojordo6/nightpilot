@@ -88,8 +88,42 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
   const [rating, setRating] = useState<number>(0);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
+  const [mood, setMood] = useState("");
+  const [listening, setListening] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const galleryRef = useRef<HTMLInputElement>(null);
+  const recognitionRef = useRef<any>(null);
+
+  const startListening = () => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ??
+      (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setError("Voice input not supported on this browser");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setMood((prev) => (prev ? `${prev} ${transcript}` : transcript));
+      setListening(false);
+    };
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
+
+    recognitionRef.current = recognition;
+    recognition.start();
+    setListening(true);
+  };
+
+  const stopListening = () => {
+    recognitionRef.current?.stop();
+    setListening(false);
+  };
 
   const handleCapture = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -121,9 +155,12 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
       topTags.length > 0
         ? `Venue preferences: they tend to like ${topTags.join(", ")}.`
         : "";
+    const moodContext = mood.trim()
+      ? `Right now they're in the mood for: ${mood.trim()}.`
+      : "";
     const tasteContext =
-      wineTaste || venueTaste
-        ? [wineTaste, venueTaste].filter(Boolean).join(" ")
+      moodContext || wineTaste || venueTaste
+        ? [moodContext, wineTaste, venueTaste].filter(Boolean).join(" ")
         : undefined;
 
     try {
@@ -209,6 +246,7 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
     setRating(0);
     setRatingSubmitted(false);
     setFeedbackSent(false);
+    setMood("");
   };
 
   const handleFeedback = (value: string) => {
@@ -324,6 +362,91 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
               Take a photo of any wine list and get personalized
               recommendations based on your taste profile.
             </p>
+
+            {/* Mood prompt */}
+            <div
+              style={{
+                position: "relative",
+                marginBottom: 20,
+                textAlign: "left",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color: "rgba(255,255,255,.4)",
+                  marginBottom: 8,
+                  textAlign: "center",
+                }}
+              >
+                What are you in the mood for?
+              </p>
+              <div style={{ position: "relative" }}>
+                <input
+                  type="text"
+                  value={mood}
+                  onChange={(e) => setMood(e.target.value)}
+                  placeholder='e.g. "a dry white wine" or "something bold and red"'
+                  style={{
+                    width: "100%",
+                    padding: "12px 48px 12px 14px",
+                    background: "rgba(255,255,255,.06)",
+                    border: listening
+                      ? "1.5px solid #a855f7"
+                      : "1.5px solid rgba(255,255,255,.1)",
+                    borderRadius: 12,
+                    color: "#fff",
+                    fontSize: 14,
+                    fontFamily: "inherit",
+                    outline: "none",
+                    boxSizing: "border-box",
+                    transition: "border-color 0.2s",
+                  }}
+                />
+                <button
+                  onClick={listening ? stopListening : startListening}
+                  style={{
+                    position: "absolute",
+                    right: 6,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    width: 36,
+                    height: 36,
+                    borderRadius: "50%",
+                    background: listening
+                      ? "rgba(168,85,247,.25)"
+                      : "rgba(255,255,255,.06)",
+                    border: listening
+                      ? "1.5px solid #a855f7"
+                      : "1.5px solid rgba(255,255,255,.1)",
+                    color: listening ? "#c084fc" : "rgba(255,255,255,.4)",
+                    fontSize: 18,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 0,
+                    transition: "all 0.2s",
+                  }}
+                >
+                  {listening ? "⏹" : "🎤"}
+                </button>
+              </div>
+              {listening && (
+                <p
+                  style={{
+                    fontSize: 11,
+                    color: "#a855f7",
+                    marginTop: 6,
+                    textAlign: "center",
+                    animation: "pulse 1.5s infinite",
+                  }}
+                >
+                  Listening...
+                </p>
+              )}
+            </div>
 
             {/* Photo thumbnails */}
             {photos.length > 0 && (
