@@ -4,7 +4,8 @@ import { VenueCard } from "../components/VenueCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { logEvent } from "../engine/analytics";
 
-const THRESHOLD = 50;
+const THRESHOLD = 80; // px distance to trigger swipe
+const VELOCITY_THRESHOLD = 0.5; // px/ms — fast flick triggers even below distance threshold
 const MIN_SWIPES = 8;
 
 interface Props {
@@ -23,14 +24,33 @@ export function SwipeScreen({
   onNightMode,
   onBack,
 }: Props) {
-  const [offset, setOffset] = useState(0);
-  const [offsetY, setOffsetY] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
+  const [, forceRender] = useState(0);
   const [exiting, setExiting] = useState(false);
   const [exitStyle, setExitStyle] = useState<React.CSSProperties | null>(null);
-  const startRef = useRef({ x: 0, y: 0 });
 
-  // Always show index 0 — the venues array is already filtered by App
+  // Mutable refs for drag state — avoids re-renders during drag
+  const dragRef = useRef({
+    active: false,
+    startX: 0,
+    startY: 0,
+    startTime: 0,
+    currentX: 0,
+    currentY: 0,
+    offsetX: 0,
+    offsetY: 0,
+    lastX: 0,
+    lastY: 0,
+    lastTime: 0,
+    velocityX: 0,
+    velocityY: 0,
+  });
+  const cardRef = useRef<HTMLDivElement>(null);
+  const nextCardRef = useRef<HTMLDivElement>(null);
+  const likeRef = useRef<HTMLDivElement>(null);
+  const nopeRef = useRef<HTMLDivElement>(null);
+  const saveRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
+
   const currentVenue = venues[0] as Venue | undefined;
   const nextVenue = venues[1] as Venue | undefined;
   const nightReady = swipeCount >= MIN_SWIPES;
@@ -45,86 +65,196 @@ export function SwipeScreen({
     }
   }, [currentVenue]);
 
+  // ─── Direct DOM updates via rAF for 60fps drag ─────────────────
+  const updateCardPosition = useCallback(() => {
+    const d = dragRef.current;
+    const card = cardRef.current;
+    const next = nextCardRef.current;
+    if (!card) return;
+
+    const rotation = d.offsetX * 0.06;
+    card.style.transform = `translateX(${d.offsetX}px) translateY(${d.offsetY}px) rotate(${rotation}deg)`;
+    card.style.transition = "none";
+
+    // Indicator opacities
+    const likeOp = Math.max(0, Math.min(1, d.offsetX / THRESHOLD));
+    const nopeOp = Math.max(0, Math.min(1, -d.offsetX / THRESHOLD));
+    const saveOp = Math.max(0, Math.min(1, -d.offsetY / 50));
+    if (likeRef.current) likeRef.current.style.opacity = String(likeOp);
+    if (nopeRef.current) nopeRef.current.style.opacity = String(nopeOp);
+    if (saveRef.current) saveRef.current.style.opacity = String(saveOp);
+
+    // Next card scales up as top card moves away
+    if (next) {
+      const progress = Math.min(1, Math.abs(d.offsetX) / (THRESHOLD * 2));
+      const scale = 0.95 + progress * 0.05;
+      const opacity = 0.5 + progress * 0.5;
+      next.style.transform = `scale(${scale})`;
+      next.style.opacity = String(opacity);
+      next.style.transition = "none";
+    }
+  }, []);
+
+  const onDragFrame = useCallback(() => {
+    updateCardPosition();
+    if (dragRef.current.active) {
+      rafRef.current = requestAnimationFrame(onDragFrame);
+    }
+  }, [updateCardPosition]);
+
   const processSwipe = useCallback(
     (action: SwipeAction) => {
       if (!currentVenue || exiting) return;
+      const d = dragRef.current;
 
-      // Calculate exit destination from current position
       const exitX =
         action === "nope"
           ? -window.innerWidth * 1.5
           : action === "like"
             ? window.innerWidth * 1.5
-            : offset;
-      const exitY = action === "save" ? -window.innerHeight * 1.5 : offsetY;
+            : d.offsetX;
+      const exitY = action === "save" ? -window.innerHeight * 1.5 : d.offsetY;
       const exitRotation =
-        action === "nope" ? -30 : action === "like" ? 30 : 0;
+        action === "nope" ? -25 : action === "like" ? 25 : 0;
+
+      // Speed up exit based on velocity — faster flick = faster exit
+      const speed = Math.sqrt(d.velocityX ** 2 + d.velocityY ** 2);
+      const duration = Math.max(0.2, 0.4 - speed * 0.15);
 
       setExiting(true);
       setExitStyle({
         transform: `translateX(${exitX}px) translateY(${exitY}px) rotate(${exitRotation}deg)`,
         opacity: 0,
-        transition: "transform 0.35s ease-out, opacity 0.35s ease-out",
+        transition: `transform ${duration}s cubic-bezier(.2,.6,.3,1), opacity ${duration}s ease-out`,
       });
+
+      // Next card entrance
+      if (nextCardRef.current) {
+        nextCardRef.current.style.transform = "scale(1)";
+        nextCardRef.current.style.opacity = "1";
+        nextCardRef.current.style.transition = `transform ${duration}s cubic-bezier(.2,.6,.3,1), opacity ${duration}s ease-out`;
+      }
 
       setTimeout(() => {
         onSwipe(currentVenue, action);
         setExiting(false);
         setExitStyle(null);
-        setOffset(0);
-        setOffsetY(0);
-      }, 350);
+        d.offsetX = 0;
+        d.offsetY = 0;
+        d.velocityX = 0;
+        d.velocityY = 0;
+        forceRender((n) => n + 1);
+      }, duration * 1000);
     },
-    [currentVenue, onSwipe, exiting, offset, offsetY]
+    [currentVenue, onSwipe, exiting]
   );
 
-  const handlePointerDown = (
-    e: React.TouchEvent | React.MouseEvent
-  ) => {
+  const handlePointerDown = (e: React.TouchEvent | React.MouseEvent) => {
     if (exiting) return;
     const point = "touches" in e ? e.touches[0] : e;
-    startRef.current = { x: point.clientX, y: point.clientY };
-    setIsDragging(true);
+    const d = dragRef.current;
+    d.active = true;
+    d.startX = point.clientX;
+    d.startY = point.clientY;
+    d.currentX = point.clientX;
+    d.currentY = point.clientY;
+    d.startTime = Date.now();
+    d.lastX = point.clientX;
+    d.lastY = point.clientY;
+    d.lastTime = Date.now();
+    d.velocityX = 0;
+    d.velocityY = 0;
+    d.offsetX = 0;
+    d.offsetY = 0;
+
+    rafRef.current = requestAnimationFrame(onDragFrame);
   };
 
-  const handlePointerMove = (
-    e: React.TouchEvent | React.MouseEvent
-  ) => {
-    if (!isDragging || exiting) return;
+  const handlePointerMove = (e: React.TouchEvent | React.MouseEvent) => {
+    const d = dragRef.current;
+    if (!d.active || exiting) return;
+
     const point = "touches" in e ? e.touches[0] : e;
-    const dx = point.clientX - startRef.current.x;
-    const dy = point.clientY - startRef.current.y;
-    setOffset(dx);
-    setOffsetY(dy * 0.3);
+    const now = Date.now();
+    const dt = now - d.lastTime;
+
+    d.currentX = point.clientX;
+    d.currentY = point.clientY;
+    d.offsetX = point.clientX - d.startX;
+    d.offsetY = (point.clientY - d.startY) * 0.3;
+
+    // Track velocity (smoothed)
+    if (dt > 0) {
+      const vx = (point.clientX - d.lastX) / dt;
+      const vy = (point.clientY - d.lastY) / dt;
+      d.velocityX = d.velocityX * 0.4 + vx * 0.6;
+      d.velocityY = d.velocityY * 0.4 + vy * 0.6;
+    }
+    d.lastX = point.clientX;
+    d.lastY = point.clientY;
+    d.lastTime = now;
   };
 
   const handlePointerUp = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    if (offsetY < -60) {
+    const d = dragRef.current;
+    if (!d.active) return;
+    d.active = false;
+    cancelAnimationFrame(rafRef.current);
+
+    // Velocity-based: a fast flick in either direction triggers even below distance threshold
+    const absVx = Math.abs(d.velocityX);
+    const absVy = Math.abs(d.velocityY);
+
+    if (d.offsetY < -50 || (d.velocityY < -VELOCITY_THRESHOLD && absVy > absVx)) {
       processSwipe("save");
       return;
     }
-    if (offset > THRESHOLD) {
+    if (d.offsetX > THRESHOLD || (d.velocityX > VELOCITY_THRESHOLD && absVx > absVy)) {
       processSwipe("like");
       return;
     }
-    if (offset < -THRESHOLD) {
+    if (d.offsetX < -THRESHOLD || (d.velocityX < -VELOCITY_THRESHOLD && absVx > absVy)) {
       processSwipe("nope");
       return;
     }
-    setOffset(0);
-    setOffsetY(0);
+
+    // Spring-back with overshoot
+    if (cardRef.current) {
+      cardRef.current.style.transform = "translateX(0) translateY(0) rotate(0deg)";
+      cardRef.current.style.transition = "transform 0.45s cubic-bezier(.175,.885,.32,1.275)";
+    }
+    if (likeRef.current) {
+      likeRef.current.style.opacity = "0";
+      likeRef.current.style.transition = "opacity 0.3s ease-out";
+    }
+    if (nopeRef.current) {
+      nopeRef.current.style.opacity = "0";
+      nopeRef.current.style.transition = "opacity 0.3s ease-out";
+    }
+    if (saveRef.current) {
+      saveRef.current.style.opacity = "0";
+      saveRef.current.style.transition = "opacity 0.3s ease-out";
+    }
+    if (nextCardRef.current) {
+      nextCardRef.current.style.transform = "scale(0.95)";
+      nextCardRef.current.style.opacity = "0.5";
+      nextCardRef.current.style.transition = "transform 0.4s ease-out, opacity 0.4s ease-out";
+    }
+
+    d.offsetX = 0;
+    d.offsetY = 0;
+    d.velocityX = 0;
+    d.velocityY = 0;
   };
 
   // Prevent scroll while dragging
   useEffect(() => {
     const prevent = (e: TouchEvent) => {
-      if (isDragging) e.preventDefault();
+      if (dragRef.current.active) e.preventDefault();
     };
     document.addEventListener("touchmove", prevent, { passive: false });
     return () => document.removeEventListener("touchmove", prevent);
-  }, [isDragging]);
+  }, []);
 
   // All swiped
   if (!currentVenue) {
@@ -174,11 +304,6 @@ export function SwipeScreen({
       </div>
     );
   }
-
-  const rotation = offset * 0.08;
-  const likeOpacity = Math.max(0, Math.min(1, offset / THRESHOLD));
-  const nopeOpacity = Math.max(0, Math.min(1, -offset / THRESHOLD));
-  const saveOpacity = Math.max(0, Math.min(1, -offsetY / 50));
 
   return (
     <div
@@ -255,18 +380,20 @@ export function SwipeScreen({
           position: "relative",
           padding: "0 20px 0",
           overflow: "hidden",
+          touchAction: "none",
         }}
         onTouchStart={handlePointerDown}
         onTouchMove={handlePointerMove}
         onTouchEnd={handlePointerUp}
         onMouseDown={handlePointerDown}
-        onMouseMove={isDragging ? handlePointerMove : undefined}
+        onMouseMove={handlePointerMove}
         onMouseUp={handlePointerUp}
-        onMouseLeave={isDragging ? handlePointerUp : undefined}
+        onMouseLeave={handlePointerUp}
       >
         {/* Next card (behind) */}
         {nextVenue && (
           <div
+            ref={nextCardRef}
             style={{
               position: "absolute",
               inset: "0 20px",
@@ -274,6 +401,7 @@ export function SwipeScreen({
               opacity: 0.5,
               borderRadius: 24,
               overflow: "hidden",
+              willChange: "transform, opacity",
             }}
           >
             <VenueCard venue={nextVenue} />
@@ -282,38 +410,24 @@ export function SwipeScreen({
 
         {/* Current card */}
         <div
+          ref={cardRef}
           style={{
             position: "absolute",
             inset: "0 20px",
             borderRadius: 24,
             overflow: "hidden",
             cursor: "grab",
-            ...(exitStyle
-              ? exitStyle
-              : {
-                  transform: `translateX(${offset}px) translateY(${offsetY}px) rotate(${rotation}deg)`,
-                  transition: isDragging
-                    ? "none"
-                    : "transform 0.3s cubic-bezier(.25,.1,.25,1)",
-                }),
+            willChange: "transform",
+            ...(exitStyle ?? {}),
           }}
         >
-          <div
-            className="swipe-indicator like"
-            style={{ opacity: likeOpacity }}
-          >
+          <div ref={likeRef} className="swipe-indicator like" style={{ opacity: 0 }}>
             LIKE
           </div>
-          <div
-            className="swipe-indicator nope"
-            style={{ opacity: nopeOpacity }}
-          >
+          <div ref={nopeRef} className="swipe-indicator nope" style={{ opacity: 0 }}>
             NOPE
           </div>
-          <div
-            className="swipe-indicator save"
-            style={{ opacity: saveOpacity }}
-          >
+          <div ref={saveRef} className="swipe-indicator save" style={{ opacity: 0 }}>
             SAVE ★
           </div>
           <VenueCard venue={currentVenue} />
@@ -333,18 +447,34 @@ export function SwipeScreen({
         <SwipeButton
           color="#ef4444"
           icon="✕"
-          onClick={() => processSwipe("nope")}
+          onClick={() => {
+            dragRef.current.offsetX = 0;
+            dragRef.current.offsetY = 0;
+            dragRef.current.velocityX = -1;
+            processSwipe("nope");
+          }}
         />
         <SwipeButton
           color="#fbbf24"
           icon="★"
-          onClick={() => processSwipe("save")}
+          onClick={() => {
+            dragRef.current.offsetX = 0;
+            dragRef.current.offsetY = 0;
+            dragRef.current.velocityX = 0;
+            dragRef.current.velocityY = -1;
+            processSwipe("save");
+          }}
           size={20}
         />
         <SwipeButton
           color="#22c55e"
           icon="♥"
-          onClick={() => processSwipe("like")}
+          onClick={() => {
+            dragRef.current.offsetX = 0;
+            dragRef.current.offsetY = 0;
+            dragRef.current.velocityX = 1;
+            processSwipe("like");
+          }}
         />
       </div>
 
