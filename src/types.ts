@@ -69,7 +69,7 @@ export interface Plan {
   whyFitsYou: string;
 }
 
-export type Screen = "landing" | "swipe" | "nightmode" | "results" | "winelens";
+export type Screen = "city" | "landing" | "swipe" | "nightmode" | "results" | "winelens";
 
 export interface AnalyticsEvent {
   event: string;

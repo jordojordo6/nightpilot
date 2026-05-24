@@ -1,6 +1,5 @@
 import { useState } from "react";
-import type { NightPrefs, TasteProfile, PlanType } from "../types";
-import { VENUES } from "../data/venues";
+import type { Venue, NightPrefs, TasteProfile, PlanType } from "../types";
 import { getProfileSummary } from "../engine/taste";
 
 interface Props {
@@ -8,6 +7,7 @@ interface Props {
   onBack: () => void;
   swipeCount: number;
   tasteProfile: TasteProfile;
+  venues: Venue[];
 }
 
 const OCCASIONS = [
@@ -25,16 +25,16 @@ const BUDGETS = [
   { key: 4, label: "$$$+", desc: "Go all out" },
 ] as const;
 
-const NEIGHBORHOODS = [
-  ...new Set(VENUES.map((v) => v.neighborhood)),
-].sort();
-
 export function NightModeScreen({
   onSubmit,
   onBack,
   swipeCount,
   tasteProfile,
+  venues,
 }: Props) {
+  const NEIGHBORHOODS = [
+    ...new Set(venues.map((v) => v.neighborhood)),
+  ].sort();
   const [planType, setPlanType] = useState<PlanType>("both");
   const [occasion, setOccasion] = useState<string | null>(null);
   const [budget, setBudget] = useState<number | null>(null);

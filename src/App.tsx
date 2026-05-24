@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import type { Venue, SwipeAction, TasteProfile, NightPrefs, Plan, Screen } from "./types";
 import { EMPTY_PROFILE } from "./types";
-import { VENUES } from "./data/venues";
+import { CITIES, getCityByKey } from "./data/cities";
 import { updateTasteProfile, seededShuffle } from "./engine/taste";
 import { generateRecommendations } from "./engine/recommendations";
 import { loadState, saveState, clearNightPilotData } from "./engine/storage";
@@ -38,7 +38,12 @@ function validateProfile(raw: unknown): TasteProfile {
 }
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>("landing");
+  const [cityKey, setCityKey] = useState<string>(() =>
+    loadState<string>("city", "")
+  );
+  const city = cityKey ? getCityByKey(cityKey) : null;
+  const venues = city?.venues ?? [];
+  const [screen, setScreen] = useState<Screen>(cityKey ? "landing" : "city" as Screen);
   const [tasteProfile, setTasteProfile] = useState<TasteProfile>(() =>
     validateProfile(loadState<unknown>("taste", null))
   );
@@ -81,10 +86,10 @@ export default function App() {
     saveState("swipeCount", swipeCount);
   }, [swipeCount]);
 
-  // Stable shuffled venue list — re-shuffles when seed changes (on reset)
+  // Stable shuffled venue list — re-shuffles when seed or city changes
   const shuffledVenues = useMemo(() => {
-    return seededShuffle(VENUES, shuffleSeed);
-  }, [shuffleSeed]);
+    return seededShuffle(venues, shuffleSeed);
+  }, [venues, shuffleSeed]);
 
   // Filter out already-swiped venues for the swipe screen
   const availableVenues = useMemo(
@@ -137,14 +142,33 @@ export default function App() {
         tasteProfile,
         prefs,
         swipedIds,
-        savedIds
+        savedIds,
+        venues
       );
       setPlans(recs);
       setCurrentPlanIdx(0);
       setScreen("results");
     },
-    [tasteProfile, swipedIds, savedIds]
+    [tasteProfile, swipedIds, savedIds, venues]
   );
+
+  const handleSelectCity = useCallback((key: string) => {
+    setCityKey(key);
+    saveState("city", key);
+    setScreen("landing");
+    // Reset profile when switching cities
+    clearNightPilotData();
+    const newSeed = Math.floor(Math.random() * 2147483646) + 1;
+    saveState("seed", newSeed);
+    saveState("city", key); // re-persist after clear
+    setShuffleSeed(newSeed);
+    setTasteProfile({ ...EMPTY_PROFILE });
+    setSwipedIds(new Set());
+    setSavedIds(new Set());
+    setSwipeCount(0);
+    setPlans([]);
+    setCurrentPlanIdx(0);
+  }, []);
 
   const resetProfile = useCallback(() => {
     clearNightPilotData();
@@ -164,11 +188,61 @@ export default function App() {
 
   return (
     <div style={{ height: "100%", position: "relative" }}>
+      {screen === "city" && (
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%)",
+            padding: "0 32px",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ fontSize: 48, marginBottom: 12 }}>🌃</div>
+          <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 6 }}>NightPilot</h1>
+          <p style={{ color: "rgba(255,255,255,.45)", fontSize: 14, marginBottom: 32 }}>
+            Pick your city to get started
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", maxWidth: 300 }}>
+            {CITIES.map((c) => (
+              <button
+                key={c.key}
+                onClick={() => handleSelectCity(c.key)}
+                style={{
+                  padding: "18px 20px",
+                  background: "rgba(255,255,255,.05)",
+                  border: "1.5px solid rgba(255,255,255,.1)",
+                  borderRadius: 16,
+                  color: "#fff",
+                  fontSize: 17,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 10,
+                  transition: "all 0.2s",
+                }}
+              >
+                <span style={{ fontSize: 24 }}>{c.flag}</span>
+                {c.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {screen === "landing" && (
         <LandingScreen
           onStart={() => setScreen("swipe")}
           onWineLens={() => setScreen("winelens")}
+          onChangeCity={() => setScreen("city")}
           swipeCount={swipeCount}
+          cityName={city?.name ?? ""}
         />
       )}
 
@@ -189,6 +263,7 @@ export default function App() {
           onBack={() => setScreen("swipe")}
           swipeCount={swipeCount}
           tasteProfile={tasteProfile}
+          venues={venues}
         />
       )}
 

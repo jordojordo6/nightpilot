@@ -1,10 +1,12 @@
 interface Props {
   onStart: () => void;
   onWineLens: () => void;
+  onChangeCity: () => void;
   swipeCount: number;
+  cityName: string;
 }
 
-export function LandingScreen({ onStart, onWineLens, swipeCount }: Props) {
+export function LandingScreen({ onStart, onWineLens, onChangeCity, swipeCount, cityName }: Props) {
   return (
     <div
       style={{
@@ -141,9 +143,20 @@ export function LandingScreen({ onStart, onWineLens, swipeCount }: Props) {
           textAlign: "center",
         }}
       >
-        <p style={{ fontSize: 11, color: "rgba(255,255,255,.2)" }}>
-          Vancouver · MVP v0.2
-        </p>
+        <button
+          onClick={onChangeCity}
+          style={{
+            background: "none",
+            border: "none",
+            fontSize: 11,
+            color: "rgba(255,255,255,.25)",
+            cursor: "pointer",
+            fontFamily: "inherit",
+            padding: "6px 12px",
+          }}
+        >
+          📍 {cityName} · tap to change
+        </button>
       </div>
     </div>
   );
