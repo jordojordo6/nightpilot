@@ -78,6 +78,32 @@ export interface AnalyticsEvent {
   [key: string]: unknown;
 }
 
+export interface WineSelection {
+  name: string;
+  type: string;
+  grape: string;
+  region: string;
+  rating: number; // 1-5
+  timestamp: string;
+}
+
+export interface WineProfile {
+  selections: WineSelection[];
+  // Aggregated preferences
+  preferredTypes: Record<string, number>; // red: 3, white: 2
+  preferredGrapes: Record<string, number>;
+  preferredRegions: Record<string, number>;
+  avgRating: number;
+}
+
+export const EMPTY_WINE_PROFILE: WineProfile = {
+  selections: [],
+  preferredTypes: {},
+  preferredGrapes: {},
+  preferredRegions: {},
+  avgRating: 0,
+};
+
 export interface ProfileSummary {
   vibeWords: string[];
   tasteWords: string[];

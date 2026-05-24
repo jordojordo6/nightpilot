@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
-import type { TasteProfile } from "../types";
+import type { TasteProfile, WineProfile, WineSelection } from "../types";
 import { getTopPositiveTags } from "../engine/taste";
 import { logEvent } from "../engine/analytics";
+import { loadWineProfile, saveWineSelection, buildWineTasteContext } from "../engine/wine";
 
 interface WineRec {
   name: string;
@@ -82,6 +83,11 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<WineResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [wineProfile, setWineProfile] = useState<WineProfile>(() => loadWineProfile());
+  const [selectedWine, setSelectedWine] = useState<WineRec | null>(null);
+  const [rating, setRating] = useState<number>(0);
+  const [ratingSubmitted, setRatingSubmitted] = useState(false);
+  const [feedbackSent, setFeedbackSent] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const galleryRef = useRef<HTMLInputElement>(null);
 
@@ -110,9 +116,14 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
     setError(null);
 
     const topTags = getTopPositiveTags(tasteProfile, 5);
-    const tasteContext =
+    const wineTaste = buildWineTasteContext(wineProfile);
+    const venueTaste =
       topTags.length > 0
-        ? `They tend to like: ${topTags.join(", ")}. They've rated ${tasteProfile.likeCount + tasteProfile.saveCount + tasteProfile.rejectCount} venues.`
+        ? `Venue preferences: they tend to like ${topTags.join(", ")}.`
+        : "";
+    const tasteContext =
+      wineTaste || venueTaste
+        ? [wineTaste, venueTaste].filter(Boolean).join(" ")
         : undefined;
 
     try {
@@ -158,10 +169,83 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
     }
   };
 
+  const handleSelectWine = (wine: WineRec) => {
+    setSelectedWine(wine);
+    setRating(0);
+    setRatingSubmitted(false);
+  };
+
+  const handleSubmitRating = () => {
+    if (!selectedWine || rating === 0) return;
+
+    const selection: WineSelection = {
+      name: selectedWine.name,
+      type: selectedWine.type,
+      grape: selectedWine.grape,
+      region: selectedWine.region,
+      rating,
+      timestamp: new Date().toISOString(),
+    };
+
+    const updated = saveWineSelection(wineProfile, selection);
+    setWineProfile(updated);
+    setRatingSubmitted(true);
+
+    logEvent("wine_rated", {
+      name: selectedWine.name,
+      type: selectedWine.type,
+      grape: selectedWine.grape,
+      region: selectedWine.region,
+      rating,
+      totalWinesRated: updated.selections.length,
+    });
+  };
+
   const handleReset = () => {
     setPhotos([]);
     setResult(null);
     setError(null);
+    setSelectedWine(null);
+    setRating(0);
+    setRatingSubmitted(false);
+    setFeedbackSent(false);
+  };
+
+  const handleFeedback = (value: string) => {
+    setFeedbackSent(true);
+
+    const wineNames = result?.wines.map((w) => w.name) ?? [];
+    const avoidNames = result?.avoid.map((w) => w.name) ?? [];
+
+    logEvent("wine_lens_feedback", {
+      response: value,
+      wineNames,
+      avoidNames,
+      photoCount: photos.length,
+      listSummary: result?.listSummary ?? "",
+      winesRated: wineProfile.selections.length,
+    });
+
+    fetch(
+      "https://script.google.com/macros/s/AKfycbxwtmbMlR8jBpE_QkvEkVmGNIO89u1JCTegtIU9_D0_I484SCY-Bf4Hql0jPl3kUr8-/exec",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          feature: "wine_lens",
+          response: value,
+          wineNames,
+          avoidNames,
+          photoCount: photos.length,
+          listSummary: result?.listSummary ?? "",
+          tip: result?.tip ?? "",
+          winesRated: wineProfile.selections.length,
+          avgWineRating: wineProfile.avgRating,
+          userAgent: navigator.userAgent,
+        }),
+      }
+    ).catch(() => {});
   };
 
   return (
@@ -637,6 +721,137 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
                       />
                     ))}
                   </div>
+
+                  {/* "I ordered this" button */}
+                  {selectedWine?.name === wine.name && !ratingSubmitted ? (
+                    <div
+                      style={{
+                        marginTop: 12,
+                        padding: "12px",
+                        background: "rgba(168,85,247,.08)",
+                        border: "1px solid rgba(168,85,247,.2)",
+                        borderRadius: 12,
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: 12,
+                          color: "rgba(255,255,255,.5)",
+                          marginBottom: 8,
+                          textAlign: "center",
+                        }}
+                      >
+                        How was it?
+                      </p>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          gap: 6,
+                          marginBottom: 10,
+                        }}
+                      >
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            onClick={() => setRating(star)}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              fontSize: 28,
+                              cursor: "pointer",
+                              opacity: star <= rating ? 1 : 0.25,
+                              transition: "opacity 0.15s, transform 0.15s",
+                              transform: star <= rating ? "scale(1.15)" : "scale(1)",
+                              padding: 2,
+                            }}
+                          >
+                            ★
+                          </button>
+                        ))}
+                      </div>
+                      <div style={{ display: "flex", gap: 8 }}>
+                        <button
+                          onClick={() => setSelectedWine(null)}
+                          style={{
+                            padding: "8px 12px",
+                            background: "rgba(255,255,255,.06)",
+                            border: "1px solid rgba(255,255,255,.1)",
+                            borderRadius: 10,
+                            color: "rgba(255,255,255,.4)",
+                            fontSize: 12,
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            fontFamily: "inherit",
+                          }}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={handleSubmitRating}
+                          disabled={rating === 0}
+                          style={{
+                            flex: 1,
+                            padding: "8px 12px",
+                            background:
+                              rating === 0
+                                ? "rgba(168,85,247,.15)"
+                                : "linear-gradient(135deg, #a855f7, #7c3aed)",
+                            color: rating === 0 ? "rgba(255,255,255,.3)" : "#fff",
+                            border: "none",
+                            borderRadius: 10,
+                            fontSize: 13,
+                            fontWeight: 700,
+                            cursor: rating === 0 ? "default" : "pointer",
+                            fontFamily: "inherit",
+                          }}
+                        >
+                          Save Rating
+                        </button>
+                      </div>
+                    </div>
+                  ) : selectedWine?.name === wine.name && ratingSubmitted ? (
+                    <div
+                      style={{
+                        marginTop: 12,
+                        padding: "10px 14px",
+                        background: "rgba(34,197,94,.08)",
+                        border: "1px solid rgba(34,197,94,.2)",
+                        borderRadius: 12,
+                        textAlign: "center",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: 13,
+                          color: "#22c55e",
+                          fontWeight: 600,
+                        }}
+                      >
+                        ✓ Rated {"★".repeat(rating)} — saved to your taste profile
+                      </p>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => handleSelectWine(wine)}
+                      style={{
+                        marginTop: 12,
+                        width: "100%",
+                        padding: "10px",
+                        background: "rgba(168,85,247,.08)",
+                        border: "1px solid rgba(168,85,247,.2)",
+                        borderRadius: 10,
+                        color: "#c084fc",
+                        fontSize: 12,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        fontFamily: "inherit",
+                        transition: "background 0.2s",
+                      }}
+                    >
+                      I ordered this 🍷
+                    </button>
+                  )}
                 </div>
               );
             })}
@@ -686,6 +901,198 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
                     </p>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {/* Feedback */}
+            <div
+              style={{
+                padding: "16px",
+                background: "rgba(255,255,255,.03)",
+                border: "1px solid rgba(255,255,255,.08)",
+                borderRadius: 16,
+                marginBottom: 16,
+                animation: "fadeInUp 0.5s ease-out 0.45s both",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: "rgba(255,255,255,.6)",
+                  textAlign: "center",
+                  marginBottom: 12,
+                }}
+              >
+                How were these wine picks?
+              </p>
+              <div style={{ display: "flex", gap: 8 }}>
+                {([
+                  { label: "Great picks", value: "great", color: "#22c55e" },
+                  { label: "Okay", value: "okay", color: "#fbbf24" },
+                  { label: "Missed the mark", value: "missed", color: "#ef4444" },
+                ] as const).map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => handleFeedback(opt.value)}
+                    disabled={feedbackSent}
+                    style={{
+                      flex: 1,
+                      padding: "10px 6px",
+                      background:
+                        feedbackSent
+                          ? "rgba(255,255,255,.03)"
+                          : "rgba(255,255,255,.05)",
+                      border: "1.5px solid rgba(255,255,255,.08)",
+                      borderRadius: 10,
+                      color: feedbackSent
+                        ? "rgba(255,255,255,.2)"
+                        : opt.color,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      cursor: feedbackSent ? "default" : "pointer",
+                      fontFamily: "inherit",
+                      opacity: feedbackSent ? 0.5 : 1,
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              {feedbackSent && (
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "rgba(255,255,255,.35)",
+                    textAlign: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  Thanks! Your feedback helps us improve.
+                </p>
+              )}
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeIMnxY-_gBGckzCc9rSPajOZGvK8AHwXP52yfi5uYq20Fl3Q/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "block",
+                  textAlign: "center",
+                  marginTop: 10,
+                  fontSize: 11,
+                  color: "rgba(255,255,255,.25)",
+                  textDecoration: "none",
+                }}
+              >
+                Have more thoughts? Share detailed feedback →
+              </a>
+            </div>
+
+            {/* Wine profile summary */}
+            {wineProfile.selections.length > 0 && (
+              <div
+                style={{
+                  background: "rgba(168,85,247,.06)",
+                  border: "1px solid rgba(168,85,247,.15)",
+                  borderRadius: 14,
+                  padding: "14px 16px",
+                  marginBottom: 16,
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: "rgba(255,255,255,.3)",
+                    textTransform: "uppercase",
+                    letterSpacing: 2,
+                    marginBottom: 10,
+                  }}
+                >
+                  Your Wine Profile
+                </p>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 10,
+                    marginBottom: 8,
+                  }}
+                >
+                  <div
+                    style={{
+                      flex: 1,
+                      textAlign: "center",
+                      padding: "8px",
+                      background: "rgba(255,255,255,.04)",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <div style={{ fontSize: 20, fontWeight: 700, color: "#c084fc" }}>
+                      {wineProfile.selections.length}
+                    </div>
+                    <div style={{ fontSize: 10, color: "rgba(255,255,255,.35)" }}>
+                      wines rated
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      flex: 1,
+                      textAlign: "center",
+                      padding: "8px",
+                      background: "rgba(255,255,255,.04)",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <div style={{ fontSize: 20, fontWeight: 700, color: "#fbbf24" }}>
+                      {wineProfile.avgRating.toFixed(1)}
+                    </div>
+                    <div style={{ fontSize: 10, color: "rgba(255,255,255,.35)" }}>
+                      avg rating
+                    </div>
+                  </div>
+                </div>
+                {/* Recent ratings */}
+                {wineProfile.selections.slice(-3).reverse().map((s, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      padding: "6px 0",
+                      borderTop:
+                        i === 0 ? "none" : "1px solid rgba(255,255,255,.05)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 12,
+                        color: "rgba(255,255,255,.5)",
+                        flex: 1,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        marginRight: 8,
+                      }}
+                    >
+                      {s.name}
+                    </span>
+                    <span style={{ fontSize: 12, color: "#fbbf24", flexShrink: 0 }}>
+                      {"★".repeat(s.rating)}
+                      {"☆".repeat(5 - s.rating)}
+                    </span>
+                  </div>
+                ))}
+                <p
+                  style={{
+                    fontSize: 11,
+                    color: "rgba(255,255,255,.3)",
+                    marginTop: 8,
+                    textAlign: "center",
+                  }}
+                >
+                  Future scans use your taste profile for better picks
+                </p>
               </div>
             )}
 
