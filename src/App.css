@@ -1,0 +1,174 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: "Inter", system-ui, sans-serif;
+  background: #0a0a0f;
+  color: #fff;
+}
+
+body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes flyRight {
+  to {
+    transform: translateX(150vw) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyLeft {
+  to {
+    transform: translateX(-150vw) rotate(-30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyUp {
+  to {
+    transform: translateY(-150vh);
+    opacity: 0;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes progressPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ─── Swipe indicators ───────────────────────────────────── */
+
+.swipe-indicator {
+  position: absolute;
+  top: 24px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 2px;
+  border: 3px solid;
+  opacity: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.swipe-indicator.like {
+  right: 24px;
+  color: #22c55e;
+  border-color: #22c55e;
+  transform: rotate(12deg);
+}
+
+.swipe-indicator.nope {
+  left: 24px;
+  color: #ef4444;
+  border-color: #ef4444;
+  transform: rotate(-12deg);
+}
+
+.swipe-indicator.save {
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fbbf24;
+  border-color: #fbbf24;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+}

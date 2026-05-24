@@ -1,0 +1,151 @@
+import type { Venue } from "../types";
+
+interface Props {
+  venue: Venue;
+}
+
+export function VenueCard({ venue }: Props) {
+  return (
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        background: `linear-gradient(145deg, ${venue.gradient[0]}, ${venue.gradient[1]})`,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        padding: 28,
+        position: "relative",
+      }}
+    >
+      {/* Top badges */}
+      <div
+        style={{
+          position: "absolute",
+          top: 20,
+          left: 20,
+          display: "flex",
+          gap: 8,
+          flexWrap: "wrap",
+        }}
+      >
+        <Badge label={venue.type === "restaurant" ? "Restaurant" : "Bar"} />
+        <Badge label={venue.neighborhood} />
+      </div>
+
+      {/* Price badge */}
+      <div style={{ position: "absolute", top: 20, right: 20 }}>
+        <Badge label={"$".repeat(venue.price)} bold />
+      </div>
+
+      {/* Background emoji */}
+      <div
+        style={{
+          position: "absolute",
+          top: "28%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
+          fontSize: 90,
+          opacity: 0.12,
+          pointerEvents: "none",
+        }}
+      >
+        {venue.emoji}
+      </div>
+
+      {/* Content */}
+      <div>
+        <div style={{ fontSize: 48, marginBottom: 8 }}>{venue.emoji}</div>
+        <h2
+          style={{
+            fontSize: 28,
+            fontWeight: 800,
+            marginBottom: 4,
+            lineHeight: 1.1,
+            textShadow: "0 2px 12px rgba(0,0,0,.3)",
+          }}
+        >
+          {venue.name}
+        </h2>
+        <p
+          style={{
+            fontSize: 14,
+            color: "rgba(255,255,255,.75)",
+            marginBottom: 2,
+            fontWeight: 500,
+          }}
+        >
+          {venue.cuisine}
+        </p>
+        <p
+          style={{
+            fontSize: 13,
+            color: "rgba(255,255,255,.55)",
+            marginBottom: 12,
+            lineHeight: 1.4,
+          }}
+        >
+          {venue.tagline}
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            marginBottom: 14,
+            alignItems: "center",
+          }}
+        >
+          <span
+            style={{
+              background: "rgba(255,255,255,.15)",
+              padding: "3px 10px",
+              borderRadius: 6,
+              fontSize: 13,
+              fontWeight: 600,
+            }}
+          >
+            ★ {venue.rating}
+          </span>
+        </div>
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {venue.highlights.map((h) => (
+            <span
+              key={h}
+              style={{
+                background: "rgba(255,255,255,.15)",
+                backdropFilter: "blur(4px)",
+                padding: "5px 12px",
+                borderRadius: 10,
+                fontSize: 11,
+                fontWeight: 500,
+                color: "rgba(255,255,255,.85)",
+              }}
+            >
+              {h}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Badge({ label, bold }: { label: string; bold?: boolean }) {
+  return (
+    <span
+      style={{
+        background: "rgba(0,0,0,.45)",
+        backdropFilter: "blur(8px)",
+        padding: "5px 12px",
+        borderRadius: 20,
+        fontSize: bold ? 13 : 12,
+        fontWeight: bold ? 700 : 600,
+        color: "rgba(255,255,255,.9)",
+      }}
+    >
+      {label}
+    </span>
+  );
+}
