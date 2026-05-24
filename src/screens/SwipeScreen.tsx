@@ -4,7 +4,7 @@ import { VenueCard } from "../components/VenueCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { logEvent } from "../engine/analytics";
 
-const THRESHOLD = 80;
+const THRESHOLD = 50;
 const MIN_SWIPES = 8;
 
 interface Props {
@@ -26,7 +26,8 @@ export function SwipeScreen({
   const [offset, setOffset] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [exitAnim, setExitAnim] = useState<string | null>(null);
+  const [exiting, setExiting] = useState(false);
+  const [exitStyle, setExitStyle] = useState<React.CSSProperties | null>(null);
   const startRef = useRef({ x: 0, y: 0 });
 
   // Always show index 0 — the venues array is already filtered by App
@@ -46,28 +47,41 @@ export function SwipeScreen({
 
   const processSwipe = useCallback(
     (action: SwipeAction) => {
-      if (!currentVenue || exitAnim) return;
-      const animName =
+      if (!currentVenue || exiting) return;
+
+      // Calculate exit destination from current position
+      const exitX =
         action === "nope"
-          ? "flyLeft"
-          : action === "save"
-            ? "flyUp"
-            : "flyRight";
-      setExitAnim(animName);
+          ? -window.innerWidth * 1.5
+          : action === "like"
+            ? window.innerWidth * 1.5
+            : offset;
+      const exitY = action === "save" ? -window.innerHeight * 1.5 : offsetY;
+      const exitRotation =
+        action === "nope" ? -30 : action === "like" ? 30 : 0;
+
+      setExiting(true);
+      setExitStyle({
+        transform: `translateX(${exitX}px) translateY(${exitY}px) rotate(${exitRotation}deg)`,
+        opacity: 0,
+        transition: "transform 0.35s ease-out, opacity 0.35s ease-out",
+      });
+
       setTimeout(() => {
         onSwipe(currentVenue, action);
-        setExitAnim(null);
+        setExiting(false);
+        setExitStyle(null);
         setOffset(0);
         setOffsetY(0);
-      }, 280);
+      }, 350);
     },
-    [currentVenue, onSwipe, exitAnim]
+    [currentVenue, onSwipe, exiting, offset, offsetY]
   );
 
   const handlePointerDown = (
     e: React.TouchEvent | React.MouseEvent
   ) => {
-    if (exitAnim) return;
+    if (exiting) return;
     const point = "touches" in e ? e.touches[0] : e;
     startRef.current = { x: point.clientX, y: point.clientY };
     setIsDragging(true);
@@ -76,7 +90,7 @@ export function SwipeScreen({
   const handlePointerMove = (
     e: React.TouchEvent | React.MouseEvent
   ) => {
-    if (!isDragging || exitAnim) return;
+    if (!isDragging || exiting) return;
     const point = "touches" in e ? e.touches[0] : e;
     const dx = point.clientX - startRef.current.x;
     const dy = point.clientY - startRef.current.y;
@@ -274,15 +288,14 @@ export function SwipeScreen({
             borderRadius: 24,
             overflow: "hidden",
             cursor: "grab",
-            transform: exitAnim
-              ? undefined
-              : `translateX(${offset}px) translateY(${offsetY}px) rotate(${rotation}deg)`,
-            transition: isDragging
-              ? "none"
-              : "transform 0.4s cubic-bezier(.25,.1,.25,1)",
-            animation: exitAnim
-              ? `${exitAnim} 0.3s ease-out forwards`
-              : undefined,
+            ...(exitStyle
+              ? exitStyle
+              : {
+                  transform: `translateX(${offset}px) translateY(${offsetY}px) rotate(${rotation}deg)`,
+                  transition: isDragging
+                    ? "none"
+                    : "transform 0.3s cubic-bezier(.25,.1,.25,1)",
+                }),
           }}
         >
           <div
