@@ -55,15 +55,38 @@ export default async function handler(req: any, res: any) {
     return res.status(500).json({ error: "API key not configured" });
   }
 
-  const { image, mediaType, tasteContext } = req.body;
+  const { image, mediaType, images, tasteContext } = req.body;
 
-  if (!image) {
+  // Support both single image (legacy) and multiple images
+  const imageList: { image: string; mediaType: string }[] = images
+    ? images
+    : image
+      ? [{ image, mediaType: mediaType || "image/jpeg" }]
+      : [];
+
+  if (imageList.length === 0) {
     return res.status(400).json({ error: "No image provided" });
   }
 
+  const pageNote =
+    imageList.length > 1
+      ? `Here are ${imageList.length} photos of a wine list (multiple pages). `
+      : `Here is a photo of a wine list. `;
+
   const userPrompt = tasteContext
-    ? `Here is a photo of a wine list. The user's taste preferences: ${tasteContext}. Based on this wine list and their preferences, recommend wines.`
-    : `Here is a photo of a wine list. Recommend wines from this list.`;
+    ? `${pageNote}The user's taste preferences: ${tasteContext}. Based on this wine list and their preferences, recommend wines.`
+    : `${pageNote}Recommend wines from this list.`;
+
+  // Build content array with all images + text prompt
+  const content: any[] = imageList.map((img: any) => ({
+    type: "image",
+    source: {
+      type: "base64",
+      media_type: img.mediaType || "image/jpeg",
+      data: img.image,
+    },
+  }));
+  content.push({ type: "text", text: userPrompt });
 
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
@@ -80,20 +103,7 @@ export default async function handler(req: any, res: any) {
         messages: [
           {
             role: "user",
-            content: [
-              {
-                type: "image",
-                source: {
-                  type: "base64",
-                  media_type: mediaType || "image/jpeg",
-                  data: image,
-                },
-              },
-              {
-                type: "text",
-                text: userPrompt,
-              },
-            ],
+            content,
           },
         ],
       }),

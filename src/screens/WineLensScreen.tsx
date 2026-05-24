@@ -40,9 +40,14 @@ const REC_LABELS: Record<string, { label: string; color: string; icon: string }>
   crowd_pleaser: { label: "Crowd Pleaser", color: "#fbbf24", icon: "⭐" },
 };
 
+interface PhotoItem {
+  base64: string;
+  mediaType: string;
+  preview: string; // data URL for thumbnail
+}
+
 export function WineLensScreen({ onBack, tasteProfile }: Props) {
-  const [photo, setPhoto] = useState<string | null>(null);
-  const [mediaType, setMediaType] = useState<string>("image/jpeg");
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<WineResult | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -50,29 +55,41 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
   const galleryRef = useRef<HTMLInputElement>(null);
 
   const handleCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
-    setMediaType(file.type || "image/jpeg");
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        const base64 = dataUrl.split(",")[1];
+        setPhotos((prev) => [
+          ...prev,
+          {
+            base64,
+            mediaType: file.type || "image/jpeg",
+            preview: dataUrl,
+          },
+        ]);
+      };
+      reader.readAsDataURL(file);
+    });
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = reader.result as string;
-      // Extract base64 data after the prefix
-      const base64 = dataUrl.split(",")[1];
-      setPhoto(base64);
-      setResult(null);
-      setError(null);
-    };
-    reader.readAsDataURL(file);
+    setResult(null);
+    setError(null);
+    // Reset input so the same file can be re-selected
+    e.target.value = "";
+  };
+
+  const removePhoto = (index: number) => {
+    setPhotos((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleAnalyze = async () => {
-    if (!photo) return;
+    if (photos.length === 0) return;
     setLoading(true);
     setError(null);
 
-    // Build taste context from profile
     const topTags = getTopPositiveTags(tasteProfile, 5);
     const tasteContext =
       topTags.length > 0
@@ -83,7 +100,13 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
       const res = await fetch("/api/wine-lens", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: photo, mediaType, tasteContext }),
+        body: JSON.stringify({
+          images: photos.map((p) => ({
+            image: p.base64,
+            mediaType: p.mediaType,
+          })),
+          tasteContext,
+        }),
       });
 
       if (!res.ok) {
@@ -98,6 +121,7 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
 
       logEvent("wine_lens_scan", {
         wineCount: data.wines.length,
+        photoCount: photos.length,
         listSummary: data.listSummary,
         topTags,
       });
@@ -111,11 +135,9 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
   };
 
   const handleReset = () => {
-    setPhoto(null);
+    setPhotos([]);
     setResult(null);
     setError(null);
-    if (fileRef.current) fileRef.current.value = "";
-    if (galleryRef.current) galleryRef.current.value = "";
   };
 
   return (
@@ -195,26 +217,78 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
               recommendations based on your taste profile.
             </p>
 
-            {/* Photo preview */}
-            {photo && (
+            {/* Photo thumbnails */}
+            {photos.length > 0 && (
               <div
                 style={{
-                  marginBottom: 20,
-                  borderRadius: 16,
-                  overflow: "hidden",
-                  border: "1px solid rgba(255,255,255,.1)",
+                  display: "flex",
+                  gap: 8,
+                  marginBottom: 16,
+                  overflowX: "auto",
+                  padding: "4px 0",
                 }}
               >
-                <img
-                  src={`data:${mediaType};base64,${photo}`}
-                  alt="Wine list"
-                  style={{
-                    width: "100%",
-                    maxHeight: 300,
-                    objectFit: "contain",
-                    background: "rgba(0,0,0,.5)",
-                  }}
-                />
+                {photos.map((p, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      position: "relative",
+                      flexShrink: 0,
+                      width: 80,
+                      height: 100,
+                      borderRadius: 12,
+                      overflow: "hidden",
+                      border: "1px solid rgba(255,255,255,.15)",
+                    }}
+                  >
+                    <img
+                      src={p.preview}
+                      alt={`Wine list page ${i + 1}`}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <button
+                      onClick={() => removePhoto(i)}
+                      style={{
+                        position: "absolute",
+                        top: 4,
+                        right: 4,
+                        width: 20,
+                        height: 20,
+                        borderRadius: "50%",
+                        background: "rgba(0,0,0,.7)",
+                        border: "none",
+                        color: "#fff",
+                        fontSize: 12,
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: 0,
+                      }}
+                    >
+                      ✕
+                    </button>
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: 4,
+                        left: 4,
+                        background: "rgba(0,0,0,.6)",
+                        borderRadius: 4,
+                        padding: "1px 5px",
+                        fontSize: 9,
+                        color: "rgba(255,255,255,.7)",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {i + 1}
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
 
@@ -231,72 +305,78 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
               ref={galleryRef}
               type="file"
               accept="image/*"
+              multiple
               onChange={handleCapture}
               style={{ display: "none" }}
             />
 
-            {!photo ? (
-              <div style={{ display: "flex", gap: 10 }}>
-                <button
-                  onClick={() => fileRef.current?.click()}
-                  style={{
-                    flex: 1,
-                    padding: "16px",
-                    background:
-                      "linear-gradient(135deg, #a855f7, #7c3aed)",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: 16,
-                    fontSize: 15,
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    fontFamily: "inherit",
-                  }}
-                >
-                  Take Photo 📸
-                </button>
-                <button
-                  onClick={() => galleryRef.current?.click()}
-                  style={{
-                    flex: 1,
-                    padding: "16px",
-                    background: "rgba(168,85,247,.12)",
-                    border: "1px solid rgba(168,85,247,.3)",
-                    borderRadius: 16,
-                    fontSize: 15,
-                    fontWeight: 700,
-                    color: "#c084fc",
-                    cursor: "pointer",
-                    fontFamily: "inherit",
-                  }}
-                >
-                  From Photos 🖼️
-                </button>
-              </div>
-            ) : (
+            {/* Capture buttons — always show so user can add more */}
+            <div style={{ display: "flex", gap: 10, marginBottom: photos.length > 0 ? 12 : 0 }}>
+              <button
+                onClick={() => fileRef.current?.click()}
+                style={{
+                  flex: 1,
+                  padding: photos.length > 0 ? "12px" : "16px",
+                  background:
+                    photos.length > 0
+                      ? "rgba(168,85,247,.12)"
+                      : "linear-gradient(135deg, #a855f7, #7c3aed)",
+                  color: photos.length > 0 ? "#c084fc" : "#fff",
+                  border: photos.length > 0
+                    ? "1px solid rgba(168,85,247,.3)"
+                    : "none",
+                  borderRadius: photos.length > 0 ? 12 : 16,
+                  fontSize: photos.length > 0 ? 13 : 15,
+                  fontWeight: photos.length > 0 ? 600 : 700,
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                }}
+              >
+                {photos.length > 0 ? "+ Take Another" : "Take Photo 📸"}
+              </button>
+              <button
+                onClick={() => galleryRef.current?.click()}
+                style={{
+                  flex: 1,
+                  padding: photos.length > 0 ? "12px" : "16px",
+                  background: "rgba(168,85,247,.12)",
+                  border: "1px solid rgba(168,85,247,.3)",
+                  borderRadius: photos.length > 0 ? 12 : 16,
+                  fontSize: photos.length > 0 ? 13 : 15,
+                  fontWeight: photos.length > 0 ? 600 : 700,
+                  color: "#c084fc",
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                }}
+              >
+                {photos.length > 0 ? "+ From Photos" : "From Photos 🖼️"}
+              </button>
+            </div>
+
+            {/* Analyze / Clear buttons */}
+            {photos.length > 0 && (
               <div style={{ display: "flex", gap: 10 }}>
                 <button
                   onClick={handleReset}
                   style={{
-                    flex: 1,
-                    padding: "14px",
+                    padding: "14px 16px",
                     background: "rgba(255,255,255,.06)",
                     border: "1px solid rgba(255,255,255,.1)",
                     borderRadius: 14,
-                    color: "rgba(255,255,255,.7)",
-                    fontSize: 14,
+                    color: "rgba(255,255,255,.5)",
+                    fontSize: 13,
                     fontWeight: 600,
                     cursor: "pointer",
                     fontFamily: "inherit",
                   }}
                 >
-                  Retake
+                  Clear
                 </button>
                 <button
                   onClick={handleAnalyze}
                   disabled={loading}
                   style={{
-                    flex: 2,
+                    flex: 1,
                     padding: "14px",
                     background: loading
                       ? "rgba(168,85,247,.3)"
@@ -310,7 +390,9 @@ export function WineLensScreen({ onBack, tasteProfile }: Props) {
                     fontFamily: "inherit",
                   }}
                 >
-                  {loading ? "Analyzing..." : "Analyze Wine List 🍷"}
+                  {loading
+                    ? "Analyzing..."
+                    : `Analyze ${photos.length} ${photos.length === 1 ? "Page" : "Pages"} 🍷`}
                 </button>
               </div>
             )}
