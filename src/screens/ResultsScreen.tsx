@@ -428,20 +428,24 @@ export function ResultsScreen({
             Keep Swiping
           </button>
           <button
-            onClick={onReset}
+            onClick={() => {
+              if (window.confirm("This will erase all your swipes and taste memory. Start fresh?")) {
+                onReset();
+              }
+            }}
             style={{
               padding: "14px 18px",
               background: "rgba(255,255,255,.06)",
-              border: "1px solid rgba(255,255,255,.1)",
+              border: "1px solid rgba(239,68,68,.2)",
               borderRadius: 14,
-              color: "rgba(255,255,255,.4)",
+              color: "rgba(239,68,68,.6)",
               fontSize: 13,
               fontWeight: 500,
               cursor: "pointer",
               fontFamily: "inherit",
             }}
           >
-            Reset
+            Start Over
           </button>
         </div>
       </div>

@@ -212,13 +212,14 @@ export default function App() {
     setCityKey(key);
     saveState("city", key);
     setScreen("landing");
-    // Reset profile when switching cities
-    clearNightPilotData();
+    // Reset city-specific data but KEEP taste profile across cities
     const newSeed = Math.floor(Math.random() * 2147483646) + 1;
     saveState("seed", newSeed);
-    saveState("city", key); // re-persist after clear
+    saveState("swiped", []);
+    saveState("saved", []);
+    saveState("swipeCount", 0);
     setShuffleSeed(newSeed);
-    setTasteProfile({ ...EMPTY_PROFILE });
+    // tasteProfile intentionally preserved — preferences carry over
     setSwipedIds(new Set());
     setSavedIds(new Set());
     setSwipeCount(0);
