@@ -321,6 +321,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
           tip: result?.tip ?? "",
           winesRated: wineProfile.selections.length,
           avgWineRating: wineProfile.avgRating,
+          city: cityKey,
           userAgent: navigator.userAgent,
         }),
       }
@@ -1235,7 +1236,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
                 </p>
               )}
               <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeIMnxY-_gBGckzCc9rSPajOZGvK8AHwXP52yfi5uYq20Fl3Q/viewform"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScJujO9jZxNTnIQwGWPDMBnarKDY8jkjxTdoap1KDscq0H1pg/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{

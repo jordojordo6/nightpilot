@@ -463,6 +463,7 @@ function FeedbackPrompt({
         mode: "no-cors",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
+          feature: "quick_feedback",
           response: value,
           planName: plan.name,
           matchScore: plan.matchScore,
