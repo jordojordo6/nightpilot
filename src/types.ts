@@ -132,10 +132,10 @@ export const DIETARY_OPTIONS: { key: DietaryRestriction; label: string; icon: st
 ];
 
 export const MICHELIN_OPTIONS: { key: MichelinLevel; label: string; icon: string }[] = [
-  { key: "3-star", label: "Three Stars", icon: "⭐⭐⭐" },
-  { key: "2-star", label: "Two Stars", icon: "⭐⭐" },
-  { key: "1-star", label: "One Star", icon: "⭐" },
-  { key: "bib-gourmand", label: "Bib Gourmand", icon: "🍽️" },
+  { key: "3-star", label: "", icon: "✿✿✿" },
+  { key: "2-star", label: "", icon: "✿✿" },
+  { key: "1-star", label: "", icon: "✿" },
+  { key: "bib-gourmand", label: "Bib Gourmand", icon: "😋" },
 ];
 
 export interface UserSettings {

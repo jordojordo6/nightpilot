@@ -150,8 +150,9 @@ export function SettingsModal({ open, settings, onClose, onChange }: Props) {
                     textAlign: "left",
                   }}
                 >
-                  <span style={{ fontSize: 16, minWidth: 48 }}>{opt.icon}</span>
-                  <span style={{ flex: 1 }}>{opt.label}</span>
+                  <span style={{ fontSize: 20, minWidth: 48, color: "#c4233b", letterSpacing: 2 }}>{opt.icon}</span>
+                  {opt.label && <span style={{ flex: 1 }}>{opt.label}</span>}
+                  {!opt.label && <span style={{ flex: 1 }} />}
                   {active && (
                     <span style={{ fontSize: 16, color: "#ef4444" }}>✓</span>
                   )}
