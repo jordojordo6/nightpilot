@@ -2,6 +2,7 @@ import type { Venue } from "../types";
 import { VENUES as VANCOUVER_VENUES } from "./venues";
 import { DUBLIN_VENUES } from "./dublin";
 import { AMSTERDAM_VENUES } from "./amsterdam";
+import { SLC_VENUES } from "./slc";
 
 export interface CityConfig {
   key: string;
@@ -25,6 +26,13 @@ export const CITIES: CityConfig[] = [
     country: "Ireland",
     flag: "🇮🇪",
     venues: DUBLIN_VENUES,
+  },
+  {
+    key: "slc",
+    name: "Salt Lake City",
+    country: "USA",
+    flag: "🇺🇸",
+    venues: SLC_VENUES,
   },
   {
     key: "vancouver",
