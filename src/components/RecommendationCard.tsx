@@ -5,19 +5,20 @@ interface Props {
   venue: ScoredVenue;
   explanation: string;
   showToast: (msg: string) => void;
+  cityKey?: string;
 }
 
-export function RecommendationCard({ venue, explanation, showToast }: Props) {
+export function RecommendationCard({ venue, explanation, showToast, cityKey }: Props) {
   const handleReserve = () => {
-    logEvent("booking_clicked", { venueId: venue.id, venueName: venue.name });
+    logEvent("booking_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
     showToast("Reservations coming soon!");
   };
 
   const handleMap = () => {
-    logEvent("map_clicked", { venueId: venue.id, venueName: venue.name });
+    logEvent("map_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
     showToast("Opening Maps...");
     window.open(
-      `https://www.google.com/maps/search/${encodeURIComponent(venue.name + " Vancouver")}`,
+      `https://www.google.com/maps/search/${encodeURIComponent(venue.name + " " + (cityKey ?? ""))}`,
       "_blank"
     );
   };
@@ -27,6 +28,7 @@ export function RecommendationCard({ venue, explanation, showToast }: Props) {
       venueId: venue.id,
       venueName: venue.name,
       source: "results",
+      city: cityKey,
     });
     showToast(`Saved ${venue.name}!`);
   };

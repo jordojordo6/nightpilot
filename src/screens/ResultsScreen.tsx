@@ -13,6 +13,7 @@ interface Props {
   onReset: () => void;
   showToast: (msg: string) => void;
   tasteProfile: TasteProfile;
+  cityKey?: string;
 }
 
 export function ResultsScreen({
@@ -24,6 +25,7 @@ export function ResultsScreen({
   onReset,
   showToast,
   tasteProfile,
+  cityKey,
 }: Props) {
   if (plans.length === 0) {
     return (
@@ -88,6 +90,7 @@ export function ResultsScreen({
       restaurant: plan.restaurant?.name ?? null,
       bar: plan.bar?.name ?? null,
       matchScore: plan.matchScore,
+      city: cityKey,
     });
     showToast(`Saved "${plan.name}"!`);
   };
@@ -269,6 +272,7 @@ export function ResultsScreen({
               venue={plan.restaurant}
               explanation={plan.rExplanation}
               showToast={showToast}
+              cityKey={cityKey}
             />
           </div>
         )}
@@ -333,6 +337,7 @@ export function ResultsScreen({
               venue={plan.bar}
               explanation={plan.bExplanation}
               showToast={showToast}
+              cityKey={cityKey}
             />
           </div>
         )}
@@ -363,6 +368,7 @@ export function ResultsScreen({
           plans={plans}
           currentIdx={currentIdx}
           tasteProfile={tasteProfile}
+          cityKey={cityKey}
         />
 
         {/* Bottom actions */}
@@ -423,10 +429,12 @@ function FeedbackPrompt({
   plans,
   currentIdx,
   tasteProfile,
+  cityKey,
 }: {
   plans: Plan[];
   currentIdx: number;
   tasteProfile: TasteProfile;
+  cityKey?: string;
 }) {
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -444,6 +452,7 @@ function FeedbackPrompt({
       recommendedVenueIds: venueIds,
       planName: plan.name,
       matchScore: plan.matchScore,
+      city: cityKey,
     });
 
     // Send to Google Sheet
@@ -466,6 +475,7 @@ function FeedbackPrompt({
             tasteProfile.likeCount +
             tasteProfile.saveCount +
             tasteProfile.rejectCount,
+          city: cityKey,
           userAgent: navigator.userAgent,
         }),
       }

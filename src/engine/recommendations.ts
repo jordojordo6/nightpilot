@@ -316,7 +316,8 @@ export function generateRecommendations(
   _swiped: Set<number>,
   saved: Set<number>,
   venues: Venue[],
-  dietary: DietaryRestriction[] = []
+  dietary: DietaryRestriction[] = [],
+  cityKey?: string
 ): Plan[] {
   const planType = prefs.planType ?? "both";
 
@@ -352,6 +353,7 @@ export function generateRecommendations(
     planType,
     planCount: plans.length,
     topMatch: plans[0]?.matchScore,
+    city: cityKey,
   });
 
   return plans;

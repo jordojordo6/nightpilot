@@ -17,6 +17,7 @@ interface Props {
   tasteProfile: TasteProfile;
   canUndo?: boolean;
   onUndo?: () => void;
+  cityKey?: string;
 }
 
 export function SwipeScreen({
@@ -27,6 +28,7 @@ export function SwipeScreen({
   onBack,
   canUndo,
   onUndo,
+  cityKey,
 }: Props) {
   const [, forceRender] = useState(0);
   const [exiting, setExiting] = useState(false);
@@ -65,6 +67,7 @@ export function SwipeScreen({
       logEvent("card_viewed", {
         venueId: currentVenue.id,
         venueName: currentVenue.name,
+        city: cityKey,
       });
     }
   }, [currentVenue]);

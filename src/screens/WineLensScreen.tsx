@@ -33,6 +33,7 @@ interface Props {
   onBack: () => void;
   tasteProfile: TasteProfile;
   dietary?: DietaryRestriction[];
+  cityKey?: string;
 }
 
 const REC_LABELS: Record<string, { label: string; color: string; icon: string }> = {
@@ -79,7 +80,7 @@ function compressImage(file: File): Promise<PhotoItem> {
   });
 }
 
-export function WineLensScreen({ onBack, tasteProfile, dietary = [] }: Props) {
+export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: Props) {
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<WineResult | null>(null);
@@ -232,6 +233,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [] }: Props) {
         photoCount: photos.length,
         listSummary: data.listSummary,
         topTags,
+        city: cityKey,
       });
     } catch (err) {
       setError(
@@ -271,6 +273,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [] }: Props) {
       region: selectedWine.region,
       rating,
       totalWinesRated: updated.selections.length,
+      city: cityKey,
     });
   };
 
@@ -299,6 +302,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [] }: Props) {
       photoCount: photos.length,
       listSummary: result?.listSummary ?? "",
       winesRated: wineProfile.selections.length,
+      city: cityKey,
     });
 
     fetch(

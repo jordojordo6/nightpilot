@@ -158,9 +158,10 @@ export default function App() {
       logEvent(eventMap[action], {
         venueId: venue.id,
         venueName: venue.name,
+        city: cityKey,
       });
     },
-    [showToast]
+    [showToast, cityKey]
   );
 
   const handleUndo = useCallback(() => {
@@ -185,8 +186,8 @@ export default function App() {
 
     setLastSwipe(null);
     showToast("Undo!");
-    logEvent("swipe_undone", { venueId: venue.id, venueName: venue.name });
-  }, [lastSwipe, showToast]);
+    logEvent("swipe_undone", { venueId: venue.id, venueName: venue.name, city: cityKey });
+  }, [lastSwipe, showToast, cityKey]);
 
   const handleNightMode = useCallback(
     (prefs: NightPrefs) => {
@@ -197,13 +198,14 @@ export default function App() {
         swipedIds,
         savedIds,
         venues,
-        userSettings.dietary
+        userSettings.dietary,
+        cityKey
       );
       setPlans(recs);
       setCurrentPlanIdx(0);
       setScreen("results");
     },
-    [tasteProfile, swipedIds, savedIds, venues, userSettings.dietary]
+    [tasteProfile, swipedIds, savedIds, venues, userSettings.dietary, cityKey]
   );
 
   const handleSelectCity = useCallback((key: string) => {
@@ -312,6 +314,7 @@ export default function App() {
           tasteProfile={tasteProfile}
           canUndo={!!lastSwipe}
           onUndo={handleUndo}
+          cityKey={cityKey}
         />
       )}
 
@@ -335,6 +338,7 @@ export default function App() {
           onReset={resetProfile}
           showToast={showToast}
           tasteProfile={tasteProfile}
+          cityKey={cityKey}
         />
       )}
 
@@ -343,6 +347,7 @@ export default function App() {
           onBack={() => setScreen("landing")}
           tasteProfile={tasteProfile}
           dietary={userSettings.dietary}
+          cityKey={cityKey}
         />
       )}
 
