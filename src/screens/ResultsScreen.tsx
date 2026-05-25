@@ -101,6 +101,7 @@ export function ResultsScreen({
     if (plan.walkTime) {
       parts.push(`\n🚶 ${plan.walkTime} between spots`);
     }
+    parts.push(`\nBuild your own perfect night on NightPilot 🌙\nhttps://nightpilot.vercel.app`);
     const text = parts.join("\n");
 
     if (navigator.share) {
