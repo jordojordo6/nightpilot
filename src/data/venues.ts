@@ -8,7 +8,7 @@ export const VENUES: Venue[] = [
     emoji:"🍽️",tagline:"Vancouver's crown jewel of fine dining at the Rosewood",
     highlights:["Tasting menu","Sommelier-led pairings","Rosewood Hotel"],
     gradient:["#722F37","#C9A96E"],bestFor:"special occasion dinners and impressing someone",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],michelin:"bib-gourmand"},
 
   {id:2,name:"Maenam",type:"restaurant",cuisine:"Thai",neighborhood:"Kitsilano",price:3,rating:4.7,
     vibe:["trendy","lively","vibrant"],
@@ -16,7 +16,7 @@ export const VENUES: Venue[] = [
     emoji:"🍜",tagline:"Award-winning modern Thai on West 4th",
     highlights:["Khao Soi curry","Pad Thai with prawns","Thai craft cocktails"],
     gradient:["#E85D04","#FFBA08"],bestFor:"adventurous eaters who love bold spice",
-    dietary:["vegetarian","vegan","gluten-free"]},
+    dietary:["vegetarian","vegan","gluten-free"],michelin:"bib-gourmand"},
 
   {id:3,name:"Savio Volpe",type:"restaurant",cuisine:"Italian",neighborhood:"Main Street",price:3,rating:4.7,
     vibe:["cozy","warm","neighbourhood"],
@@ -40,7 +40,7 @@ export const VENUES: Venue[] = [
     emoji:"🍛",tagline:"Vikram Vij's legendary modern Indian — no reservations",
     highlights:["Lamb popsicles","No-reservation policy","Chai while you wait"],
     gradient:["#9B2226","#EE9B00"],bestFor:"iconic Vancouver food experiences",
-    dietary:["vegetarian","vegan","gluten-free","halal"]},
+    dietary:["vegetarian","vegan","gluten-free","halal"],michelin:"bib-gourmand"},
 
   {id:6,name:"Tojo's",type:"restaurant",cuisine:"Japanese",neighborhood:"Fairview",price:4,rating:4.8,
     vibe:["upscale","intimate","classic"],
@@ -56,7 +56,7 @@ export const VENUES: Venue[] = [
     emoji:"🌿",tagline:"Art-covered walls and hyper-seasonal West Coast plates",
     highlights:["Famous smash burger","Seasonal tasting menu","Gallery-like interiors"],
     gradient:["#2D6A4F","#95D5B2"],bestFor:"creative food lovers who appreciate art and design",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],michelin:"1-star"},
 
   {id:8,name:"Phnom Penh",type:"restaurant",cuisine:"Vietnamese-Cambodian",neighborhood:"Chinatown",price:1,rating:4.5,
     vibe:["casual","vibrant","iconic"],
@@ -87,7 +87,7 @@ export const VENUES: Venue[] = [
     emoji:"🌾",tagline:"Intimate 40-seat tasting menu destination on Main",
     highlights:["Multi-course tasting","BC-sourced ingredients","Curated natural wine"],
     gradient:["#606C38","#DDA15E"],bestFor:"serious foodies who love seasonal tasting menus",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],michelin:"1-star"},
 
   {id:12,name:"La Quercia",type:"restaurant",cuisine:"Italian",neighborhood:"Commercial Drive",price:3,rating:4.6,
     vibe:["romantic","warm","classic"],
@@ -119,7 +119,7 @@ export const VENUES: Venue[] = [
     emoji:"🍜",tagline:"Modern Vietnamese with stunning design and bold flavours",
     highlights:["Hanoi-style pho","Lemongrass tofu","Gorgeous interior design"],
     gradient:["#1B4965","#CAE9FF"],bestFor:"stylish Vietnamese with a modern twist",
-    dietary:["vegetarian","vegan","gluten-free"]},
+    dietary:["vegetarian","vegan","gluten-free"],michelin:"bib-gourmand"},
 
   {id:16,name:"Masayoshi",type:"restaurant",cuisine:"Japanese",neighborhood:"Fairview",price:4,rating:4.8,
     vibe:["intimate","upscale","quiet"],
@@ -127,7 +127,7 @@ export const VENUES: Venue[] = [
     emoji:"🐟",tagline:"12-seat omakase temple — Vancouver's best-kept secret",
     highlights:["12-seat counter","Omakase-only format","Seasonal nigiri art"],
     gradient:["#3D405B","#E07A5F"],bestFor:"the ultimate intimate sushi experience",
-    dietary:["pescatarian","gluten-free"]},
+    dietary:["pescatarian","gluten-free"],michelin:"1-star"},
 
   {id:17,name:"The Acorn",type:"restaurant",cuisine:"Plant-Based",neighborhood:"Main Street",price:3,rating:4.5,
     vibe:["trendy","creative","intimate"],
@@ -143,7 +143,7 @@ export const VENUES: Venue[] = [
     emoji:"🎷",tagline:"Jazz-age Japanese-Italian fusion above Chinatown",
     highlights:["Miso spaghetti","Live jazz evenings","Retro cocktail menu"],
     gradient:["#240046","#C77DFF"],bestFor:"creative date nights with jazz and cocktails",
-    dietary:["vegetarian","pescatarian"]},
+    dietary:["vegetarian","pescatarian"],michelin:"1-star"},
 
   // ─── BARS ──────────────────────────────────────────────────
   {id:19,name:"Keefer Bar",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Chinatown",price:3,rating:4.7,

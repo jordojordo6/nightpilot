@@ -8,7 +8,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🌿",tagline:"Michelin-starred elegance on Dawson Street",
     highlights:["Michelin star","Seasonal tasting menu","Exceptional wine pairing"],
     gradient:["#2D6A4F","#95D5B2"],bestFor:"special occasion fine dining at the highest level",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],michelin:"1-star"},
 
   {id:102,name:"Chapter One",type:"restaurant",cuisine:"Modern Irish",neighborhood:"Parnell Square",price:4,rating:4.8,
     vibe:["upscale","classic","intimate"],
@@ -16,7 +16,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"📖",tagline:"Michelin-starred modern Irish in a Georgian basement",
     highlights:["Michelin star","Pre-theatre menu","Dublin Writers Museum building"],
     gradient:["#1A1A2E","#E6B325"],bestFor:"refined modern Irish cuisine with literary charm",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],michelin:"2-star"},
 
   {id:103,name:"Hera",type:"restaurant",cuisine:"Modern European",neighborhood:"Ranelagh",price:3,rating:4.7,
     vibe:["trendy","creative","intimate"],
@@ -24,7 +24,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🔥",tagline:"Michelin-recognised neighbourhood gem in Ranelagh",
     highlights:["Michelin recognised","Open kitchen","Natural wine focus"],
     gradient:["#E85D04","#FFBA08"],bestFor:"creative date nights with serious cooking",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],michelin:"1-star"},
 
   {id:104,name:"Bastible",type:"restaurant",cuisine:"Modern Irish",neighborhood:"South Circular Road",price:3,rating:4.7,
     vibe:["warm","intimate","seasonal"],

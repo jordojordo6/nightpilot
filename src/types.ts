@@ -18,7 +18,10 @@ export interface Venue {
   gradient: [string, string];
   bestFor: string;
   dietary?: string[]; // e.g. ["vegetarian","vegan","gluten-free"]
+  michelin?: MichelinLevel;
 }
+
+export type MichelinLevel = "1-star" | "2-star" | "3-star" | "bib-gourmand";
 
 export interface ScoredVenue extends Venue {
   score: number;
@@ -128,10 +131,19 @@ export const DIETARY_OPTIONS: { key: DietaryRestriction; label: string; icon: st
   { key: "dairy-free", label: "Dairy-Free", icon: "🥛" },
 ];
 
+export const MICHELIN_OPTIONS: { key: MichelinLevel; label: string; icon: string }[] = [
+  { key: "3-star", label: "Three Stars", icon: "⭐⭐⭐" },
+  { key: "2-star", label: "Two Stars", icon: "⭐⭐" },
+  { key: "1-star", label: "One Star", icon: "⭐" },
+  { key: "bib-gourmand", label: "Bib Gourmand", icon: "🍽️" },
+];
+
 export interface UserSettings {
   dietary: DietaryRestriction[];
+  michelin: MichelinLevel[];
 }
 
 export const DEFAULT_SETTINGS: UserSettings = {
   dietary: [],
+  michelin: [],
 };

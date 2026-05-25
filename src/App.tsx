@@ -101,7 +101,7 @@ export default function App() {
     return seededShuffle(venues, shuffleSeed);
   }, [venues, shuffleSeed]);
 
-  // Filter out already-swiped venues and dietary-incompatible restaurants
+  // Filter out already-swiped venues, dietary-incompatible restaurants, and Michelin filter
   const availableVenues = useMemo(
     () =>
       shuffledVenues.filter((v) => {
@@ -112,9 +112,16 @@ export default function App() {
           !userSettings.dietary.every((d) => v.dietary?.includes(d))
         )
           return false;
+        // Michelin filter: if any levels selected, only show venues with matching michelin tag
+        if (
+          userSettings.michelin.length > 0 &&
+          v.type === "restaurant" &&
+          (!v.michelin || !userSettings.michelin.includes(v.michelin))
+        )
+          return false;
         return true;
       }),
-    [shuffledVenues, swipedIds, userSettings.dietary]
+    [shuffledVenues, swipedIds, userSettings.dietary, userSettings.michelin]
   );
 
   const showToast = useCallback((msg: string) => {
@@ -352,9 +359,11 @@ export default function App() {
             borderRadius: "50%",
             background: "rgba(255,255,255,.06)",
             border: "1px solid rgba(255,255,255,.1)",
-            color: userSettings.dietary.length > 0
-              ? "#c084fc"
-              : "rgba(255,255,255,.4)",
+            color: userSettings.michelin.length > 0
+              ? "#ef4444"
+              : userSettings.dietary.length > 0
+                ? "#c084fc"
+                : "rgba(255,255,255,.4)",
             fontSize: 18,
             cursor: "pointer",
             display: "flex",

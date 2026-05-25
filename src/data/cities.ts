@@ -13,11 +13,11 @@ export interface CityConfig {
 
 export const CITIES: CityConfig[] = [
   {
-    key: "vancouver",
-    name: "Vancouver",
-    country: "Canada",
-    flag: "🇨🇦",
-    venues: VANCOUVER_VENUES,
+    key: "amsterdam",
+    name: "Amsterdam",
+    country: "Netherlands",
+    flag: "🇳🇱",
+    venues: AMSTERDAM_VENUES,
   },
   {
     key: "dublin",
@@ -27,11 +27,11 @@ export const CITIES: CityConfig[] = [
     venues: DUBLIN_VENUES,
   },
   {
-    key: "amsterdam",
-    name: "Amsterdam",
-    country: "Netherlands",
-    flag: "🇳🇱",
-    venues: AMSTERDAM_VENUES,
+    key: "vancouver",
+    name: "Vancouver",
+    country: "Canada",
+    flag: "🇨🇦",
+    venues: VANCOUVER_VENUES,
   },
 ];
 

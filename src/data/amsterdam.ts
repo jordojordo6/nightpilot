@@ -8,7 +8,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🌸",tagline:"Two Michelin stars overlooking the Amstel river",
     highlights:["2 Michelin stars","Conscious fine dining","Herbivore menu available"],
     gradient:["#2D6A4F","#95D5B2"],bestFor:"the ultimate Amsterdam dining experience",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],michelin:"2-star"},
 
   {id:202,name:"Choux",type:"restaurant",cuisine:"Modern European",neighborhood:"Centrum",price:3,rating:4.7,
     vibe:["creative","casual","seasonal"],
@@ -16,7 +16,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🥦",tagline:"Seasonal veg-led cooking in an industrial Centrum space",
     highlights:["Five-course set menu","Veg-forward","Behind Centraal Station"],
     gradient:["#606C38","#DDA15E"],bestFor:"creative seasonal dining without the pretension",
-    dietary:["vegetarian","vegan"]},
+    dietary:["vegetarian","vegan"],michelin:"1-star"},
 
   {id:203,name:"Troef",type:"restaurant",cuisine:"Modern Dutch",neighborhood:"De Pijp",price:3,rating:4.7,
     vibe:["creative","warm","intimate"],
