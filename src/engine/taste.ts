@@ -142,7 +142,7 @@ export function scoreVenue(
   if (prefs.budget !== null && venue.price <= prefs.budget) score += 2;
 
   // Selected neighborhood match: +4
-  if (prefs.neighborhood !== null && venue.neighborhood === prefs.neighborhood) {
+  if (prefs.neighborhoods.length > 0 && prefs.neighborhoods.includes(venue.neighborhood)) {
     score += 4;
   }
 

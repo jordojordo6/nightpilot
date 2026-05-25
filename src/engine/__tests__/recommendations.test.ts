@@ -45,7 +45,7 @@ function makeTestVenues(): Venue[] {
 const makePrefs = (overrides: Partial<NightPrefs> = {}): NightPrefs => ({
   occasion: null,
   budget: null,
-  neighborhood: null,
+  neighborhoods: [],
   planType: "both",
   ...overrides,
 });

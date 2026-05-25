@@ -37,7 +37,7 @@ const makeVenue = (overrides: Partial<Venue> = {}): Venue => ({
 const makePrefs = (overrides: Partial<NightPrefs> = {}): NightPrefs => ({
   occasion: null,
   budget: null,
-  neighborhood: null,
+  neighborhoods: [],
   planType: "both",
   ...overrides,
 });
@@ -231,7 +231,7 @@ describe("scoreVenue", () => {
 
   it("applies neighborhood preference from prefs", () => {
     const venue = makeVenue({ neighborhood: "Gastown" });
-    const prefs = makePrefs({ neighborhood: "Gastown" });
+    const prefs = makePrefs({ neighborhoods: ["Gastown"] });
     const score = scoreVenue(venue, { ...EMPTY_PROFILE }, prefs);
     expect(score).toBe(4);
   });

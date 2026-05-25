@@ -36,13 +36,19 @@ export function NightModeScreen({
   const [planType, setPlanType] = useState<PlanType>("both");
   const [occasion, setOccasion] = useState<string | null>(null);
   const [budget, setBudget] = useState<number | null>(null);
-  const [neighborhood, setNeighborhood] = useState<string | null>(null);
+  const [neighborhoods, setNeighborhoods] = useState<string[]>([]);
+
+  const toggleNeighborhood = (n: string) => {
+    setNeighborhoods((prev) =>
+      prev.includes(n) ? prev.filter((x) => x !== n) : [...prev, n]
+    );
+  };
 
   const profileSummary = getProfileSummary(tasteProfile);
 
   const handleSubmit = () => {
     if (occasion) {
-      onSubmit({ occasion, budget, neighborhood, planType });
+      onSubmit({ occasion, budget, neighborhoods, planType });
     }
   };
 
@@ -286,15 +292,15 @@ export function NightModeScreen({
           >
             <OptionPill
               label="Anywhere"
-              selected={neighborhood === null}
-              onClick={() => setNeighborhood(null)}
+              selected={neighborhoods.length === 0}
+              onClick={() => setNeighborhoods([])}
             />
             {NEIGHBORHOODS.map((n) => (
               <OptionPill
                 key={n}
                 label={n}
-                selected={neighborhood === n}
-                onClick={() => setNeighborhood(n)}
+                selected={neighborhoods.includes(n)}
+                onClick={() => toggleNeighborhood(n)}
               />
             ))}
           </div>

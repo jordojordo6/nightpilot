@@ -349,7 +349,7 @@ export function generateRecommendations(
   logEvent("night_generated", {
     occasion: prefs.occasion,
     budget: prefs.budget,
-    neighborhood: prefs.neighborhood,
+    neighborhoods: prefs.neighborhoods,
     planType,
     planCount: plans.length,
     topMatch: plans[0]?.matchScore,

@@ -54,7 +54,7 @@ export type PlanType = "dinner" | "drinks" | "both";
 export interface NightPrefs {
   occasion: string | null;
   budget: number | null;
-  neighborhood: string | null;
+  neighborhoods: string[];
   planType: PlanType;
 }
 

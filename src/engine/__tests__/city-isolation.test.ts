@@ -11,7 +11,7 @@ vi.mock("../analytics", () => ({
 const DEFAULT_PREFS: NightPrefs = {
   occasion: "casual",
   budget: null,
-  neighborhood: null,
+  neighborhoods: [],
   planType: "both",
 };
 

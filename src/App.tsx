@@ -60,7 +60,7 @@ export default function App() {
   const [, setNightPrefs] = useState<NightPrefs>({
     occasion: null,
     budget: null,
-    neighborhood: null,
+    neighborhoods: [],
     planType: "both" as const,
   });
   const [plans, setPlans] = useState<Plan[]>([]);
@@ -237,7 +237,7 @@ export default function App() {
     setSwipedIds(new Set());
     setSavedIds(new Set());
     setSwipeCount(0);
-    setNightPrefs({ occasion: null, budget: null, neighborhood: null, planType: "both" as const });
+    setNightPrefs({ occasion: null, budget: null, neighborhoods: [], planType: "both" as const });
     setPlans([]);
     setCurrentPlanIdx(0);
     setLastSwipe(null);
