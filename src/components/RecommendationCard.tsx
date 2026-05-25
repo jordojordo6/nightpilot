@@ -10,9 +10,12 @@ interface Props {
 }
 
 export function RecommendationCard({ venue, explanation, showToast, cityKey, cityName }: Props) {
-  const handleReserve = () => {
-    logEvent("booking_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
-    showToast("Reservations coming soon!");
+  const handleSearch = () => {
+    logEvent("search_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
+    window.open(
+      `https://www.google.com/search?q=${encodeURIComponent(venue.name + " " + (cityName ?? cityKey ?? "") + " restaurant")}`,
+      "_blank"
+    );
   };
 
   const handleMap = () => {
@@ -158,7 +161,7 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
 
         {/* Actions */}
         <div style={{ display: "flex", gap: 8 }}>
-          <ActionButton label="📞 Reserve" primary onClick={handleReserve} />
+          <ActionButton label="🔍 Search" primary onClick={handleSearch} />
           <ActionButton label="📍 Map" onClick={handleMap} />
           <ActionButton label="♥ Save" onClick={handleSave} />
         </div>

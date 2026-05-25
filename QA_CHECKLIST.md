@@ -65,10 +65,10 @@
 - [ ] Recommendation cards show: emoji, name, cuisine, neighborhood, price, rating
 - [ ] 🎯 explanation text is personalized (not generic)
 - [ ] Highlight pills display
-- [ ] **📞 Reserve** button shows "Reservations coming soon!" toast
+- [ ] **🔍 Search** button opens Google search for the venue in new tab
 - [ ] **📍 Map** button opens Google Maps in new tab with correct venue + city
 - [ ] **♥ Save** button shows toast
-- [ ] **Save This Night** button shows toast
+- [ ] **Share This Night 📤** copies plan summary to clipboard (or opens native share sheet on mobile)
 - [ ] Quick feedback: "Yes, surprisingly accurate" / "Kind of" / "Not really"
 - [ ] Selecting feedback sends to Google Sheets (check quick_feedback tab)
 - [ ] "Share detailed feedback →" opens Google Form in new tab

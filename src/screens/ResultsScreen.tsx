@@ -86,15 +86,41 @@ export function ResultsScreen({
 
   const plan = plans[currentIdx];
 
-  const handleSaveNight = () => {
-    logEvent("night_saved", {
+  const handleShareNight = () => {
+    const parts: string[] = [];
+    parts.push(`🌙 NightPilot — ${plan.name}`);
+    parts.push(`${plan.matchScore}% match\n`);
+    if (plan.restaurant) {
+      parts.push(`🍽️ ${plan.restaurant.name}`);
+      parts.push(`   ${plan.restaurant.cuisine} · ${plan.restaurant.neighborhood} · ${"$".repeat(plan.restaurant.price)}`);
+    }
+    if (plan.bar) {
+      parts.push(`🍸 ${plan.bar.name}`);
+      parts.push(`   ${plan.bar.cuisine} · ${plan.bar.neighborhood} · ${"$".repeat(plan.bar.price)}`);
+    }
+    if (plan.walkTime) {
+      parts.push(`\n🚶 ${plan.walkTime} between spots`);
+    }
+    const text = parts.join("\n");
+
+    if (navigator.share) {
+      navigator.share({ text }).catch(() => {
+        navigator.clipboard.writeText(text).then(() => showToast("Copied to clipboard!"));
+      });
+    } else {
+      navigator.clipboard.writeText(text).then(
+        () => showToast("Copied to clipboard!"),
+        () => showToast("Couldn't copy — try a screenshot instead")
+      );
+    }
+
+    logEvent("night_shared", {
       planName: plan.name,
       restaurant: plan.restaurant?.name ?? null,
       bar: plan.bar?.name ?? null,
       matchScore: plan.matchScore,
       city: cityKey,
     });
-    showToast(`Saved "${plan.name}"!`);
   };
 
   return (
@@ -346,9 +372,9 @@ export function ResultsScreen({
           </div>
         )}
 
-        {/* Save Night button */}
+        {/* Share Night button */}
         <button
-          onClick={handleSaveNight}
+          onClick={handleShareNight}
           style={{
             width: "100%",
             marginTop: 20,
@@ -364,7 +390,7 @@ export function ResultsScreen({
             animation: "fadeInUp 0.5s ease-out 0.4s both",
           }}
         >
-          Save This Night ♥
+          Share This Night 📤
         </button>
 
         {/* Feedback section */}
