@@ -3,7 +3,7 @@ import type { Venue } from "../types";
 export const SLC_VENUES: Venue[] = [
   // ─── RESTAURANTS ───────────────────────────────────────────
 
-  {id:401,name:"Urban Hill",type:"restaurant",cuisine:"New American",neighborhood:"Downtown",price:4,rating:4.8,
+  {id:401,name:"Urban Hill",type:"restaurant",cuisine:"New American",neighborhood:"Downtown SLC",price:4,rating:4.8,
     vibe:["upscale","creative","warm"],
     tags:["fine-dining","upscale","creative","warm","seasonal","wine","date-night"],
     emoji:"🏔️",tagline:"James Beard finalist chef serving New Mexican–inspired fine dining",
@@ -19,7 +19,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#1B4332","#95D5B2"],bestFor:"romantic special occasion in a stunning natural setting",
     dietary:["vegetarian","gluten-free"]},
 
-  {id:403,name:"Valter's Osteria",type:"restaurant",cuisine:"Italian",neighborhood:"Downtown",price:4,rating:4.7,
+  {id:403,name:"Valter's Osteria",type:"restaurant",cuisine:"Italian",neighborhood:"Downtown SLC",price:4,rating:4.7,
     vibe:["classic","intimate","warm"],
     tags:["italian","classic","intimate","warm","upscale","wine","date-night"],
     emoji:"🍝",tagline:"Elegant Italian with candlelight, wine, and old-world charm",
@@ -27,7 +27,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#5C0A0A","#D4A574"],bestFor:"a romantic Italian dinner rooted in tradition and soul",
     dietary:["vegetarian"]},
 
-  {id:404,name:"HSL",type:"restaurant",cuisine:"New American",neighborhood:"Downtown",price:3,rating:4.6,
+  {id:404,name:"HSL",type:"restaurant",cuisine:"New American",neighborhood:"Downtown SLC",price:3,rating:4.6,
     vibe:["trendy","creative","upscale"],
     tags:["modern-american","trendy","creative","upscale","seasonal","cocktails","date-night"],
     emoji:"🌿",tagline:"Botanically-inspired modern American in a velvet-draped lounge",
@@ -35,7 +35,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#4A148C","#CE93D8"],bestFor:"a stylish date night with inventive seasonal plates",
     dietary:["vegetarian","gluten-free"]},
 
-  {id:405,name:"Bambara",type:"restaurant",cuisine:"New American",neighborhood:"Downtown",price:3,rating:4.5,
+  {id:405,name:"Bambara",type:"restaurant",cuisine:"New American",neighborhood:"Downtown SLC",price:3,rating:4.5,
     vibe:["upscale","classic","lively"],
     tags:["modern-american","upscale","classic","lively","cocktails","brunch"],
     emoji:"🏛️",tagline:"20-year downtown institution in the historic Hotel Monaco",
@@ -43,7 +43,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#1A237E","#FFD54F"],bestFor:"a polished business dinner or weekend brunch",
     dietary:["vegetarian","gluten-free"]},
 
-  {id:406,name:"Copper Onion",type:"restaurant",cuisine:"Modern European",neighborhood:"Downtown",price:3,rating:4.6,
+  {id:406,name:"Copper Onion",type:"restaurant",cuisine:"Modern European",neighborhood:"Downtown SLC",price:3,rating:4.6,
     vibe:["lively","trendy","warm"],
     tags:["modern-european","lively","trendy","warm","brunch","shareable","wine"],
     emoji:"🧅",tagline:"Downtown brasserie with brunch crowds and seasonal plates",
@@ -59,7 +59,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#3E2723","#A1887F"],bestFor:"a creative tasting menu from one of SLC's rising chefs",
     dietary:["vegetarian"]},
 
-  {id:408,name:"Manolis",type:"restaurant",cuisine:"Greek",neighborhood:"Downtown",price:2,rating:4.5,
+  {id:408,name:"Manolis",type:"restaurant",cuisine:"Greek",neighborhood:"Downtown SLC",price:2,rating:4.5,
     vibe:["warm","casual","fun"],
     tags:["mediterranean","warm","casual","fun","shareable","brunch"],
     emoji:"🫒",tagline:"Greek-inspired small plates and weekend brunch downtown",
@@ -67,7 +67,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#1565C0","#FFFFFF"],bestFor:"casual Mediterranean sharing with friends or brunch",
     dietary:["vegetarian","gluten-free"]},
 
-  {id:409,name:"Pretty Bird",type:"restaurant",cuisine:"Hot Chicken",neighborhood:"Downtown",price:2,rating:4.5,
+  {id:409,name:"Pretty Bird",type:"restaurant",cuisine:"Hot Chicken",neighborhood:"Downtown SLC",price:2,rating:4.5,
     vibe:["casual","fun","vibrant"],
     tags:["southern","casual","fun","vibrant","budget","comfort-food"],
     emoji:"🐔",tagline:"Nashville-style hot chicken sandwiches that pack serious heat",
@@ -75,7 +75,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#FF5722","#FFEB3B"],bestFor:"a quick, punchy lunch or casual dinner with friends",
     dietary:[]},
 
-  {id:410,name:"Taqueria 27",type:"restaurant",cuisine:"Modern Mexican",neighborhood:"Downtown",price:2,rating:4.4,
+  {id:410,name:"Taqueria 27",type:"restaurant",cuisine:"Modern Mexican",neighborhood:"Downtown SLC",price:2,rating:4.4,
     vibe:["casual","fun","creative"],
     tags:["mexican","casual","fun","creative","shareable","cocktails","patio"],
     emoji:"🌮",tagline:"Inventive daily-changing tacos and creative margaritas",
@@ -99,7 +99,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#2E7D32","#C8E6C9"],bestFor:"an intimate date night celebrating local ingredients",
     dietary:["vegetarian","gluten-free"]},
 
-  {id:413,name:"Sapa",type:"restaurant",cuisine:"Vietnamese-Japanese",neighborhood:"Downtown",price:2,rating:4.4,
+  {id:413,name:"Sapa",type:"restaurant",cuisine:"Vietnamese-Japanese",neighborhood:"Downtown SLC",price:2,rating:4.4,
     vibe:["trendy","vibrant","casual"],
     tags:["asian-fusion","trendy","vibrant","casual","sushi","cocktails"],
     emoji:"🍣",tagline:"Vietnamese and Japanese fusion with sushi and Thai noodles",
@@ -147,7 +147,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#33691E","#DCEDC8"],bestFor:"casual beers and elevated pub food on a sunny afternoon",
     dietary:["vegetarian"]},
 
-  {id:419,name:"SLC Eatery",type:"restaurant",cuisine:"Global Fusion",neighborhood:"Downtown",price:2,rating:4.3,
+  {id:419,name:"SLC Eatery",type:"restaurant",cuisine:"Global Fusion",neighborhood:"Downtown SLC",price:2,rating:4.3,
     vibe:["trendy","social","fun"],
     tags:["fusion","trendy","social","fun","shareable","cocktails","group"],
     emoji:"🍴",tagline:"Food-hall-style sharing plates in a lively downtown space",
@@ -173,7 +173,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#1A237E","#7C4DFF"],bestFor:"a quiet, masterful cocktail experience on a date",
     dietary:[]},
 
-  {id:452,name:"Copper Common",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown",price:3,rating:4.6,
+  {id:452,name:"Copper Common",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown SLC",price:3,rating:4.6,
     vibe:["cozy","upscale","intimate"],
     tags:["craft-cocktails","cozy","upscale","intimate","whiskey","date-night"],
     emoji:"🥃",tagline:"Big-city cocktails in a snug, copper-toned downtown hideaway",
@@ -181,7 +181,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#3E2723","#D7CCC8"],bestFor:"an intimate nightcap with expertly crafted cocktails",
     dietary:[]},
 
-  {id:453,name:"White Horse",type:"bar",cuisine:"Spirits & Wine Bar",neighborhood:"Downtown",price:3,rating:4.5,
+  {id:453,name:"White Horse",type:"bar",cuisine:"Spirits & Wine Bar",neighborhood:"Downtown SLC",price:3,rating:4.5,
     vibe:["trendy","lively","social"],
     tags:["craft-cocktails","trendy","lively","social","wine","brunch","patio"],
     emoji:"🐴",tagline:"Downtown spirits bar with weekend brunch and buzzy energy",
@@ -189,7 +189,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#F5F5F5","#212121"],bestFor:"boozy brunch or a lively evening with friends",
     dietary:[]},
 
-  {id:454,name:"Felt Bar",type:"bar",cuisine:"Cocktail Lounge",neighborhood:"Downtown",price:2,rating:4.4,
+  {id:454,name:"Felt Bar",type:"bar",cuisine:"Cocktail Lounge",neighborhood:"Downtown SLC",price:2,rating:4.4,
     vibe:["intimate","classic","chill"],
     tags:["craft-cocktails","intimate","classic","chill","whiskey","live-music","late-night"],
     emoji:"🎷",tagline:"Prohibition-era cocktail lounge with nightly live jazz",
@@ -197,7 +197,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#1B1B2F","#E8D5B7"],bestFor:"a moody jazz-filled evening with great whiskey",
     dietary:[]},
 
-  {id:455,name:"BTG Wine Bar",type:"bar",cuisine:"Wine Bar",neighborhood:"Downtown",price:3,rating:4.5,
+  {id:455,name:"BTG Wine Bar",type:"bar",cuisine:"Wine Bar",neighborhood:"Downtown SLC",price:3,rating:4.5,
     vibe:["upscale","intimate","refined"],
     tags:["wine","upscale","intimate","refined","date-night","cheese"],
     emoji:"🍷",tagline:"Utah's finest wine-by-the-glass program downtown",
@@ -205,7 +205,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#4A0E0E","#F8BBD0"],bestFor:"a refined wine tasting without committing to full bottles",
     dietary:["vegetarian"]},
 
-  {id:456,name:"Lake Effect",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown",price:2,rating:4.4,
+  {id:456,name:"Lake Effect",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown SLC",price:2,rating:4.4,
     vibe:["trendy","fun","vibrant"],
     tags:["craft-cocktails","trendy","fun","vibrant","social","late-night"],
     emoji:"🌊",tagline:"Vibrant downtown cocktail bar with creative seasonal drinks",
@@ -213,7 +213,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#0277BD","#B3E5FC"],bestFor:"starting the night with creative drinks and good energy",
     dietary:[]},
 
-  {id:457,name:"Van Ryder Rooftop",type:"bar",cuisine:"Rooftop Bar",neighborhood:"Downtown",price:3,rating:4.5,
+  {id:457,name:"Van Ryder Rooftop",type:"bar",cuisine:"Rooftop Bar",neighborhood:"Downtown SLC",price:3,rating:4.5,
     vibe:["upscale","scenic","social"],
     tags:["rooftop","upscale","scenic","social","views","cocktails","impressive"],
     emoji:"🌅",tagline:"11th-floor panoramic views of the city and mountains at sunset",
@@ -221,7 +221,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#FF6F00","#FFF3E0"],bestFor:"impressing someone with sunset views and cocktails",
     dietary:[]},
 
-  {id:458,name:"The Green Pig",type:"bar",cuisine:"Dive Bar & Pub",neighborhood:"Downtown",price:1,rating:4.2,
+  {id:458,name:"The Green Pig",type:"bar",cuisine:"Dive Bar & Pub",neighborhood:"Downtown SLC",price:1,rating:4.2,
     vibe:["casual","fun","lively"],
     tags:["dive-bar","casual","fun","lively","budget","sports","patio"],
     emoji:"🐷",tagline:"Classic downtown dive with cheap drinks and weekend brunch",
@@ -237,7 +237,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#5D4037","#D7CCC8"],bestFor:"a no-frills, cheap night out in a neighbourhood classic",
     dietary:[]},
 
-  {id:460,name:"Repeal",type:"bar",cuisine:"Speakeasy",neighborhood:"Downtown",price:3,rating:4.5,
+  {id:460,name:"Repeal",type:"bar",cuisine:"Speakeasy",neighborhood:"Downtown SLC",price:3,rating:4.5,
     vibe:["intimate","upscale","trendy"],
     tags:["speakeasy","intimate","upscale","trendy","craft-cocktails","date-night"],
     emoji:"🚪",tagline:"Hidden speakeasy with prohibition-era vibes and expert cocktails",
@@ -253,7 +253,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#B71C1C","#FFCDD2"],bestFor:"a fun night out with live music and cheap drinks",
     dietary:[]},
 
-  {id:462,name:"Alibi",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown",price:2,rating:4.4,
+  {id:462,name:"Alibi",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown SLC",price:2,rating:4.4,
     vibe:["trendy","social","fun"],
     tags:["craft-cocktails","trendy","social","fun","lively","late-night"],
     emoji:"🕵️",tagline:"Trendy downtown cocktail bar with a buzzy late-night crowd",
@@ -261,7 +261,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#311B92","#D1C4E9"],bestFor:"starting or ending a night downtown with good drinks",
     dietary:[]},
 
-  {id:463,name:"Beerhive",type:"bar",cuisine:"Craft Beer Bar",neighborhood:"Downtown",price:2,rating:4.3,
+  {id:463,name:"Beerhive",type:"bar",cuisine:"Craft Beer Bar",neighborhood:"Downtown SLC",price:2,rating:4.3,
     vibe:["casual","social","fun"],
     tags:["craft-beer","casual","social","fun","sports","patio","group"],
     emoji:"🐝",tagline:"Downtown craft beer hub with huge tap list and patio",
@@ -277,7 +277,7 @@ export const SLC_VENUES: Venue[] = [
     gradient:["#1A1A2E","#534BAE"],bestFor:"a chill, unpretentious wine date in a great neighbourhood",
     dietary:[]},
 
-  {id:465,name:"Prohibition",type:"bar",cuisine:"Speakeasy",neighborhood:"Downtown",price:2,rating:4.3,
+  {id:465,name:"Prohibition",type:"bar",cuisine:"Speakeasy",neighborhood:"Downtown SLC",price:2,rating:4.3,
     vibe:["intimate","classic","fun"],
     tags:["speakeasy","intimate","classic","fun","craft-cocktails","late-night"],
     emoji:"🎩",tagline:"Underground speakeasy vibes with classic cocktails downtown",
