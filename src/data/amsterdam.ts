@@ -9,7 +9,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["2 Michelin stars","Conscious fine dining","Herbivore menu available"],
     gradient:["#2D6A4F","#95D5B2"],bestFor:"the ultimate Amsterdam dining experience",
     dietary:["vegetarian","gluten-free"],michelin:"2-star",
-    lat:49.2831,lng:-123.1208},
+    lat:52.3653,lng:4.8994},
 
   {id:202,name:"Choux",type:"restaurant",cuisine:"Modern European",neighborhood:"Centrum",price:3,rating:4.7,
     vibe:["creative","casual","seasonal"],
@@ -54,7 +54,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Anjou pigeon","Langoustines with boudin noir","Intimate setting"],
     gradient:["#3D405B","#E07A5F"],bestFor:"a refined tasting menu in the Jordaan",
     dietary:["gluten-free"],
-    lat:49.2828,lng:-123.1212},
+    lat:52.3766,lng:4.8806},
 
   {id:207,name:"Kop van Oost",type:"restaurant",cuisine:"Modern International",neighborhood:"Oost",price:2,rating:4.5,
     vibe:["casual","lively","social"],
@@ -72,7 +72,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Wood-fired oven","Thin crispy crust","Jordaan neighbourhood gem"],
     gradient:["#DC2F02","#FFBA08"],bestFor:"the best pizza in Amsterdam, no contest",
     dietary:["vegetarian"],
-    lat:49.2836,lng:-123.1191},
+    lat:52.3746,lng:4.8823},
 
   {id:209,name:"Gifu",type:"restaurant",cuisine:"Japanese",neighborhood:"Jordaan",price:3,rating:4.6,
     vibe:["trendy","intimate","creative"],
@@ -81,7 +81,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Rich ramen","Izakaya grilled dishes","Sake selection"],
     gradient:["#0F3460","#E94560"],bestFor:"a cozy Japanese dinner in the Jordaan",
     dietary:["pescatarian"],
-    lat:49.2836,lng:-123.1212},
+    lat:52.3751,lng:4.8839},
 
   {id:210,name:"Warung Spang Makandra",type:"restaurant",cuisine:"Surinamese",neighborhood:"De Pijp",price:1,rating:4.5,
     vibe:["casual","vibrant","authentic"],
@@ -108,7 +108,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Bistro-style cooking","Award-winning wine list","Jordaan charmer"],
     gradient:["#7B2CBF","#E0AAFF"],bestFor:"a candlelit bistro dinner with great wine",
     dietary:["vegetarian"],
-    lat:49.2818,lng:-123.1210},
+    lat:52.3738,lng:4.8838},
 
   {id:213,name:"Senayan",type:"restaurant",cuisine:"Indonesian",neighborhood:"Nine Streets",price:2,rating:4.5,
     vibe:["warm","vibrant","authentic"],
@@ -117,7 +117,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Best satay outside Indonesia","Rijsttafel","Sarirasa Group"],
     gradient:["#FF6B6B","#FFE66D"],bestFor:"an authentic Indonesian feast with friends",
     dietary:["vegetarian","halal"],
-    lat:49.2816,lng:-123.1205},
+    lat:52.3700,lng:4.8842},
 
   {id:214,name:"Leo Bistro",type:"restaurant",cuisine:"French Bistro",neighborhood:"Oost",price:2,rating:4.4,
     vibe:["casual","warm","social"],
@@ -171,7 +171,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🚪",tagline:"Amsterdam's original speakeasy — World's 50 Best Bars",
     highlights:["Hidden entrance","World's 50 Best Bars","Reservation only"],
     gradient:["#1A1A2E","#C9A96E"],bestFor:"an unforgettable speakeasy cocktail experience",
-    lat:49.2824,lng:-123.1189},
+    lat:52.3640,lng:4.8944},
 
   {id:252,name:"Flying Dutchmen",type:"bar",cuisine:"Cocktails",neighborhood:"Centrum",price:3,rating:4.7,
     vibe:["cozy","creative","intimate"],
@@ -203,7 +203,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🍺",tagline:"Historic brown café with a canal-side terrace since 1786",
     highlights:["Canal-side terrace","Since 1786","Classic Jordaan atmosphere"],
     gradient:["#774936","#D4A373"],bestFor:"a classic Dutch beer on the canal in the Jordaan",
-    lat:49.2825,lng:-123.1195},
+    lat:52.3764,lng:4.8811},
 
   {id:256,name:"Café 't Papeneiland",type:"bar",cuisine:"Brown Café",neighborhood:"Jordaan",price:2,rating:4.5,
     vibe:["cozy","classic","authentic"],
@@ -211,7 +211,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🏠",tagline:"A Jordaan institution since 1642 — famous for apple pie",
     highlights:["Since 1642","Best apple pie in Amsterdam","Secret tunnel to church"],
     gradient:["#BC6C25","#DDA15E"],bestFor:"the most authentic brown café experience in Amsterdam",
-    lat:49.2828,lng:-123.1222},
+    lat:52.3742,lng:4.8825},
 
   {id:257,name:"GlouGlou",type:"bar",cuisine:"Wine Bar",neighborhood:"De Pijp",price:2,rating:4.5,
     vibe:["trendy","casual","social"],
@@ -235,7 +235,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🍻",tagline:"The oldest café in the Jordaan — since 1624",
     highlights:["Oldest café in Jordaan","Beer house since 1624","Local crowd"],
     gradient:["#8B5A2B","#D2B48C"],bestFor:"cheap beers in a 400-year-old pub",
-    lat:49.2834,lng:-123.1193},
+    lat:52.3764,lng:4.8815},
 
   {id:260,name:"Café Nol",type:"bar",cuisine:"Brown Café",neighborhood:"Jordaan",price:1,rating:4.3,
     vibe:["lively","fun","authentic"],
@@ -243,7 +243,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🎤",tagline:"Party café with singalongs and pure Jordaan energy",
     highlights:["Singalong nights","Party from 9pm","Classic Jordaan chaos"],
     gradient:["#E85D04","#FFBA08"],bestFor:"a wild sing-along night in a proper Amsterdam pub",
-    lat:49.2836,lng:-123.1194},
+    lat:52.3749,lng:4.8831},
 
   {id:261,name:"Pilsvogel",type:"bar",cuisine:"Craft Beer",neighborhood:"Oost",price:2,rating:4.4,
     vibe:["casual","social","lively"],
@@ -259,7 +259,7 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"☕",tagline:"Local Jordaan hangout with a canalside terrace",
     highlights:["Lindengracht terrace","Local crowd","Perfect borrel spot"],
     gradient:["#606C38","#FEFAE0"],bestFor:"a relaxed afternoon borrel on the canal",
-    lat:49.2822,lng:-123.1193},
+    lat:52.3752,lng:4.8838},
 
   {id:263,name:"Odeon",type:"bar",cuisine:"Cocktails",neighborhood:"Grachtengordel",price:3,rating:4.5,
     vibe:["trendy","lively","upscale"],

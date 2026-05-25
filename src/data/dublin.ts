@@ -9,7 +9,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Michelin star","Seasonal tasting menu","Exceptional wine pairing"],
     gradient:["#2D6A4F","#95D5B2"],bestFor:"special occasion fine dining at the highest level",
     dietary:["vegetarian","gluten-free"],michelin:"1-star",
-    lat:49.2821,lng:-123.1200},
+    lat:53.3403,lng:-6.2601},
 
   {id:102,name:"Chapter One",type:"restaurant",cuisine:"Modern Irish",neighborhood:"Parnell Square",price:4,rating:4.8,
     vibe:["upscale","classic","intimate"],
@@ -18,7 +18,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Michelin star","Pre-theatre menu","Dublin Writers Museum building"],
     gradient:["#1A1A2E","#E6B325"],bestFor:"refined modern Irish cuisine with literary charm",
     dietary:["vegetarian","gluten-free"],michelin:"2-star",
-    lat:49.2835,lng:-123.1191},
+    lat:53.3530,lng:-6.2634},
 
   {id:103,name:"Hera",type:"restaurant",cuisine:"Modern European",neighborhood:"Ranelagh",price:3,rating:4.7,
     vibe:["trendy","creative","intimate"],
@@ -36,7 +36,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Seasonal set menu","Irish producers focus","Intimate 40-seat room"],
     gradient:["#606C38","#DDA15E"],bestFor:"a special dinner that celebrates Irish ingredients",
     dietary:["vegetarian"],
-    lat:49.2823,lng:-123.1195},
+    lat:53.3312,lng:-6.2718},
 
   {id:105,name:"FIRE Steakhouse",type:"restaurant",cuisine:"Steakhouse",neighborhood:"Dawson Street",price:4,rating:4.5,
     vibe:["upscale","classic","impressive"],
@@ -44,7 +44,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🥩",tagline:"Steak in the Lord Mayor's Mansion House since 1715",
     highlights:["Historic Supper Room","Dry-aged Irish beef","Pre-theatre menu"],
     gradient:["#722F37","#C9A96E"],bestFor:"impressing someone in a historic setting",
-    lat:49.2813,lng:-123.1197},
+    lat:53.3403,lng:-6.2588},
 
   {id:106,name:"Fade St Social",type:"restaurant",cuisine:"Modern European",neighborhood:"Fade Street",price:3,rating:4.5,
     vibe:["trendy","lively","social"],
@@ -53,7 +53,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Sharing plates","Exposed brick Scandi vibes","Great cocktails"],
     gradient:["#7B2CBF","#E0AAFF"],bestFor:"lively group dinners with sharing plates",
     dietary:["vegetarian","gluten-free"],
-    lat:49.2830,lng:-123.1188},
+    lat:53.3424,lng:-6.2658},
 
   {id:107,name:"Chimac",type:"restaurant",cuisine:"Korean Fried Chicken",neighborhood:"Baggot Street",price:2,rating:4.5,
     vibe:["casual","fun","vibrant"],
@@ -70,7 +70,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Wagyu beef gyoza","Izakaya sharing format","Late-night dining"],
     gradient:["#0F3460","#E94560"],bestFor:"vibrant Japanese small plates with a group",
     dietary:["vegetarian"],
-    lat:49.2824,lng:-123.1217},
+    lat:53.3402,lng:-6.2668},
 
   {id:109,name:"Crudo",type:"restaurant",cuisine:"Italian",neighborhood:"Dame Street",price:3,rating:4.6,
     vibe:["trendy","intimate","creative"],
@@ -79,7 +79,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Fresh pasta daily","Natural wine list","Candlelit atmosphere"],
     gradient:["#BC4749","#F2E8CF"],bestFor:"an intimate pasta date night with great wine",
     dietary:["vegetarian"],
-    lat:49.2815,lng:-123.1195},
+    lat:53.3444,lng:-6.2606},
 
   {id:110,name:"Hang Dai",type:"restaurant",cuisine:"Chinese",neighborhood:"Camden Street",price:3,rating:4.5,
     vibe:["trendy","vibrant","fun"],
@@ -106,7 +106,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Giant NY-style slices","Spicy pepperoni","Late-night window"],
     gradient:["#FFBE0B","#3A86A7"],bestFor:"late-night slices after a few pints",
     dietary:["vegetarian"],
-    lat:49.2821,lng:-123.1227},
+    lat:53.3344,lng:-6.2685},
 
   {id:113,name:"Suesey Street",type:"restaurant",cuisine:"Modern European",neighborhood:"Fitzwilliam Place",price:4,rating:4.5,
     vibe:["upscale","romantic","classic"],
@@ -115,7 +115,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Georgian townhouse","Garden terrace","Extensive wine cellar"],
     gradient:["#2D3436","#636E72"],bestFor:"a polished evening in a stunning setting",
     dietary:["vegetarian","gluten-free"],
-    lat:49.2823,lng:-123.1220},
+    lat:53.3358,lng:-6.2509},
 
   {id:114,name:"Coke Lane Pizza",type:"restaurant",cuisine:"Pizza",neighborhood:"Stoneybatter",price:1,rating:4.5,
     vibe:["casual","neighbourhood","fun"],
@@ -133,7 +133,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Tasting menu","Brazilian-influenced","One of Dublin's most exciting"],
     gradient:["#240046","#C77DFF"],bestFor:"adventurous diners who want a chef-led experience",
     dietary:["vegetarian"],
-    lat:49.2817,lng:-123.1212},
+    lat:53.3425,lng:-6.2658},
 
   {id:116,name:"Fish Shop",type:"restaurant",cuisine:"Seafood",neighborhood:"Queen Street",price:2,rating:4.5,
     vibe:["casual","creative","vibrant"],
@@ -142,7 +142,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Daily-changing menu","Irish-caught fish","Natural wines"],
     gradient:["#14213D","#FCA311"],bestFor:"fresh seafood lovers who appreciate simplicity",
     dietary:["pescatarian","gluten-free"],
-    lat:49.2837,lng:-123.1216},
+    lat:53.3492,lng:-6.2758},
 
   {id:117,name:"Pig Ear",type:"restaurant",cuisine:"Modern Irish",neighborhood:"Nassau Street",price:3,rating:4.5,
     vibe:["warm","classic","neighbourhood"],
@@ -151,7 +151,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Trinity College views","Irish pork belly","Sunday roast"],
     gradient:["#BB3E03","#F4A261"],bestFor:"comforting Irish cooking with a view",
     dietary:["vegetarian"],
-    lat:49.2832,lng:-123.1192},
+    lat:53.3425,lng:-6.2554},
 
   {id:118,name:"Big Mamma",type:"restaurant",cuisine:"Italian",neighborhood:"South Anne Street",price:2,rating:4.4,
     vibe:["lively","fun","vibrant"],
@@ -160,7 +160,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Giant truffle pasta","Wood-fired pizzas","Party atmosphere"],
     gradient:["#5F0F40","#E36414"],bestFor:"fun Italian feasts that don't take themselves seriously",
     dietary:["vegetarian"],
-    lat:49.2835,lng:-123.1211},
+    lat:53.3404,lng:-6.2586},
 
   // ─── BARS ──────────────────────────────────────────────────
   {id:119,name:"Bar 1661",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Green Street",price:3,rating:4.7,
@@ -169,7 +169,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🍸",tagline:"Award-winning cocktails with Irish poitín at the core",
     highlights:["Ireland's Best Cocktail Bar","Poitín specialist","Multiple award winner"],
     gradient:["#6A040F","#D00000"],bestFor:"serious cocktail lovers who want something uniquely Irish",
-    lat:49.2841,lng:-123.1207},
+    lat:53.3504,lng:-6.2734},
 
   {id:120,name:"The Vintage Cocktail Club",type:"bar",cuisine:"Speakeasy",neighborhood:"Temple Bar",price:3,rating:4.6,
     vibe:["intimate","speakeasy","upscale"],
@@ -185,7 +185,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🐷",tagline:"Bootlegger-style speakeasy above a Fade Street restaurant",
     highlights:["Hidden upstairs entrance","Candlelit vintage decor","Prohibition cocktails"],
     gradient:["#3F37C9","#4CC9F0"],bestFor:"secret bar vibes with creative cocktails",
-    lat:49.2818,lng:-123.1193},
+    lat:53.3436,lng:-6.2638},
 
   {id:122,name:"The Little Pig",type:"bar",cuisine:"Speakeasy",neighborhood:"Dame Street",price:3,rating:4.5,
     vibe:["intimate","cozy","creative"],
@@ -193,7 +193,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🎷",tagline:"Red velvet walls, jazz, and cocktails with unusual ingredients",
     highlights:["Live blues and jazz","Red velvet interior","Tasselled lampshades"],
     gradient:["#9B2335","#F0E6D3"],bestFor:"moody jazz-bar evenings with inventive drinks",
-    lat:49.2837,lng:-123.1190},
+    lat:53.3447,lng:-6.2604},
 
   {id:123,name:"Dausie's Bar",type:"bar",cuisine:"Whiskey Bar",neighborhood:"Christchurch",price:3,rating:4.5,
     vibe:["classic","warm","upscale"],
@@ -201,7 +201,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🥃",tagline:"100+ whiskeys overlooking Christchurch Cathedral",
     highlights:["100+ whiskey collection","Cathedral views","Classic pub meets modern lounge"],
     gradient:["#774936","#D4A373"],bestFor:"whiskey lovers with a taste for atmosphere",
-    lat:49.2839,lng:-123.1199},
+    lat:53.3440,lng:-6.2719},
 
   {id:124,name:"The Bank on College Green",type:"bar",cuisine:"Cocktail Bar",neighborhood:"College Green",price:3,rating:4.5,
     vibe:["upscale","classic","impressive"],
@@ -209,7 +209,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🏛️",tagline:"Stained-glass ceilings and cocktails in a former Victorian bank",
     highlights:["Stained-glass ceiling","The Penicillin cocktail","Farm-to-table kitchen"],
     gradient:["#B5179E","#F72585"],bestFor:"drinks in one of Dublin's most beautiful rooms",
-    lat:49.2819,lng:-123.1214},
+    lat:53.3448,lng:-6.2577},
 
   {id:125,name:"Grogan's",type:"bar",cuisine:"Traditional Pub",neighborhood:"South William Street",price:1,rating:4.6,
     vibe:["casual","classic","iconic"],
@@ -217,7 +217,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🍺",tagline:"Dublin's most iconic literary and artist pub since 1899",
     highlights:["Toasted sandwiches","Art on the walls","No music, just chat"],
     gradient:["#A68A64","#582F0E"],bestFor:"a proper Dublin pub with character and conversation",
-    lat:49.2831,lng:-123.1215},
+    lat:53.3408,lng:-6.2641},
 
   {id:126,name:"Mulligans",type:"bar",cuisine:"Traditional Pub",neighborhood:"Poolbeg Street",price:1,rating:4.7,
     vibe:["classic","iconic","warm"],
@@ -225,7 +225,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🍻",tagline:"Unchanged since 1782 — Dublin's finest pint of Guinness",
     highlights:["Best Guinness in Dublin","Unchanged Victorian interior","No TV, no music"],
     gradient:["#3D405B","#E07A5F"],bestFor:"the quintessential Dublin pub experience",
-    lat:49.2839,lng:-123.1203},
+    lat:53.3454,lng:-6.2540},
 
   {id:127,name:"The Cobblestone",type:"bar",cuisine:"Trad Music Pub",neighborhood:"Stoneybatter",price:1,rating:4.7,
     vibe:["vibrant","iconic","authentic"],
@@ -241,7 +241,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🍺",tagline:"Victorian snug bar spilling onto South Anne Street",
     highlights:["Famous snug bar","After-work institution","Victorian mahogany interior"],
     gradient:["#4A4E69","#9A8C98"],bestFor:"after-work pints in a proper Victorian pub",
-    lat:49.2815,lng:-123.1225},
+    lat:53.3409,lng:-6.2583},
 
   {id:129,name:"Flight Club",type:"bar",cuisine:"Activity Bar",neighborhood:"Dawson Street",price:2,rating:4.4,
     vibe:["fun","lively","social"],
@@ -249,7 +249,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🎯",tagline:"High-tech darts, creative cocktails, and pizza on Dawson Street",
     highlights:["Interactive dart boards","Creative cocktails","Group party vibes"],
     gradient:["#FF006E","#8338EC"],bestFor:"fun group nights that need an activity",
-    lat:49.2829,lng:-123.1201},
+    lat:53.3383,lng:-6.2603},
 
   {id:130,name:"Peruke & Periwig",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Dawson Street",price:3,rating:4.5,
     vibe:["upscale","creative","trendy"],
@@ -257,7 +257,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🎭",tagline:"Three floors of elaborate cocktails topped by a rooftop terrace",
     highlights:["Rooftop terrace","Theatrical cocktails","Georgian townhouse"],
     gradient:["#2D6A4F","#95D5B2"],bestFor:"cocktails with a view and a sense of theatre",
-    lat:49.2818,lng:-123.1224},
+    lat:53.3385,lng:-6.2586},
 
   {id:131,name:"Token",type:"bar",cuisine:"Arcade Bar",neighborhood:"Smithfield",price:2,rating:4.3,
     vibe:["fun","casual","quirky"],
@@ -281,7 +281,7 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🪞",tagline:"Ornate Victorian pub unchanged since the 1880s",
     highlights:["Antique mirrors and chandeliers","Victorian carved bar","One of Dublin's oldest"],
     gradient:["#5F0F40","#E36414"],bestFor:"stepping back in time for a perfect pint",
-    lat:49.2831,lng:-123.1198},
+    lat:53.3409,lng:-6.2665},
 
   {id:134,name:"Sophie's at The Dean",type:"bar",cuisine:"Rooftop Bar",neighborhood:"Harcourt Street",price:3,rating:4.4,
     vibe:["trendy","views","social"],
@@ -290,7 +290,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Dublin skyline views","Wood-fired pizza","DJ sets"],
     gradient:["#FF9E00","#FF0169"],bestFor:"sunset drinks with skyline panoramas",
     dietary:["vegetarian"],
-    lat:49.2835,lng:-123.1213},
+    lat:53.3342,lng:-6.2626},
 
   {id:135,name:"P. Mac's",type:"bar",cuisine:"Eclectic Bar",neighborhood:"Stephen Street",price:2,rating:4.4,
     vibe:["quirky","casual","fun"],
@@ -298,5 +298,5 @@ export const DUBLIN_VENUES: Venue[] = [
     emoji:"🪑",tagline:"Eclectic junk-shop decor and a beloved sun-trap courtyard",
     highlights:["Courtyard beer garden","Mismatched furniture","Creative crowd"],
     gradient:["#4361EE","#7209B7"],bestFor:"sunny afternoon hangs in Dublin's quirkiest spot",
-    lat:49.2823,lng:-123.1205},
+    lat:53.3389,lng:-6.2673},
 ];
