@@ -147,6 +147,32 @@ export function SwipeScreen({
         d.offsetY = 0;
         d.velocityX = 0;
         d.velocityY = 0;
+
+        // Reset DOM refs for the new card
+        requestAnimationFrame(() => {
+          if (cardRef.current) {
+            cardRef.current.style.transform = "translateX(0) translateY(0) rotate(0deg)";
+            cardRef.current.style.transition = "none";
+          }
+          if (likeRef.current) {
+            likeRef.current.style.opacity = "0";
+            likeRef.current.style.transition = "none";
+          }
+          if (nopeRef.current) {
+            nopeRef.current.style.opacity = "0";
+            nopeRef.current.style.transition = "none";
+          }
+          if (saveRef.current) {
+            saveRef.current.style.opacity = "0";
+            saveRef.current.style.transition = "none";
+          }
+          if (nextCardRef.current) {
+            nextCardRef.current.style.transform = "scale(0.95)";
+            nextCardRef.current.style.opacity = "0.5";
+            nextCardRef.current.style.transition = "none";
+          }
+        });
+
         forceRender((n) => n + 1);
       }, duration * 1000);
     },
