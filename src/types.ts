@@ -60,6 +60,7 @@ export interface LocationFilter {
   lat: number | null;
   lng: number | null;
   walkMinutes: number | null;   // e.g. 15
+  bikeMinutes: number | null;   // e.g. 10
   driveMinutes: number | null;  // e.g. 15
   radiusKm: number | null;     // raw km radius
 }
@@ -69,6 +70,7 @@ export const EMPTY_LOCATION_FILTER: LocationFilter = {
   lat: null,
   lng: null,
   walkMinutes: null,
+  bikeMinutes: null,
   driveMinutes: null,
   radiusKm: null,
 };

@@ -27,12 +27,20 @@ function toRad(deg: number): number {
 /** Average walking speed: ~5 km/h → 1 min ≈ 83m */
 const WALK_SPEED_KM_PER_MIN = 5 / 60;
 
+/** Average cycling speed: ~15 km/h → 1 min ≈ 250m */
+const BIKE_SPEED_KM_PER_MIN = 15 / 60;
+
 /** Average city driving speed: ~30 km/h → 1 min ≈ 500m */
 const DRIVE_SPEED_KM_PER_MIN = 30 / 60;
 
 /** Convert walk minutes to km radius. */
 export function walkMinutesToKm(minutes: number): number {
   return minutes * WALK_SPEED_KM_PER_MIN;
+}
+
+/** Convert bike minutes to km radius. */
+export function bikeMinutesToKm(minutes: number): number {
+  return minutes * BIKE_SPEED_KM_PER_MIN;
 }
 
 /** Convert drive minutes to km radius. */
@@ -43,6 +51,11 @@ export function driveMinutesToKm(minutes: number): number {
 /** Estimate walk time in minutes from km distance. */
 export function kmToWalkMinutes(km: number): number {
   return Math.round(km / WALK_SPEED_KM_PER_MIN);
+}
+
+/** Estimate bike time in minutes from km distance. */
+export function kmToBikeMinutes(km: number): number {
+  return Math.round(km / BIKE_SPEED_KM_PER_MIN);
 }
 
 /** Estimate drive time in minutes from km distance. */
@@ -66,6 +79,9 @@ export function getFilterRadiusKm(filter: LocationFilter): number | null {
 
   if (filter.walkMinutes !== null) {
     radii.push(walkMinutesToKm(filter.walkMinutes));
+  }
+  if (filter.bikeMinutes !== null) {
+    radii.push(bikeMinutesToKm(filter.bikeMinutes));
   }
   if (filter.driveMinutes !== null) {
     radii.push(driveMinutesToKm(filter.driveMinutes));

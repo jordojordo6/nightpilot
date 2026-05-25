@@ -45,6 +45,7 @@ export function NightModeScreen({
   const [locationLat, setLocationLat] = useState<number | null>(null);
   const [locationLng, setLocationLng] = useState<number | null>(null);
   const [walkMinutes, setWalkMinutes] = useState<string>("");
+  const [bikeMinutes, setBikeMinutes] = useState<string>("");
   const [driveMinutes, setDriveMinutes] = useState<string>("");
   const [radiusKm, setRadiusKm] = useState<string>("");
   const [geoStatus, setGeoStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -89,6 +90,7 @@ export function NightModeScreen({
       lat: locationLat,
       lng: locationLng,
       walkMinutes: walkMinutes ? Number(walkMinutes) : null,
+      bikeMinutes: bikeMinutes ? Number(bikeMinutes) : null,
       driveMinutes: driveMinutes ? Number(driveMinutes) : null,
       radiusKm: radiusKm ? Number(radiusKm) : null,
     };
@@ -433,6 +435,30 @@ export function NightModeScreen({
                   placeholder="min"
                   value={walkMinutes}
                   onChange={(e) => setWalkMinutes(e.target.value)}
+                  style={{
+                    width: 70,
+                    padding: "8px 12px",
+                    background: "rgba(255,255,255,.06)",
+                    border: "1.5px solid rgba(255,255,255,.12)",
+                    borderRadius: 10,
+                    color: "#fff",
+                    fontSize: 13,
+                    fontFamily: "inherit",
+                    outline: "none",
+                    textAlign: "center",
+                  }}
+                />
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,.35)" }}>minutes</span>
+              </div>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,.5)", minWidth: 60 }}>
+                  🚲 Bike
+                </span>
+                <input
+                  type="number"
+                  placeholder="min"
+                  value={bikeMinutes}
+                  onChange={(e) => setBikeMinutes(e.target.value)}
                   style={{
                     width: 70,
                     padding: "8px 12px",
