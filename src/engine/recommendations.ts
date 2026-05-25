@@ -313,7 +313,7 @@ function scoreAndFilter(
 export function generateRecommendations(
   profile: TasteProfile,
   prefs: NightPrefs,
-  swiped: Set<number>,
+  _swiped: Set<number>,
   saved: Set<number>,
   venues: Venue[],
   dietary: DietaryRestriction[] = []
