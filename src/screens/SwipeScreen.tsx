@@ -462,30 +462,12 @@ export function SwipeScreen({
           flexShrink: 0,
         }}
       >
-        {/* Undo button */}
-        <button
-          onClick={canUndo ? onUndo : undefined}
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: "50%",
-            border: `1.5px solid ${canUndo ? "rgba(255,255,255,.2)" : "rgba(255,255,255,.06)"}`,
-            background: canUndo ? "rgba(255,255,255,.06)" : "transparent",
-            color: canUndo ? "rgba(255,255,255,.5)" : "rgba(255,255,255,.12)",
-            fontSize: 16,
-            cursor: canUndo ? "pointer" : "default",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "all 0.2s",
-            flexShrink: 0,
-            fontFamily: "inherit",
-            padding: 0,
-          }}
-        >
-          ↩
-        </button>
-
+        <SwipeButton
+          color={canUndo ? "#3b82f6" : "#3b82f633"}
+          icon="↩"
+          onClick={canUndo ? (onUndo ?? (() => {})) : () => {}}
+          size={20}
+        />
         <SwipeButton
           color="#ef4444"
           icon="✕"
