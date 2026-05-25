@@ -166,7 +166,7 @@ export const DUBLIN_VENUES: Venue[] = [
     highlights:["Hidden upstairs entrance","Candlelit vintage decor","Prohibition cocktails"],
     gradient:["#3F37C9","#4CC9F0"],bestFor:"secret bar vibes with creative cocktails"},
 
-  {id:122,name:"The Little Pig",type:"bar",cuisine:"Speakeasy",neighborhood:"City Centre",price:3,rating:4.5,
+  {id:122,name:"The Little Pig",type:"bar",cuisine:"Speakeasy",neighborhood:"Dame Street",price:3,rating:4.5,
     vibe:["intimate","cozy","creative"],
     tags:["speakeasy","intimate","cozy","creative","craft-cocktails","jazz","date-night"],
     emoji:"🎷",tagline:"Red velvet walls, jazz, and cocktails with unusual ingredients",

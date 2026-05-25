@@ -70,7 +70,7 @@ export function SwipeScreen({
         city: cityKey,
       });
     }
-  }, [currentVenue]);
+  }, [currentVenue, cityKey]);
 
   // ─── Direct DOM updates via rAF for 60fps drag ─────────────────
   const updateCardPosition = useCallback(() => {

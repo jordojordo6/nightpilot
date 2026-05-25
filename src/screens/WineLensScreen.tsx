@@ -51,7 +51,7 @@ interface PhotoItem {
 
 /** Compress an image file to max 800px wide JPEG at 0.6 quality */
 function compressImage(file: File): Promise<PhotoItem> {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const img = new Image();
     const url = URL.createObjectURL(file);
     img.onload = () => {
@@ -75,6 +75,10 @@ function compressImage(file: File): Promise<PhotoItem> {
         mediaType: "image/jpeg",
         preview: dataUrl,
       });
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error(`Failed to load image: ${file.name}`));
     };
     img.src = url;
   });
@@ -145,13 +149,17 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    const compressed = await Promise.all(
-      Array.from(files).map((f) => compressImage(f))
-    );
+    try {
+      const compressed = await Promise.all(
+        Array.from(files).map((f) => compressImage(f))
+      );
 
-    setPhotos((prev) => [...prev, ...compressed]);
-    setResult(null);
-    setError(null);
+      setPhotos((prev) => [...prev, ...compressed]);
+      setResult(null);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load image");
+    }
     // Reset input so the same file can be re-selected
     e.target.value = "";
   };

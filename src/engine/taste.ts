@@ -86,7 +86,7 @@ export function undoTasteProfile(
     next.saveCount = Math.max(0, next.saveCount - 1);
   } else {
     for (const tag of venue.tags) {
-      next.rejectedTags[tag] = (next.rejectedTags[tag] ?? 0) + 1;
+      next.rejectedTags[tag] = (next.rejectedTags[tag] ?? 0) - 1;
     }
     next.neighborhoods[venue.neighborhood] =
       (next.neighborhoods[venue.neighborhood] ?? 0) + 1;

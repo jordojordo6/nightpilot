@@ -54,7 +54,7 @@ export function generateExplanation(
       `${cap} is one of your strongest taste signals, and ${venue.name} is known for it`
     );
     templates.push(
-      `You keep gravitating toward ${strongSignals[0]} — this is one of the best in Vancouver for it`
+      `You keep gravitating toward ${strongSignals[0]} — ${venue.name} is one of the best for it`
     );
   }
 

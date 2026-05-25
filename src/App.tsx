@@ -43,7 +43,7 @@ export default function App() {
     loadState<string>("city", "")
   );
   const city = cityKey ? getCityByKey(cityKey) : null;
-  const venues = city?.venues ?? [];
+  const venues = useMemo(() => city?.venues ?? [], [city]);
   const [screen, setScreen] = useState<Screen>(cityKey ? "landing" : "city" as Screen);
   const [tasteProfile, setTasteProfile] = useState<TasteProfile>(() =>
     validateProfile(loadState<unknown>("taste", null))
@@ -339,6 +339,7 @@ export default function App() {
           showToast={showToast}
           tasteProfile={tasteProfile}
           cityKey={cityKey}
+          cityName={city?.name}
         />
       )}
 

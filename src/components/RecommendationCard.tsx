@@ -6,9 +6,10 @@ interface Props {
   explanation: string;
   showToast: (msg: string) => void;
   cityKey?: string;
+  cityName?: string;
 }
 
-export function RecommendationCard({ venue, explanation, showToast, cityKey }: Props) {
+export function RecommendationCard({ venue, explanation, showToast, cityKey, cityName }: Props) {
   const handleReserve = () => {
     logEvent("booking_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
     showToast("Reservations coming soon!");
@@ -18,7 +19,7 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey }: P
     logEvent("map_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
     showToast("Opening Maps...");
     window.open(
-      `https://www.google.com/maps/search/${encodeURIComponent(venue.name + " " + (cityKey ?? ""))}`,
+      `https://www.google.com/maps/search/${encodeURIComponent(venue.name + " " + (cityName ?? cityKey ?? ""))}`,
       "_blank"
     );
   };

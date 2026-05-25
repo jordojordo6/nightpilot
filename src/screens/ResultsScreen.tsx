@@ -14,6 +14,7 @@ interface Props {
   showToast: (msg: string) => void;
   tasteProfile: TasteProfile;
   cityKey?: string;
+  cityName?: string;
 }
 
 export function ResultsScreen({
@@ -26,6 +27,7 @@ export function ResultsScreen({
   showToast,
   tasteProfile,
   cityKey,
+  cityName,
 }: Props) {
   if (plans.length === 0) {
     return (
@@ -273,6 +275,7 @@ export function ResultsScreen({
               explanation={plan.rExplanation}
               showToast={showToast}
               cityKey={cityKey}
+              cityName={cityName}
             />
           </div>
         )}
@@ -338,6 +341,7 @@ export function ResultsScreen({
               explanation={plan.bExplanation}
               showToast={showToast}
               cityKey={cityKey}
+              cityName={cityName}
             />
           </div>
         )}
