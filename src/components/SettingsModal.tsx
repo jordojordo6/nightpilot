@@ -1,6 +1,77 @@
 import type { UserSettings, DietaryRestriction, MichelinLevel } from "../types";
 import { DIETARY_OPTIONS, MICHELIN_OPTIONS } from "../types";
 
+/* ── Tabler Icons (MIT) – inline SVG for Michelin rosette & Bib Gourmand ── */
+function MichelinRosette({ size = 20, color = "#c4233b" }: { size?: number; color?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M14.792 17.063c0 .337 .057 .618 .057 .9c0 1.8 -1.238 3.037 -2.982 3.037c-1.8 0 -2.98 -1.238 -2.98 -3.206v-.731c-.957 .675 -1.576 .9 -2.42 .9c-1.518 0 -2.925 -1.463 -2.925 -3.094c0 -1.181 .844 -2.194 2.082 -2.756l.28 -.113c-1.574 -.787 -2.362 -1.688 -2.362 -2.925c0 -1.687 1.294 -3.094 2.925 -3.094c.675 0 1.52 .338 2.138 .788l.281 .112c0 -.337 -.056 -.619 -.056 -.844c0 -1.8 1.237 -3.037 2.98 -3.037c1.8 0 2.981 1.237 2.981 3.206v.394l-.056 .281c.956 -.675 1.575 -.9 2.419 -.9c1.519 0 2.925 1.463 2.925 3.094c0 1.181 -.844 2.194 -2.081 2.756l-.282 .169c1.575 .787 2.363 1.688 2.363 2.925c0 1.688 -1.294 3.094 -2.925 3.094c-.675 0 -1.575 -.281 -2.138 -.788l-.225 -.169l.001 .001" />
+    </svg>
+  );
+}
+
+function BibGourmand({ size = 20, color = "#c4233b" }: { size?: number; color?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4.97 20c-2.395 -1.947 -4.763 -5.245 -1.005 -8c-.52 -4 3.442 -7.5 5.524 -7.5c.347 -1 1.499 -1.5 2.54 -1.5c1.04 0 2.135 .5 2.482 1.5c2.082 0 6.044 3.5 5.524 7.5c3.758 2.755 1.39 6.053 -1.005 8" />
+      <path d="M8 11a1 2 0 1 0 2 0a1 2 0 1 0 -2 0" />
+      <path d="M14 11a1 2 0 1 0 2 0a1 2 0 1 0 -2 0" />
+      <path d="M8 17.085c3.5 2.712 6.5 2.712 9 -1.085" />
+      <path d="M13 18.5c.815 -2.337 1.881 -1.472 2 -.5" />
+    </svg>
+  );
+}
+
+/** Render the correct icon(s) for a Michelin level */
+function MichelinIcon({ level, color }: { level: MichelinLevel; color: string }) {
+  const size = 18;
+  switch (level) {
+    case "3-star":
+      return (
+        <span style={{ display: "flex", gap: 2 }}>
+          <MichelinRosette size={size} color={color} />
+          <MichelinRosette size={size} color={color} />
+          <MichelinRosette size={size} color={color} />
+        </span>
+      );
+    case "2-star":
+      return (
+        <span style={{ display: "flex", gap: 2 }}>
+          <MichelinRosette size={size} color={color} />
+          <MichelinRosette size={size} color={color} />
+        </span>
+      );
+    case "1-star":
+      return (
+        <span style={{ display: "flex", gap: 2 }}>
+          <MichelinRosette size={size} color={color} />
+        </span>
+      );
+    case "bib-gourmand":
+      return <BibGourmand size={22} color={color} />;
+  }
+}
+
 interface Props {
   open: boolean;
   settings: UserSettings;
@@ -150,7 +221,9 @@ export function SettingsModal({ open, settings, onClose, onChange }: Props) {
                     textAlign: "left",
                   }}
                 >
-                  <span style={{ fontSize: 20, minWidth: 48, color: "#c4233b", letterSpacing: 2 }}>{opt.icon}</span>
+                  <span style={{ minWidth: 60, display: "flex", alignItems: "center" }}>
+                    <MichelinIcon level={opt.key} color={active ? "#ef4444" : "#c4233b"} />
+                  </span>
                   {opt.label && <span style={{ flex: 1 }}>{opt.label}</span>}
                   {!opt.label && <span style={{ flex: 1 }} />}
                   {active && (
