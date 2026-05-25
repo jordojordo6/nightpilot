@@ -38,6 +38,17 @@ const NEARBY: Record<string, string[]> = {
   "South Circular Road": ["Camden Street", "Wexford Street"],
   "Nassau Street": ["College Green", "Dawson Street"],
   "South Great Georges Street": ["Dame Street", "Fade Street", "Aungier Street"],
+  // Amsterdam
+  "Centrum": ["Grachtengordel", "Jordaan", "Reguliersdwarsstraat", "Nine Streets"],
+  "Jordaan": ["Centrum", "Grachtengordel", "Nine Streets", "Oud-West"],
+  "Nine Streets": ["Jordaan", "Centrum", "Grachtengordel"],
+  "Grachtengordel": ["Centrum", "Jordaan", "Nine Streets", "Reguliersdwarsstraat", "De Pijp"],
+  "Reguliersdwarsstraat": ["Centrum", "Grachtengordel", "De Pijp"],
+  "De Pijp": ["Grachtengordel", "Reguliersdwarsstraat", "Oost", "Amstel", "Plantage"],
+  "Oud-West": ["Jordaan", "Centrum"],
+  "Oost": ["De Pijp", "Plantage", "Amstel"],
+  "Plantage": ["Oost", "Centrum", "De Pijp", "Amstel"],
+  "Amstel": ["Plantage", "De Pijp", "Oost", "Grachtengordel"],
 };
 
 export function areNearby(n1: string, n2: string): boolean {
