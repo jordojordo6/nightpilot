@@ -19,6 +19,8 @@ export interface Venue {
   bestFor: string;
   dietary?: string[]; // e.g. ["vegetarian","vegan","gluten-free"]
   michelin?: MichelinLevel;
+  lat: number;
+  lng: number;
 }
 
 export type MichelinLevel = "1-star" | "2-star" | "3-star" | "bib-gourmand";
@@ -51,11 +53,32 @@ export const EMPTY_PROFILE: TasteProfile = {
 
 export type PlanType = "dinner" | "drinks" | "both";
 
+export type LocationMode = "anywhere" | "current" | "address";
+
+export interface LocationFilter {
+  mode: LocationMode;
+  lat: number | null;
+  lng: number | null;
+  walkMinutes: number | null;   // e.g. 15
+  driveMinutes: number | null;  // e.g. 15
+  radiusKm: number | null;     // raw km radius
+}
+
+export const EMPTY_LOCATION_FILTER: LocationFilter = {
+  mode: "anywhere",
+  lat: null,
+  lng: null,
+  walkMinutes: null,
+  driveMinutes: null,
+  radiusKm: null,
+};
+
 export interface NightPrefs {
   occasion: string | null;
   budget: number | null;
   neighborhoods: string[];
   planType: PlanType;
+  location: LocationFilter;
 }
 
 export interface Plan {

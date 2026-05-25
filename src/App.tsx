@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import type { Venue, SwipeAction, TasteProfile, NightPrefs, Plan, Screen, UserSettings } from "./types";
-import { EMPTY_PROFILE, DEFAULT_SETTINGS } from "./types";
+import { EMPTY_PROFILE, DEFAULT_SETTINGS, EMPTY_LOCATION_FILTER } from "./types";
 import { CITIES, getCityByKey } from "./data/cities";
 import { updateTasteProfile, undoTasteProfile, seededShuffle } from "./engine/taste";
 import { generateRecommendations } from "./engine/recommendations";
@@ -62,6 +62,7 @@ export default function App() {
     budget: null,
     neighborhoods: [],
     planType: "both" as const,
+    location: { ...EMPTY_LOCATION_FILTER },
   });
   const [plans, setPlans] = useState<Plan[]>([]);
   const [currentPlanIdx, setCurrentPlanIdx] = useState(0);
@@ -237,7 +238,7 @@ export default function App() {
     setSwipedIds(new Set());
     setSavedIds(new Set());
     setSwipeCount(0);
-    setNightPrefs({ occasion: null, budget: null, neighborhoods: [], planType: "both" as const });
+    setNightPrefs({ occasion: null, budget: null, neighborhoods: [], planType: "both" as const, location: { ...EMPTY_LOCATION_FILTER } });
     setPlans([]);
     setCurrentPlanIdx(0);
     setLastSwipe(null);

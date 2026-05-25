@@ -1,6 +1,7 @@
 import type { Venue, ScoredVenue, TasteProfile, NightPrefs, Plan, DietaryRestriction } from "../types";
 import { areNearby, estimateWalkTime } from "../data/neighborhoods";
 import { scoreVenue, normalizeScore, getDrivingTags, getNetTagScore } from "./taste";
+import { filterVenuesByLocation } from "./geo";
 import { logEvent } from "./analytics";
 
 // ─── Explanation generator ──────────────────────────────────────────
@@ -321,15 +322,18 @@ export function generateRecommendations(
 ): Plan[] {
   const planType = prefs.planType ?? "both";
 
+  // Apply location filter first
+  const locationFiltered = filterVenuesByLocation(venues, prefs.location);
+
   const meetsdietary = (v: Venue) => {
     if (dietary.length === 0 || v.type === "bar") return true;
     return dietary.every((d) => v.dietary?.includes(d));
   };
 
-  const restaurants = venues.filter(
+  const restaurants = locationFiltered.filter(
     (v) => v.type === "restaurant" && meetsdietary(v)
   );
-  const bars = venues.filter(
+  const bars = locationFiltered.filter(
     (v) => v.type === "bar"
   );
 

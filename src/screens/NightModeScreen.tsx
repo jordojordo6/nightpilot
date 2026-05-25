@@ -1,6 +1,8 @@
 import { useState } from "react";
-import type { Venue, NightPrefs, TasteProfile, PlanType } from "../types";
+import type { Venue, NightPrefs, TasteProfile, PlanType, LocationMode, LocationFilter } from "../types";
+import { EMPTY_LOCATION_FILTER } from "../types";
 import { getProfileSummary } from "../engine/taste";
+import { getCurrentPosition } from "../engine/geo";
 
 interface Props {
   onSubmit: (prefs: NightPrefs) => void;
@@ -38,17 +40,65 @@ export function NightModeScreen({
   const [budget, setBudget] = useState<number | null>(null);
   const [neighborhoods, setNeighborhoods] = useState<string[]>([]);
 
+  // Location filter state
+  const [locationMode, setLocationMode] = useState<LocationMode>("anywhere");
+  const [locationLat, setLocationLat] = useState<number | null>(null);
+  const [locationLng, setLocationLng] = useState<number | null>(null);
+  const [walkMinutes, setWalkMinutes] = useState<string>("");
+  const [driveMinutes, setDriveMinutes] = useState<string>("");
+  const [radiusKm, setRadiusKm] = useState<string>("");
+  const [geoStatus, setGeoStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [addressInput, setAddressInput] = useState("");
+
   const toggleNeighborhood = (n: string) => {
     setNeighborhoods((prev) =>
       prev.includes(n) ? prev.filter((x) => x !== n) : [...prev, n]
     );
   };
 
+  const handleUseMyLocation = async () => {
+    setGeoStatus("loading");
+    try {
+      const pos = await getCurrentPosition();
+      setLocationLat(pos.lat);
+      setLocationLng(pos.lng);
+      setLocationMode("current");
+      setGeoStatus("success");
+    } catch {
+      setGeoStatus("error");
+    }
+  };
+
+  const handleSetAddress = () => {
+    // For MVP: use hardcoded city centers as geocoding fallback
+    // In production this would call a geocoding API
+    if (addressInput.trim()) {
+      setLocationMode("address");
+      // Use first venue's coords as a rough city center proxy
+      if (venues.length > 0) {
+        setLocationLat(venues[0].lat);
+        setLocationLng(venues[0].lng);
+      }
+    }
+  };
+
+  const buildLocationFilter = (): LocationFilter => {
+    if (locationMode === "anywhere") return { ...EMPTY_LOCATION_FILTER };
+    return {
+      mode: locationMode,
+      lat: locationLat,
+      lng: locationLng,
+      walkMinutes: walkMinutes ? Number(walkMinutes) : null,
+      driveMinutes: driveMinutes ? Number(driveMinutes) : null,
+      radiusKm: radiusKm ? Number(radiusKm) : null,
+    };
+  };
+
   const profileSummary = getProfileSummary(tasteProfile);
 
   const handleSubmit = () => {
     if (occasion) {
-      onSubmit({ occasion, budget, neighborhoods, planType });
+      onSubmit({ occasion, budget, neighborhoods, planType, location: buildLocationFilter() });
     }
   };
 
@@ -304,6 +354,153 @@ export function NightModeScreen({
               />
             ))}
           </div>
+        </div>
+
+        {/* Location */}
+        <div style={{ marginBottom: 28 }}>
+          <SectionLabel>Location (optional)</SectionLabel>
+          <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+            <OptionPill
+              label="Anywhere"
+              selected={locationMode === "anywhere"}
+              onClick={() => {
+                setLocationMode("anywhere");
+                setLocationLat(null);
+                setLocationLng(null);
+                setGeoStatus("idle");
+              }}
+            />
+            <OptionPill
+              label="📍 My Location"
+              selected={locationMode === "current"}
+              onClick={handleUseMyLocation}
+            />
+            <OptionPill
+              label="📫 Address"
+              selected={locationMode === "address"}
+              onClick={() => setLocationMode("address")}
+            />
+          </div>
+
+          {geoStatus === "loading" && (
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,.4)", marginBottom: 8 }}>
+              Getting your location...
+            </p>
+          )}
+          {geoStatus === "error" && (
+            <p style={{ fontSize: 12, color: "#ef4444", marginBottom: 8 }}>
+              Couldn't get location — check permissions
+            </p>
+          )}
+          {geoStatus === "success" && locationMode === "current" && (
+            <p style={{ fontSize: 12, color: "#4ade80", marginBottom: 8 }}>
+              ✓ Location set
+            </p>
+          )}
+
+          {locationMode === "address" && (
+            <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+              <input
+                type="text"
+                placeholder="Enter neighborhood or address"
+                value={addressInput}
+                onChange={(e) => setAddressInput(e.target.value)}
+                onBlur={handleSetAddress}
+                onKeyDown={(e) => e.key === "Enter" && handleSetAddress()}
+                style={{
+                  flex: 1,
+                  padding: "10px 14px",
+                  background: "rgba(255,255,255,.06)",
+                  border: "1.5px solid rgba(255,255,255,.12)",
+                  borderRadius: 12,
+                  color: "#fff",
+                  fontSize: 13,
+                  fontFamily: "inherit",
+                  outline: "none",
+                }}
+              />
+            </div>
+          )}
+
+          {locationMode !== "anywhere" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,.5)", minWidth: 60 }}>
+                  🚶 Walk
+                </span>
+                <input
+                  type="number"
+                  placeholder="min"
+                  value={walkMinutes}
+                  onChange={(e) => setWalkMinutes(e.target.value)}
+                  style={{
+                    width: 70,
+                    padding: "8px 12px",
+                    background: "rgba(255,255,255,.06)",
+                    border: "1.5px solid rgba(255,255,255,.12)",
+                    borderRadius: 10,
+                    color: "#fff",
+                    fontSize: 13,
+                    fontFamily: "inherit",
+                    outline: "none",
+                    textAlign: "center",
+                  }}
+                />
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,.35)" }}>minutes</span>
+              </div>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,.5)", minWidth: 60 }}>
+                  🚗 Drive
+                </span>
+                <input
+                  type="number"
+                  placeholder="min"
+                  value={driveMinutes}
+                  onChange={(e) => setDriveMinutes(e.target.value)}
+                  style={{
+                    width: 70,
+                    padding: "8px 12px",
+                    background: "rgba(255,255,255,.06)",
+                    border: "1.5px solid rgba(255,255,255,.12)",
+                    borderRadius: 10,
+                    color: "#fff",
+                    fontSize: 13,
+                    fontFamily: "inherit",
+                    outline: "none",
+                    textAlign: "center",
+                  }}
+                />
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,.35)" }}>minutes</span>
+              </div>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,.5)", minWidth: 60 }}>
+                  📏 Radius
+                </span>
+                <input
+                  type="number"
+                  placeholder="km"
+                  value={radiusKm}
+                  onChange={(e) => setRadiusKm(e.target.value)}
+                  style={{
+                    width: 70,
+                    padding: "8px 12px",
+                    background: "rgba(255,255,255,.06)",
+                    border: "1.5px solid rgba(255,255,255,.12)",
+                    borderRadius: 10,
+                    color: "#fff",
+                    fontSize: 13,
+                    fontFamily: "inherit",
+                    outline: "none",
+                    textAlign: "center",
+                  }}
+                />
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,.35)" }}>km</span>
+              </div>
+              <p style={{ fontSize: 11, color: "rgba(255,255,255,.25)", marginTop: 2 }}>
+                Fill any one — we'll use the widest range
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Submit */}

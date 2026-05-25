@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import type { Venue, TasteProfile, NightPrefs } from "../../types";
-import { EMPTY_PROFILE } from "../../types";
+import { EMPTY_PROFILE, EMPTY_LOCATION_FILTER } from "../../types";
 import { generateRecommendations, generateExplanation } from "../recommendations";
 
 // Mock analytics to avoid localStorage in tests
@@ -26,6 +26,8 @@ const makeVenue = (overrides: Partial<Venue> = {}): Venue => ({
   gradient: ["#000", "#111"] as [string, string],
   bestFor: "casual dinner with friends",
   dietary: ["vegetarian"],
+  lat: 49.2827,
+  lng: -123.1207,
   ...overrides,
 });
 
@@ -47,6 +49,7 @@ const makePrefs = (overrides: Partial<NightPrefs> = {}): NightPrefs => ({
   budget: null,
   neighborhoods: [],
   planType: "both",
+  location: { ...EMPTY_LOCATION_FILTER },
   ...overrides,
 });
 

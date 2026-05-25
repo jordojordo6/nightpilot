@@ -9,7 +9,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🏔️",tagline:"James Beard finalist chef serving New Mexican–inspired fine dining",
     highlights:["James Beard semifinalist","Open kitchen","Weekend brunch"],
     gradient:["#2C3E50","#E67E22"],bestFor:"a truly special dinner with creative seasonal cooking",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7608,lng:-111.8929},
 
   {id:402,name:"Log Haven",type:"restaurant",cuisine:"Mountain American",neighborhood:"Millcreek Canyon",price:4,rating:4.7,
     vibe:["romantic","intimate","scenic"],
@@ -17,7 +18,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🌲",tagline:"Mountain fine dining tucked four miles up Millcreek Canyon",
     highlights:["Waterfall patio","Canyon setting","Southwestern flair"],
     gradient:["#1B4332","#95D5B2"],bestFor:"romantic special occasion in a stunning natural setting",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7058,lng:-111.7818},
 
   {id:403,name:"Valter's Osteria",type:"restaurant",cuisine:"Italian",neighborhood:"Downtown",price:4,rating:4.7,
     vibe:["classic","intimate","warm"],
@@ -25,7 +27,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🍝",tagline:"Elegant Italian with candlelight, wine, and old-world charm",
     highlights:["Handmade pasta","Valter's personal touch","Extensive wine list"],
     gradient:["#5C0A0A","#D4A574"],bestFor:"a romantic Italian dinner rooted in tradition and soul",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],
+    lat:40.7598,lng:-111.8904},
 
   {id:404,name:"HSL",type:"restaurant",cuisine:"New American",neighborhood:"Downtown",price:3,rating:4.6,
     vibe:["trendy","creative","upscale"],
@@ -33,7 +36,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🌿",tagline:"Botanically-inspired modern American in a velvet-draped lounge",
     highlights:["Seasonal menu","Beautiful interior","Craft cocktails"],
     gradient:["#4A148C","#CE93D8"],bestFor:"a stylish date night with inventive seasonal plates",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7617,lng:-111.8900},
 
   {id:405,name:"Bambara",type:"restaurant",cuisine:"New American",neighborhood:"Downtown",price:3,rating:4.5,
     vibe:["upscale","classic","lively"],
@@ -41,7 +45,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🏛️",tagline:"20-year downtown institution in the historic Hotel Monaco",
     highlights:["Hotel Monaco setting","New chef 2025","Power brunch"],
     gradient:["#1A237E","#FFD54F"],bestFor:"a polished business dinner or weekend brunch",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7612,lng:-111.8911},
 
   {id:406,name:"Copper Onion",type:"restaurant",cuisine:"Modern European",neighborhood:"Downtown",price:3,rating:4.6,
     vibe:["lively","trendy","warm"],
@@ -49,7 +54,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🧅",tagline:"Downtown brasserie with brunch crowds and seasonal plates",
     highlights:["Famous brunch","House-made pasta","Local favorite"],
     gradient:["#B87333","#FFF8DC"],bestFor:"weekend brunch or a lively dinner with friends",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7593,lng:-111.8890},
 
   {id:407,name:"Arlo",type:"restaurant",cuisine:"New American",neighborhood:"Sugar House",price:3,rating:4.7,
     vibe:["creative","intimate","seasonal"],
@@ -57,7 +63,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🌾",tagline:"James Beard–recognized seasonal cooking in Sugar House",
     highlights:["James Beard semifinalist 2026","Seasonal tasting","Intimate room"],
     gradient:["#3E2723","#A1887F"],bestFor:"a creative tasting menu from one of SLC's rising chefs",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],
+    lat:40.7216,lng:-111.8576},
 
   {id:408,name:"Manolis",type:"restaurant",cuisine:"Greek",neighborhood:"Downtown",price:2,rating:4.5,
     vibe:["warm","casual","fun"],
@@ -65,7 +72,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🫒",tagline:"Greek-inspired small plates and weekend brunch downtown",
     highlights:["Myzithra pancakes","Shareable mezze","Weekend brunch"],
     gradient:["#1565C0","#FFFFFF"],bestFor:"casual Mediterranean sharing with friends or brunch",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7613,lng:-111.8900},
 
   {id:409,name:"Pretty Bird",type:"restaurant",cuisine:"Hot Chicken",neighborhood:"Downtown",price:2,rating:4.5,
     vibe:["casual","fun","vibrant"],
@@ -73,7 +81,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🐔",tagline:"Nashville-style hot chicken sandwiches that pack serious heat",
     highlights:["Signature hot chicken","Fast casual","Cult following"],
     gradient:["#FF5722","#FFEB3B"],bestFor:"a quick, punchy lunch or casual dinner with friends",
-    dietary:[]},
+    dietary:[],
+    lat:40.7616,lng:-111.8904},
 
   {id:410,name:"Taqueria 27",type:"restaurant",cuisine:"Modern Mexican",neighborhood:"Downtown",price:2,rating:4.4,
     vibe:["casual","fun","creative"],
@@ -81,7 +90,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🌮",tagline:"Inventive daily-changing tacos and creative margaritas",
     highlights:["Daily taco specials","Veteran-owned","Great patio"],
     gradient:["#F57C00","#FFF176"],bestFor:"fun creative tacos and margs with a group",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7606,lng:-111.8895},
 
   {id:411,name:"Nomad East",type:"restaurant",cuisine:"Neapolitan Pizza",neighborhood:"Sugar House",price:2,rating:4.5,
     vibe:["casual","fun","neighbourhood"],
@@ -89,7 +99,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🍕",tagline:"Wood-fired Neapolitan pizza in the heart of Sugar House",
     highlights:["Wood-fired oven","Family salad","Neighbourhood vibe"],
     gradient:["#D32F2F","#FFCDD2"],bestFor:"sharing pizzas and sides with the friend group",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],
+    lat:40.7220,lng:-111.8571},
 
   {id:412,name:"Pago",type:"restaurant",cuisine:"Farm-to-Table American",neighborhood:"9th & 9th",price:3,rating:4.6,
     vibe:["intimate","seasonal","warm"],
@@ -97,7 +108,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🥬",tagline:"Hyper-local farm-to-table in the charming 9th & 9th district",
     highlights:["Local sourcing","Intimate room","Neighbourhood gem"],
     gradient:["#2E7D32","#C8E6C9"],bestFor:"an intimate date night celebrating local ingredients",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7437,lng:-111.8700},
 
   {id:413,name:"Sapa",type:"restaurant",cuisine:"Vietnamese-Japanese",neighborhood:"Downtown",price:2,rating:4.4,
     vibe:["trendy","vibrant","casual"],
@@ -105,7 +117,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🍣",tagline:"Vietnamese and Japanese fusion with sushi and Thai noodles",
     highlights:["Sushi bar","Thai noodles","Stylish space"],
     gradient:["#E91E63","#FCE4EC"],bestFor:"casual Asian fusion with variety and cocktails",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7599,lng:-111.8908},
 
   {id:414,name:"Stanza",type:"restaurant",cuisine:"Italian",neighborhood:"Capitol Hill",price:3,rating:4.6,
     vibe:["cozy","intimate","warm"],
@@ -113,7 +126,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🍷",tagline:"Handmade pasta and natural wine on Capitol Hill",
     highlights:["Handmade pasta daily","Natural wine focus","Cozy room"],
     gradient:["#4E342E","#BCAAA4"],bestFor:"a cozy pasta and wine date without the fuss",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],
+    lat:40.7598,lng:-111.8779},
 
   {id:415,name:"Franklin Ave",type:"restaurant",cuisine:"New American",neighborhood:"Central 9th",price:3,rating:4.7,
     vibe:["trendy","creative","lively"],
@@ -121,7 +135,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🥃",tagline:"Salt Lake Magazine's Best Restaurant 2025 — cocktails meet scratch kitchen",
     highlights:["Best Restaurant 2025","Amaro & whiskey","Inventive menu"],
     gradient:["#37474F","#FFAB40"],bestFor:"impressive cocktails paired with serious food",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7519,lng:-111.8923},
 
   {id:416,name:"The Pearl",type:"restaurant",cuisine:"Vietnamese-American",neighborhood:"Capitol Hill",price:2,rating:4.5,
     vibe:["creative","trendy","casual"],
@@ -129,7 +144,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🦪",tagline:"Vietnamese-fusion brunch and dinner on Capitol Hill",
     highlights:["Vietnamese-fusion breakfast","Creative menu","Hip vibe"],
     gradient:["#00695C","#B2DFDB"],bestFor:"a creative brunch that goes beyond eggs and toast",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7615,lng:-111.8802},
 
   {id:417,name:"Ekamai Thai",type:"restaurant",cuisine:"Thai",neighborhood:"Sugar House",price:2,rating:4.5,
     vibe:["upscale","vibrant","warm"],
@@ -137,7 +153,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🌶️",tagline:"Elevated Thai cuisine in a stylish Sugar House setting",
     highlights:["Upscale Thai","Beautiful plating","Great cocktails"],
     gradient:["#F9A825","#4CAF50"],bestFor:"Thai food that feels special enough for a date",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7233,lng:-111.8587},
 
   {id:418,name:"Avenues Proper",type:"restaurant",cuisine:"Gastropub",neighborhood:"The Avenues",price:2,rating:4.4,
     vibe:["casual","neighbourhood","fun"],
@@ -145,7 +162,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🍺",tagline:"SLC's original neighbourhood brewpub with chef-driven food",
     highlights:["House-brewed beer","Seasonal menu","Great patio"],
     gradient:["#33691E","#DCEDC8"],bestFor:"casual beers and elevated pub food on a sunny afternoon",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],
+    lat:40.7793,lng:-111.8778},
 
   {id:419,name:"SLC Eatery",type:"restaurant",cuisine:"Global Fusion",neighborhood:"Downtown",price:2,rating:4.3,
     vibe:["trendy","social","fun"],
@@ -153,7 +171,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🍴",tagline:"Food-hall-style sharing plates in a lively downtown space",
     highlights:["Sharing plates","Global menu","Late-night friendly"],
     gradient:["#6A1B9A","#CE93D8"],bestFor:"group dinners where everyone can order something different",
-    dietary:["vegetarian","gluten-free"]},
+    dietary:["vegetarian","gluten-free"],
+    lat:40.7599,lng:-111.8929},
 
   {id:420,name:"Sweet Lake Biscuits",type:"restaurant",cuisine:"Southern Brunch",neighborhood:"Sugar House",price:1,rating:4.5,
     vibe:["casual","fun","comfort"],
@@ -161,7 +180,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🧈",tagline:"Towering biscuit sandwiches and limeade in Sugar House",
     highlights:["The Hoss biscuit","Fresh limeade","Walk-in only"],
     gradient:["#FFF59D","#FF8A65"],bestFor:"a hearty no-frills brunch that won't break the bank",
-    dietary:[]},
+    dietary:[],
+    lat:40.7229,lng:-111.8573},
 
   // ─── BARS ─────────────────────────────────────────────────
 
@@ -171,7 +191,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🧙‍♀️",tagline:"James Beard–nominated cocktail bar with the city's best sake list",
     highlights:["James Beard finalist 2025","Sake selection","Intimate space"],
     gradient:["#1A237E","#7C4DFF"],bestFor:"a quiet, masterful cocktail experience on a date",
-    dietary:[]},
+    dietary:[],
+    lat:40.7490,lng:-111.8923},
 
   {id:452,name:"Copper Common",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown",price:3,rating:4.6,
     vibe:["cozy","upscale","intimate"],
@@ -179,7 +200,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🥃",tagline:"Big-city cocktails in a snug, copper-toned downtown hideaway",
     highlights:["Expert mixologists","Cozy atmosphere","Whiskey focus"],
     gradient:["#3E2723","#D7CCC8"],bestFor:"an intimate nightcap with expertly crafted cocktails",
-    dietary:[]},
+    dietary:[],
+    lat:40.7607,lng:-111.8914},
 
   {id:453,name:"White Horse",type:"bar",cuisine:"Spirits & Wine Bar",neighborhood:"Downtown",price:3,rating:4.5,
     vibe:["trendy","lively","social"],
@@ -187,7 +209,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🐴",tagline:"Downtown spirits bar with weekend brunch and buzzy energy",
     highlights:["Brunch cocktails","Lively atmosphere","Great wine list"],
     gradient:["#F5F5F5","#212121"],bestFor:"boozy brunch or a lively evening with friends",
-    dietary:[]},
+    dietary:[],
+    lat:40.7601,lng:-111.8910},
 
   {id:454,name:"Felt Bar",type:"bar",cuisine:"Cocktail Lounge",neighborhood:"Downtown",price:2,rating:4.4,
     vibe:["intimate","classic","chill"],
@@ -195,7 +218,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🎷",tagline:"Prohibition-era cocktail lounge with nightly live jazz",
     highlights:["Live jazz nightly","Whiskey library","Handcrafted cocktails"],
     gradient:["#1B1B2F","#E8D5B7"],bestFor:"a moody jazz-filled evening with great whiskey",
-    dietary:[]},
+    dietary:[],
+    lat:40.7619,lng:-111.8927},
 
   {id:455,name:"BTG Wine Bar",type:"bar",cuisine:"Wine Bar",neighborhood:"Downtown",price:3,rating:4.5,
     vibe:["upscale","intimate","refined"],
@@ -203,7 +227,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🍷",tagline:"Utah's finest wine-by-the-glass program downtown",
     highlights:["Extensive wine flights","Sommelier-guided","Cheese pairings"],
     gradient:["#4A0E0E","#F8BBD0"],bestFor:"a refined wine tasting without committing to full bottles",
-    dietary:["vegetarian"]},
+    dietary:["vegetarian"],
+    lat:40.7623,lng:-111.8901},
 
   {id:456,name:"Lake Effect",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown",price:2,rating:4.4,
     vibe:["trendy","fun","vibrant"],
@@ -211,7 +236,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🌊",tagline:"Vibrant downtown cocktail bar with creative seasonal drinks",
     highlights:["Seasonal menu","Fun atmosphere","Late night"],
     gradient:["#0277BD","#B3E5FC"],bestFor:"starting the night with creative drinks and good energy",
-    dietary:[]},
+    dietary:[],
+    lat:40.7610,lng:-111.8902},
 
   {id:457,name:"Van Ryder Rooftop",type:"bar",cuisine:"Rooftop Bar",neighborhood:"Downtown",price:3,rating:4.5,
     vibe:["upscale","scenic","social"],
@@ -219,7 +245,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🌅",tagline:"11th-floor panoramic views of the city and mountains at sunset",
     highlights:["Mountain views","Sunset cocktails","Le Meridien hotel"],
     gradient:["#FF6F00","#FFF3E0"],bestFor:"impressing someone with sunset views and cocktails",
-    dietary:[]},
+    dietary:[],
+    lat:40.7619,lng:-111.8897},
 
   {id:458,name:"The Green Pig",type:"bar",cuisine:"Dive Bar & Pub",neighborhood:"Downtown",price:1,rating:4.2,
     vibe:["casual","fun","lively"],
@@ -227,7 +254,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🐷",tagline:"Classic downtown dive with cheap drinks and weekend brunch",
     highlights:["Cheap drinks","Rooftop patio","Weekend brunch"],
     gradient:["#388E3C","#C8E6C9"],bestFor:"no-pressure drinks with friends on a budget",
-    dietary:[]},
+    dietary:[],
+    lat:40.7599,lng:-111.8918},
 
   {id:459,name:"Bongo Lounge",type:"bar",cuisine:"Dive Bar",neighborhood:"Sugar House",price:1,rating:4.1,
     vibe:["casual","chill","classic"],
@@ -235,7 +263,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🪘",tagline:"SLC's best dive bar since 1952 — $2.75 steins and local craft",
     highlights:["Open since 1952","Cheapest steins in town","No pretense"],
     gradient:["#5D4037","#D7CCC8"],bestFor:"a no-frills, cheap night out in a neighbourhood classic",
-    dietary:[]},
+    dietary:[],
+    lat:40.7219,lng:-111.8573},
 
   {id:460,name:"Repeal",type:"bar",cuisine:"Speakeasy",neighborhood:"Downtown",price:3,rating:4.5,
     vibe:["intimate","upscale","trendy"],
@@ -243,7 +272,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🚪",tagline:"Hidden speakeasy with prohibition-era vibes and expert cocktails",
     highlights:["Speakeasy entrance","Craft cocktails","Intimate seating"],
     gradient:["#263238","#B0BEC5"],bestFor:"a memorable date night with speakeasy intrigue",
-    dietary:[]},
+    dietary:[],
+    lat:40.7621,lng:-111.8918},
 
   {id:461,name:"Garage on Beck",type:"bar",cuisine:"Live Music Venue",neighborhood:"Marmalade",price:2,rating:4.3,
     vibe:["lively","fun","vibrant"],
@@ -251,7 +281,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🎸",tagline:"Live music venue and bar in a converted auto garage",
     highlights:["Live bands nightly","Converted garage","Great energy"],
     gradient:["#B71C1C","#FFCDD2"],bestFor:"a fun night out with live music and cheap drinks",
-    dietary:[]},
+    dietary:[],
+    lat:40.7723,lng:-111.9018},
 
   {id:462,name:"Alibi",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Downtown",price:2,rating:4.4,
     vibe:["trendy","social","fun"],
@@ -259,7 +290,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🕵️",tagline:"Trendy downtown cocktail bar with a buzzy late-night crowd",
     highlights:["Late-night scene","Creative cocktails","Social vibe"],
     gradient:["#311B92","#D1C4E9"],bestFor:"starting or ending a night downtown with good drinks",
-    dietary:[]},
+    dietary:[],
+    lat:40.7593,lng:-111.8895},
 
   {id:463,name:"Beerhive",type:"bar",cuisine:"Craft Beer Bar",neighborhood:"Downtown",price:2,rating:4.3,
     vibe:["casual","social","fun"],
@@ -267,7 +299,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🐝",tagline:"Downtown craft beer hub with huge tap list and patio",
     highlights:["Massive tap list","Rooftop patio","Sports screens"],
     gradient:["#F9A825","#FFF9C4"],bestFor:"beers with a group on a sunny downtown patio",
-    dietary:[]},
+    dietary:[],
+    lat:40.7599,lng:-111.8908},
 
   {id:464,name:"Melancholy",type:"bar",cuisine:"Wine & Cocktail Bar",neighborhood:"9th & 9th",price:2,rating:4.5,
     vibe:["chill","intimate","trendy"],
@@ -275,7 +308,8 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🌙",tagline:"Moody natural wine and cocktails in the 9th & 9th neighbourhood",
     highlights:["Natural wine focus","Low-key vibe","Neighbourhood spot"],
     gradient:["#1A1A2E","#534BAE"],bestFor:"a chill, unpretentious wine date in a great neighbourhood",
-    dietary:[]},
+    dietary:[],
+    lat:40.7426,lng:-111.8677},
 
   {id:465,name:"Prohibition",type:"bar",cuisine:"Speakeasy",neighborhood:"Downtown",price:2,rating:4.3,
     vibe:["intimate","classic","fun"],
@@ -283,5 +317,6 @@ export const SLC_VENUES: Venue[] = [
     emoji:"🎩",tagline:"Underground speakeasy vibes with classic cocktails downtown",
     highlights:["Hidden entrance","Classic cocktails","Moody atmosphere"],
     gradient:["#212121","#757575"],bestFor:"a fun speakeasy experience without breaking the bank",
-    dietary:[]},
+    dietary:[],
+    lat:40.7610,lng:-111.8917},
 ];

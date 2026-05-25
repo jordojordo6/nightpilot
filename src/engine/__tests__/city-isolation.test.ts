@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { EMPTY_PROFILE } from "../../types";
+import { EMPTY_PROFILE, EMPTY_LOCATION_FILTER } from "../../types";
 import type { NightPrefs } from "../../types";
 import { generateRecommendations } from "../recommendations";
 import { CITIES } from "../../data/cities";
@@ -13,6 +13,7 @@ const DEFAULT_PREFS: NightPrefs = {
   budget: null,
   neighborhoods: [],
   planType: "both",
+  location: { ...EMPTY_LOCATION_FILTER },
 };
 
 describe("City isolation", () => {
