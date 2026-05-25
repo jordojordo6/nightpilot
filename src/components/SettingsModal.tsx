@@ -163,80 +163,8 @@ export function SettingsModal({ open, settings, onClose, onChange }: Props) {
           </button>
         </div>
 
-        {/* Michelin Filter */}
-        <div style={{ marginBottom: 28 }}>
-          <p
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              color: "rgba(255,255,255,.3)",
-              textTransform: "uppercase",
-              letterSpacing: 2,
-              marginBottom: 12,
-            }}
-          >
-            Michelin Guide
-          </p>
-          <p
-            style={{
-              fontSize: 12,
-              color: "rgba(255,255,255,.35)",
-              marginBottom: 16,
-              lineHeight: 1.5,
-            }}
-          >
-            Only show Michelin-recognised restaurants.
-          </p>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 8,
-            }}
-          >
-            {MICHELIN_OPTIONS.map((opt) => {
-              const active = settings.michelin.includes(opt.key);
-              return (
-                <button
-                  key={opt.key}
-                  onClick={() => toggleMichelin(opt.key)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    padding: "14px 16px",
-                    background: active
-                      ? "rgba(220,38,38,.10)"
-                      : "rgba(255,255,255,.04)",
-                    border: active
-                      ? "1.5px solid rgba(220,38,38,.4)"
-                      : "1.5px solid rgba(255,255,255,.08)",
-                    borderRadius: 14,
-                    color: active ? "#ef4444" : "rgba(255,255,255,.6)",
-                    fontSize: 15,
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    fontFamily: "inherit",
-                    transition: "all 0.15s",
-                    textAlign: "left",
-                  }}
-                >
-                  <span style={{ minWidth: 60, display: "flex", alignItems: "center" }}>
-                    <MichelinIcon level={opt.key} color={active ? "#ef4444" : "#c4233b"} />
-                  </span>
-                  {opt.label && <span style={{ flex: 1 }}>{opt.label}</span>}
-                  {!opt.label && <span style={{ flex: 1 }} />}
-                  {active && (
-                    <span style={{ fontSize: 16, color: "#ef4444" }}>✓</span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
         {/* Dietary Restrictions */}
-        <div>
+        <div style={{ marginBottom: 28 }}>
           <p
             style={{
               fontSize: 11,
@@ -304,6 +232,78 @@ export function SettingsModal({ open, settings, onClose, onChange }: Props) {
                     >
                       ✓
                     </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Michelin Filter */}
+        <div>
+          <p
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              color: "rgba(255,255,255,.3)",
+              textTransform: "uppercase",
+              letterSpacing: 2,
+              marginBottom: 12,
+            }}
+          >
+            Michelin Guide
+          </p>
+          <p
+            style={{
+              fontSize: 12,
+              color: "rgba(255,255,255,.35)",
+              marginBottom: 16,
+              lineHeight: 1.5,
+            }}
+          >
+            Only show Michelin-recognised restaurants.
+          </p>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+            }}
+          >
+            {MICHELIN_OPTIONS.map((opt) => {
+              const active = settings.michelin.includes(opt.key);
+              return (
+                <button
+                  key={opt.key}
+                  onClick={() => toggleMichelin(opt.key)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    padding: "14px 16px",
+                    background: active
+                      ? "rgba(220,38,38,.10)"
+                      : "rgba(255,255,255,.04)",
+                    border: active
+                      ? "1.5px solid rgba(220,38,38,.4)"
+                      : "1.5px solid rgba(255,255,255,.08)",
+                    borderRadius: 14,
+                    color: active ? "#ef4444" : "rgba(255,255,255,.6)",
+                    fontSize: 15,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                    transition: "all 0.15s",
+                    textAlign: "left",
+                  }}
+                >
+                  <span style={{ minWidth: 60, display: "flex", alignItems: "center" }}>
+                    <MichelinIcon level={opt.key} color={active ? "#ef4444" : "#c4233b"} />
+                  </span>
+                  {opt.label && <span style={{ flex: 1 }}>{opt.label}</span>}
+                  {!opt.label && <span style={{ flex: 1 }} />}
+                  {active && (
+                    <span style={{ fontSize: 16, color: "#ef4444" }}>✓</span>
                   )}
                 </button>
               );
