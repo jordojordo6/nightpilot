@@ -27,14 +27,18 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
     );
   };
 
-  const handleSave = () => {
-    logEvent("venue_saved", {
+  const handleCopy = () => {
+    const text = `${venue.name} — ${venue.cuisine} · ${venue.neighborhood} · ${"$".repeat(venue.price)}`;
+    navigator.clipboard.writeText(text).then(
+      () => showToast("Copied to clipboard!"),
+      () => showToast("Couldn't copy")
+    );
+    logEvent("venue_copied", {
       venueId: venue.id,
       venueName: venue.name,
       source: "results",
       city: cityKey,
     });
-    showToast(`Saved ${venue.name}!`);
   };
 
   return (
@@ -163,7 +167,7 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
         <div style={{ display: "flex", gap: 8 }}>
           <ActionButton label="🔍 Search" primary onClick={handleSearch} />
           <ActionButton label="📍 Map" onClick={handleMap} />
-          <ActionButton label="♥ Save" onClick={handleSave} />
+          <ActionButton label="📋 Copy" onClick={handleCopy} />
         </div>
       </div>
     </div>

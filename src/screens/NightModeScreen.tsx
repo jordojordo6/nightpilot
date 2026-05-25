@@ -5,7 +5,6 @@ import { getProfileSummary } from "../engine/taste";
 interface Props {
   onSubmit: (prefs: NightPrefs) => void;
   onBack: () => void;
-  swipeCount: number;
   tasteProfile: TasteProfile;
   venues: Venue[];
 }
@@ -28,7 +27,6 @@ const BUDGETS = [
 export function NightModeScreen({
   onSubmit,
   onBack,
-  swipeCount,
   tasteProfile,
   venues,
 }: Props) {
@@ -165,7 +163,7 @@ export function NightModeScreen({
                 marginTop: 8,
               }}
             >
-              Based on {swipeCount} ratings
+              Based on {tasteProfile.likeCount + tasteProfile.saveCount + tasteProfile.rejectCount} ratings
             </p>
           </div>
         )}

@@ -323,7 +323,6 @@ export default function App() {
         <NightModeScreen
           onSubmit={handleNightMode}
           onBack={() => setScreen("swipe")}
-          swipeCount={swipeCount}
           tasteProfile={tasteProfile}
           venues={venues}
         />
