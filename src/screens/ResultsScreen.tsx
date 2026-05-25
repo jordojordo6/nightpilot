@@ -51,35 +51,64 @@ export function ResultsScreen({
             textAlign: "center",
           }}
         >
-          Need more data
+          No strong matches
         </h2>
         <p
           style={{
             color: "rgba(255,255,255,.5)",
             textAlign: "center",
-            marginBottom: 32,
+            marginBottom: 12,
             fontSize: 14,
             lineHeight: 1.5,
           }}
         >
-          Swipe through more spots so we can learn your taste better.
+          Try expanding your radius, selecting more neighborhoods, or adjusting your budget.
         </p>
-        <button
-          onClick={onKeepSwiping}
+        <p
           style={{
-            padding: "14px 32px",
-            background: "linear-gradient(135deg,#fbbf24,#f59e0b)",
-            color: "#0a0a0f",
-            border: "none",
-            borderRadius: 14,
-            fontSize: 16,
-            fontWeight: 700,
-            cursor: "pointer",
-            fontFamily: "inherit",
+            color: "rgba(255,255,255,.35)",
+            textAlign: "center",
+            marginBottom: 32,
+            fontSize: 13,
+            lineHeight: 1.4,
           }}
         >
-          Keep Swiping
-        </button>
+          You can also swipe through more spots to improve recommendations.
+        </p>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+          <button
+            onClick={onBack}
+            style={{
+              padding: "14px 24px",
+              background: "rgba(255,255,255,.08)",
+              color: "rgba(255,255,255,.8)",
+              border: "1px solid rgba(255,255,255,.15)",
+              borderRadius: 14,
+              fontSize: 15,
+              fontWeight: 600,
+              cursor: "pointer",
+              fontFamily: "inherit",
+            }}
+          >
+            Adjust Filters
+          </button>
+          <button
+            onClick={onKeepSwiping}
+            style={{
+              padding: "14px 24px",
+              background: "linear-gradient(135deg,#fbbf24,#f59e0b)",
+              color: "#0a0a0f",
+              border: "none",
+              borderRadius: 14,
+              fontSize: 15,
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "inherit",
+            }}
+          >
+            Keep Swiping
+          </button>
+        </div>
       </div>
     );
   }

@@ -109,15 +109,15 @@ export function generatePairingRationale(
 
   if (sameHood) {
     parts.push(
-      `Both in ${restaurant.neighborhood} — ${walkTime} between them, so you can stroll over after dinner.`
+      `Both in ${restaurant.neighborhood} — approx. ${walkTime} between them, so you can stroll over after dinner.`
     );
   } else if (areNearby(restaurant.neighborhood, bar.neighborhood)) {
     parts.push(
-      `${restaurant.neighborhood} to ${bar.neighborhood} is a quick ${walkTime} — easy transition.`
+      `${restaurant.neighborhood} to ${bar.neighborhood} is approx. ${walkTime} — easy transition.`
     );
   } else {
     parts.push(
-      `${restaurant.neighborhood} to ${bar.neighborhood} — ${walkTime}. Worth the trip.`
+      `${restaurant.neighborhood} to ${bar.neighborhood} — approx. ${walkTime}. Worth the trip.`
     );
   }
 
@@ -358,6 +358,12 @@ export function generateRecommendations(
     planCount: plans.length,
     topMatch: plans[0]?.matchScore,
     city: cityKey,
+    locationMode: prefs.location.mode,
+    walkMinutes: prefs.location.walkMinutes,
+    bikeMinutes: prefs.location.bikeMinutes,
+    driveMinutes: prefs.location.driveMinutes,
+    radiusKm: prefs.location.radiusKm,
+    hasAddress: prefs.location.mode === "address",
   });
 
   return plans;

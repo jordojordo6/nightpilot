@@ -71,16 +71,30 @@ export function NightModeScreen({
   };
 
   const handleSetAddress = () => {
-    // For MVP: use hardcoded city centers as geocoding fallback
+    // For MVP: use city center as geocoding fallback
     // In production this would call a geocoding API
     if (addressInput.trim()) {
       setLocationMode("address");
-      // Use first venue's coords as a rough city center proxy
+      // Use average of all venue coords as a rough city center proxy
       if (venues.length > 0) {
-        setLocationLat(venues[0].lat);
-        setLocationLng(venues[0].lng);
+        const avgLat = venues.reduce((s, v) => s + v.lat, 0) / venues.length;
+        const avgLng = venues.reduce((s, v) => s + v.lng, 0) / venues.length;
+        setLocationLat(avgLat);
+        setLocationLng(avgLng);
       }
+    } else {
+      // Empty address — reset to anywhere
+      setLocationMode("anywhere");
+      setLocationLat(null);
+      setLocationLng(null);
     }
+  };
+
+  /** Parse a positive number or return null. Clamps <=0 to null. */
+  const posNum = (s: string): number | null => {
+    if (!s) return null;
+    const n = Number(s);
+    return n > 0 ? n : null;
   };
 
   const buildLocationFilter = (): LocationFilter => {
@@ -89,10 +103,10 @@ export function NightModeScreen({
       mode: locationMode,
       lat: locationLat,
       lng: locationLng,
-      walkMinutes: walkMinutes ? Number(walkMinutes) : null,
-      bikeMinutes: bikeMinutes ? Number(bikeMinutes) : null,
-      driveMinutes: driveMinutes ? Number(driveMinutes) : null,
-      radiusKm: radiusKm ? Number(radiusKm) : null,
+      walkMinutes: posNum(walkMinutes),
+      bikeMinutes: posNum(bikeMinutes),
+      driveMinutes: posNum(driveMinutes),
+      radiusKm: posNum(radiusKm),
     };
   };
 
@@ -391,7 +405,7 @@ export function NightModeScreen({
           )}
           {geoStatus === "error" && (
             <p style={{ fontSize: 12, color: "#ef4444", marginBottom: 8 }}>
-              Couldn't get location — check permissions
+              Location access was denied. Enter an address or choose neighborhoods instead.
             </p>
           )}
           {geoStatus === "success" && locationMode === "current" && (
@@ -401,26 +415,31 @@ export function NightModeScreen({
           )}
 
           {locationMode === "address" && (
-            <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-              <input
-                type="text"
-                placeholder="Enter neighborhood or address"
-                value={addressInput}
-                onChange={(e) => setAddressInput(e.target.value)}
-                onBlur={handleSetAddress}
-                onKeyDown={(e) => e.key === "Enter" && handleSetAddress()}
-                style={{
-                  flex: 1,
-                  padding: "10px 14px",
-                  background: "rgba(255,255,255,.06)",
-                  border: "1.5px solid rgba(255,255,255,.12)",
-                  borderRadius: 12,
-                  color: "#fff",
-                  fontSize: 13,
-                  fontFamily: "inherit",
-                  outline: "none",
-                }}
-              />
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ display: "flex", gap: 8, marginBottom: 6 }}>
+                <input
+                  type="text"
+                  placeholder="Enter neighborhood or address"
+                  value={addressInput}
+                  onChange={(e) => setAddressInput(e.target.value)}
+                  onBlur={handleSetAddress}
+                  onKeyDown={(e) => e.key === "Enter" && handleSetAddress()}
+                  style={{
+                    flex: 1,
+                    padding: "10px 14px",
+                    background: "rgba(255,255,255,.06)",
+                    border: "1.5px solid rgba(255,255,255,.12)",
+                    borderRadius: 12,
+                    color: "#fff",
+                    fontSize: 13,
+                    fontFamily: "inherit",
+                    outline: "none",
+                  }}
+                />
+              </div>
+              <p style={{ fontSize: 10, color: "rgba(255,255,255,.25)" }}>
+                Approximate — uses city center as reference point
+              </p>
             </div>
           )}
 
@@ -432,6 +451,7 @@ export function NightModeScreen({
                 </span>
                 <input
                   type="number"
+                  min="1"
                   placeholder="min"
                   value={walkMinutes}
                   onChange={(e) => setWalkMinutes(e.target.value)}
@@ -456,6 +476,7 @@ export function NightModeScreen({
                 </span>
                 <input
                   type="number"
+                  min="1"
                   placeholder="min"
                   value={bikeMinutes}
                   onChange={(e) => setBikeMinutes(e.target.value)}
@@ -480,6 +501,7 @@ export function NightModeScreen({
                 </span>
                 <input
                   type="number"
+                  min="1"
                   placeholder="min"
                   value={driveMinutes}
                   onChange={(e) => setDriveMinutes(e.target.value)}
@@ -504,6 +526,8 @@ export function NightModeScreen({
                 </span>
                 <input
                   type="number"
+                  min="0.1"
+                  step="0.5"
                   placeholder="km"
                   value={radiusKm}
                   onChange={(e) => setRadiusKm(e.target.value)}
@@ -523,7 +547,7 @@ export function NightModeScreen({
                 <span style={{ fontSize: 11, color: "rgba(255,255,255,.35)" }}>km</span>
               </div>
               <p style={{ fontSize: 11, color: "rgba(255,255,255,.25)", marginTop: 2 }}>
-                Fill any one — we'll use the widest range
+                Fill any — we'll use the widest range. Estimated travel times.
               </p>
             </div>
           )}

@@ -173,3 +173,73 @@
 - [ ] Wine Lens with unreadable photo → graceful error
 - [ ] Corrupted localStorage → app recovers gracefully (try/catch fallbacks)
 - [ ] Michelin filter on in SLC → shows only bars (0 Michelin restaurants)
+
+## Night Mode — Location + Radius + Travel Mode QA
+
+### Multi-Neighborhood Selection
+- [ ] Select one neighborhood → recommendation favors it
+- [ ] Select two neighborhoods → both are boosted in scoring
+- [ ] Select all neighborhoods → same as "Anywhere"
+- [ ] Deselect all → "Anywhere" pill highlights
+- [ ] Switch cities → neighborhood pills refresh to new city's neighborhoods
+- [ ] No stale neighborhoods from previous city
+
+### Current Location
+- [ ] Tap "My Location" → browser permission prompt appears (HTTPS/Vercel only)
+- [ ] Grant permission → "Location set" green checkmark appears
+- [ ] Deny permission → "Location access was denied" error with alternative suggestion
+- [ ] Unsupported browser → error handled gracefully
+
+### Address Input
+- [ ] Tap "Address" → text input appears with placeholder
+- [ ] Enter text and blur/press Enter → location mode set
+- [ ] "Approximate — uses city center" label visible
+- [ ] Empty address → resets to "Anywhere" mode
+- [ ] Clear address after setting it → location filter removed
+
+### Walking Radius
+- [ ] Enter 5 min walk → fewer venues than 30 min walk
+- [ ] Enter 1 min walk → very few or no venues (empty-results fallback shown)
+- [ ] Negative/zero values → ignored (min="1" enforced, posNum clamps)
+
+### Cycling Radius
+- [ ] Enter 10 min bike → more venues than 10 min walk, fewer than 10 min drive
+- [ ] Cycling speed ~15 km/h documented in geo.ts
+
+### Driving Radius
+- [ ] Enter 15 min drive → largest radius of the three travel modes
+- [ ] Driving speed ~30 km/h documented in geo.ts
+
+### Radius (km)
+- [ ] Enter 2 km → filters venues within ~2km
+- [ ] Enter 50 km → returns all city venues
+- [ ] Multiple inputs → widest range used (most permissive)
+
+### No Results Fallback
+- [ ] Impossibly tight radius → "No strong matches" with "Adjust Filters" button
+- [ ] "Adjust Filters" returns to Night Mode form
+- [ ] "Keep Swiping" also offered as alternative
+
+### Pairing Rationale
+- [ ] Walk time shown as "approx. X min walk" (not presented as precise routing)
+- [ ] "Estimated travel times" label shown below radius inputs
+
+### Analytics
+- [ ] `night_generated` event includes: locationMode, walkMinutes, bikeMinutes, driveMinutes, radiusKm, hasAddress
+- [ ] No precise user coordinates stored in analytics (only mode + radius)
+
+### SLC Dogfooding
+- [ ] Select Salt Lake City → "Salt Lake City" displayed consistently
+- [ ] SLC neighborhoods: Downtown, Capitol Hill, Central 9th, 9th & 9th, Sugar House, Marmalade, The Avenues, Millcreek Canyon
+- [ ] Select Downtown + Capitol Hill → recommendations from those neighborhoods
+- [ ] Use My Location in SLC → venues near user (if in SLC)
+- [ ] 10 min walk from Downtown SLC → returns Downtown-area venues
+- [ ] 10 min bike from Downtown SLC → returns wider set
+- [ ] 15 min drive from Downtown SLC → returns most/all SLC venues
+- [ ] Dinner + Drinks → restaurant + bar both from SLC only
+
+### Mobile Viewport
+- [ ] Location section not cramped on iPhone SE-sized screen
+- [ ] Walk/Bike/Drive/Radius inputs accessible without horizontal overflow
+- [ ] "My Location" / "Address" / "Anywhere" pills wrap cleanly
+- [ ] Number inputs accept tap-to-type on mobile keyboard
