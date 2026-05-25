@@ -1,6 +1,6 @@
 const NEARBY: Record<string, string[]> = {
-  // Vancouver
-  "Downtown": ["Coal Harbour", "Gastown", "Yaletown", "Chinatown", "Waterfront"],
+  // Vancouver + Salt Lake City (shared key — safe because recs are always within one city)
+  "Downtown": ["Coal Harbour", "Gastown", "Yaletown", "Chinatown", "Waterfront", "Capitol Hill", "Central 9th", "Marmalade", "The Avenues"],
   "Gastown": ["Downtown", "Chinatown", "Railtown", "Waterfront"],
   "Chinatown": ["Gastown", "Downtown", "Main Street", "Railtown"],
   "Yaletown": ["Downtown", "Fairview", "Waterfront"],
@@ -50,12 +50,11 @@ const NEARBY: Record<string, string[]> = {
   "Plantage": ["Oost", "Centrum", "De Pijp", "Amstel"],
   "Amstel": ["Plantage", "De Pijp", "Oost", "Grachtengordel"],
   // Salt Lake City
-  "Downtown SLC": ["Capitol Hill", "Central 9th", "Marmalade", "The Avenues"],
-  "Capitol Hill": ["Downtown SLC", "Marmalade", "The Avenues"],
-  "Marmalade": ["Capitol Hill", "Downtown SLC"],
-  "The Avenues": ["Downtown SLC", "Capitol Hill"],
-  "Central 9th": ["Downtown SLC", "9th & 9th", "Sugar House"],
-  "9th & 9th": ["Central 9th", "Sugar House", "Downtown SLC"],
+  "Capitol Hill": ["Downtown", "Marmalade", "The Avenues"],
+  "Marmalade": ["Capitol Hill", "Downtown"],
+  "The Avenues": ["Downtown", "Capitol Hill"],
+  "Central 9th": ["Downtown", "9th & 9th", "Sugar House"],
+  "9th & 9th": ["Central 9th", "Sugar House", "Downtown"],
   "Sugar House": ["9th & 9th", "Central 9th"],
   "Millcreek Canyon": [],
 };

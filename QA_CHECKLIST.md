@@ -1,4 +1,4 @@
-# NightPilot QA Checklist — Beta Release
+# NightPilot QA Checklist — Beta Release (4 Cities)
 
 ## Setup
 - [ ] Run `npm install` (installs vitest for tests)
@@ -9,9 +9,9 @@
 
 ## City Selector
 - [ ] App launches to city picker on fresh visit (no localStorage)
-- [ ] All 3 cities listed alphabetically: Amsterdam, Dublin, Vancouver
+- [ ] All 4 cities listed alphabetically: Amsterdam, Dublin, Salt Lake City, Vancouver
 - [ ] Selecting a city navigates to Landing Screen
-- [ ] City flag emoji renders correctly on mobile
+- [ ] City flag emoji renders correctly on mobile (🇳🇱 🇮🇪 🇺🇸 🇨🇦)
 
 ## Landing Screen
 - [ ] "Start Swiping" button navigates to Swipe Screen
@@ -26,14 +26,14 @@
 - [ ] Highlights and tags display on card
 - [ ] **Swipe right** = like (card animates out right)
 - [ ] **Swipe left** = nope (card animates out left)
-- [ ] **Swipe up** = save (card animates up, "Saved for later!" toast)
+- [ ] **Swipe up** = super like (card animates up, "Super liked! ★" toast)
 - [ ] **Button controls** work: ✗, ♥, ★
 - [ ] **Undo button** appears after first swipe and reverses the last action
 - [ ] Undo toast appears: "Undo!"
 - [ ] Progress bar advances with each swipe
 - [ ] "Build My Night" button appears after sufficient swipes
 - [ ] Back button returns to Landing Screen
-- [ ] Venue count matches expected (35 Van, 35 Dublin, 33 Amsterdam)
+- [ ] Venue count matches expected (35 Van, 35 Dublin, 33 Amsterdam, 35 SLC)
 
 ## Settings (⚙️ gear icon)
 - [ ] Gear icon visible on all screens except city picker
@@ -41,17 +41,18 @@
 - [ ] **Dietary Restrictions** section appears above Michelin
 - [ ] Selecting dietary restrictions filters restaurants in swipe deck
 - [ ] **Michelin Guide** section shows with rosette SVG icons
-- [ ] Michelin filter works (only shows matching restaurants)
+- [ ] Michelin filter works (only shows matching restaurants — note: SLC has no Michelin venues)
 - [ ] Gear icon turns purple when dietary filter active
 - [ ] Gear icon turns red when Michelin filter active
 - [ ] Settings persist across page reloads
 
 ## Night Mode (Build My Night)
 - [ ] Occasion selector works (date, friends, fancy, casual, solo, group)
-- [ ] Budget selector works ($, $$, $$$, $$$$)
-- [ ] Neighborhood selector shows neighborhoods from current city
-- [ ] Plan type selector works: Dinner Only, Drinks Only, Full Night
-- [ ] "Build My Night" button generates results
+- [ ] Budget selector works ($–$$, $$–$$$, $$$+)
+- [ ] Neighborhood selector shows neighborhoods from current city only
+- [ ] Plan type selector works: Dinner Only, Drinks Only, Dinner + Drinks
+- [ ] "Find My Night" button generates results
+- [ ] Taste profile summary shows tags from swiping history
 
 ## Results Screen
 - [ ] Plan dots show at top (up to 3 plans), tappable
@@ -60,20 +61,21 @@
 - [ ] "Why this fits you" section explains match
 - [ ] **Dinner Only** mode: shows restaurant card, no bar
 - [ ] **Drinks Only** mode: shows bar card, no restaurant
-- [ ] **Full Night** mode: shows restaurant + pairing rationale + bar
+- [ ] **Dinner + Drinks** mode: shows restaurant + pairing rationale + bar
 - [ ] Pairing rationale mentions neighborhoods and walk time
 - [ ] Recommendation cards show: emoji, name, cuisine, neighborhood, price, rating
 - [ ] 🎯 explanation text is personalized (not generic)
 - [ ] Highlight pills display
 - [ ] **🔍 Search** button opens Google search for the venue in new tab
 - [ ] **📍 Map** button opens Google Maps in new tab with correct venue + city
-- [ ] **♥ Save** button shows toast
+- [ ] **📋 Copy** button copies venue details to clipboard
 - [ ] **Share This Night 📤** copies plan summary to clipboard (or opens native share sheet on mobile)
+- [ ] Share message includes NightPilot link at the bottom
 - [ ] Quick feedback: "Yes, surprisingly accurate" / "Kind of" / "Not really"
 - [ ] Selecting feedback sends to Google Sheets (check quick_feedback tab)
 - [ ] "Share detailed feedback →" opens Google Form in new tab
 - [ ] "Keep Swiping" returns to swipe screen
-- [ ] "Reset" clears all data and returns to landing
+- [ ] "Start Over" shows confirmation dialog mentioning memory/swipes, then resets
 
 ## Wine Lens
 - [ ] Take Photo button opens camera (mobile)
@@ -109,10 +111,51 @@
   - `Wine Lens Detailed` — Wine Lens Google Form responses
 
 ## Cross-City Regression
-- [ ] Switch cities: profile resets, fresh venues appear
-- [ ] Swipe 10+ venues in city A → switch to city B → verify clean slate
-- [ ] Generate Night Mode recommendations in each city
-- [ ] Verify no hardcoded "Vancouver" text appears in any city
+- [ ] Taste profile persists across city switches (tags carry over)
+- [ ] Swipe count and swiped IDs reset on city switch
+- [ ] Switch cities: fresh venues appear, no old city venues shown
+- [ ] Generate Night Mode recommendations in each city — only local venues appear
+- [ ] Verify no hardcoded city names appear in the wrong context
+
+## 4-City Beta Testing Flow
+
+### Amsterdam 🇳🇱
+- [ ] Select Amsterdam → 33 venues in deck
+- [ ] Swipe 10+ cards (mix of like/nope/super like)
+- [ ] Generate Dinner + Drinks → both venues are Amsterdam
+- [ ] Click 🔍 Search → opens correct Google search
+- [ ] Click 📍 Map → opens Google Maps in Amsterdam
+- [ ] Share This Night → text includes NightPilot link
+
+### Dublin 🇮🇪
+- [ ] Select Dublin → 35 venues in deck
+- [ ] Swipe 10+ cards
+- [ ] Generate Dinner + Drinks → both venues are Dublin
+- [ ] Click 🔍 Search → correct venue + Dublin search
+- [ ] Click 📍 Map → opens Google Maps in Dublin
+- [ ] Neighborhood filter shows Dublin neighborhoods
+
+### Salt Lake City 🇺🇸
+- [ ] Select Salt Lake City → 35 venues in deck
+- [ ] Cards show "Downtown" (not "Downtown SLC")
+- [ ] Swipe 10+ cards
+- [ ] Generate Dinner Only → SLC restaurants only
+- [ ] Generate Drinks Only → SLC bars only
+- [ ] Generate Dinner + Drinks → SLC restaurant + SLC bar
+- [ ] Click 🔍 Search → venue + "Salt Lake City" + correct type (restaurant/bar)
+- [ ] Click 📍 Map → opens Google Maps in SLC
+- [ ] Neighborhood selector shows SLC neighborhoods (Downtown, Sugar House, etc.)
+- [ ] Wine Lens works with SLC taste profile
+- [ ] Michelin filter OFF shows all 35 venues
+- [ ] Michelin filter ON shows 0 restaurants (SLC has no Michelin venues) + 15 bars
+
+### Vancouver 🇨🇦
+- [ ] Select Vancouver → 35 venues in deck
+- [ ] Swipe 10+ cards
+- [ ] Generate Dinner + Drinks → both venues are Vancouver
+- [ ] Click 🔍 Search → correct venue + Vancouver search
+- [ ] Click 📍 Map → opens Google Maps in Vancouver
+- [ ] Michelin filter shows only Michelin-tagged venues
 
 ## Mobile-Specific
 - [ ] Test on iPhone Safari (primary target)
@@ -121,10 +164,12 @@
 - [ ] Safe area padding at top/bottom
 - [ ] Keyboard doesn't break layout (Wine Lens mood input)
 - [ ] Camera/photo upload works on mobile
+- [ ] "Add to Home Screen" works as standalone PWA
 
 ## Edge Cases
-- [ ] 0 swipes → "Build My Night" → "Need more data" empty state
+- [ ] 0 swipes → "Build My Night" button disabled
 - [ ] All venues swiped → empty swipe deck state
-- [ ] Wine Lens with no API key → "API key not configured" error
-- [ ] Wine Lens with unreadable photo → graceful degradation
-- [ ] Corrupted localStorage → app recovers gracefully
+- [ ] Wine Lens with no API key → error message displayed
+- [ ] Wine Lens with unreadable photo → graceful error
+- [ ] Corrupted localStorage → app recovers gracefully (try/catch fallbacks)
+- [ ] Michelin filter on in SLC → shows only bars (0 Michelin restaurants)

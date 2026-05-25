@@ -13,7 +13,7 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
   const handleSearch = () => {
     logEvent("search_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
     window.open(
-      `https://www.google.com/search?q=${encodeURIComponent(venue.name + " " + (cityName ?? cityKey ?? "") + " restaurant")}`,
+      `https://www.google.com/search?q=${encodeURIComponent(venue.name + " " + (cityName ?? cityKey ?? "") + " " + (venue.type === "bar" ? "bar" : "restaurant"))}`,
       "_blank"
     );
   };
