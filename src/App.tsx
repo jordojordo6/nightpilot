@@ -147,7 +147,7 @@ export default function App() {
           next.add(venue.id);
           return next;
         });
-        showToast("Saved for later!");
+        showToast("Super liked! ★");
       }
 
       const eventMap: Record<SwipeAction, string> = {

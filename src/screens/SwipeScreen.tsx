@@ -474,7 +474,7 @@ export function SwipeScreen({
             NOPE
           </div>
           <div ref={saveRef} className="swipe-indicator save" style={{ opacity: 0 }}>
-            SAVE ★
+            SUPER LIKE ★
           </div>
           <VenueCard venue={currentVenue} />
         </div>
@@ -540,7 +540,7 @@ export function SwipeScreen({
           }}
         >
           <p style={{ fontSize: 12, color: "rgba(255,255,255,.3)" }}>
-            ← skip · like → · save ↑
+            ← skip · like → · super like ↑
           </p>
         </div>
       )}
