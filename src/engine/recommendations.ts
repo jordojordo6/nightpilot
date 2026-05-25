@@ -326,10 +326,10 @@ export function generateRecommendations(
   };
 
   const restaurants = venues.filter(
-    (v) => v.type === "restaurant" && (!swiped.has(v.id) || saved.has(v.id)) && meetsdietary(v)
+    (v) => v.type === "restaurant" && meetsdietary(v)
   );
   const bars = venues.filter(
-    (v) => v.type === "bar" && (!swiped.has(v.id) || saved.has(v.id))
+    (v) => v.type === "bar"
   );
 
   const scoredR = scoreAndFilter(restaurants, profile, prefs, saved);
