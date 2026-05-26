@@ -2,14 +2,14 @@ import type { Venue } from "../types";
 
 export const DUBLIN_VENUES: Venue[] = [
   // ─── RESTAURANTS ───────────────────────────────────────────
-  {id:101,name:"The Greenhouse",type:"restaurant",cuisine:"Fine Dining",neighborhood:"Dawson Street",price:4,rating:4.8,
-    vibe:["upscale","intimate","refined"],
-    tags:["fine-dining","upscale","intimate","refined","tasting-menu","wine","michelin"],
-    emoji:"🌿",tagline:"Michelin-starred elegance on Dawson Street",
-    highlights:["Michelin star","Seasonal tasting menu","Exceptional wine pairing"],
-    gradient:["#2D6A4F","#95D5B2"],bestFor:"special occasion fine dining at the highest level",
-    dietary:["vegetarian","gluten-free"],michelin:"1-star",
-    lat:53.3403,lng:-6.2601},
+  {id:101,name:"Comet",type:"restaurant",cuisine:"Modern French",neighborhood:"Dawson Street",price:4,rating:4.7,
+    vibe:["upscale","intimate","creative"],
+    tags:["fine-dining","upscale","intimate","creative","tasting-menu","wine","french"],
+    emoji:"☄️",tagline:"Modern French bistro by a Kadeau alum — Michelin Guide listed",
+    highlights:["Michelin Guide listed","Carte blanche tasting","French-Irish seasonal produce"],
+    gradient:["#2D6A4F","#95D5B2"],bestFor:"special occasion dining with creative French technique",
+    dietary:["vegetarian","gluten-free"],
+    lat:53.3401,lng:-6.2592},
 
   {id:102,name:"Chapter One",type:"restaurant",cuisine:"Modern Irish",neighborhood:"Parnell Square",price:4,rating:4.8,
     vibe:["upscale","classic","intimate"],
@@ -153,14 +153,14 @@ export const DUBLIN_VENUES: Venue[] = [
     dietary:["vegetarian"],
     lat:53.3425,lng:-6.2554},
 
-  {id:118,name:"Big Mamma",type:"restaurant",cuisine:"Italian",neighborhood:"South Anne Street",price:2,rating:4.4,
+  {id:118,name:"Gloria Osteria",type:"restaurant",cuisine:"Italian",neighborhood:"Westmoreland Street",price:2,rating:4.4,
     vibe:["lively","fun","vibrant"],
     tags:["italian","lively","fun","vibrant","pasta","pizza","shareable"],
-    emoji:"🤌",tagline:"Over-the-top Italian — massive pastas, wood-fired pizzas",
+    emoji:"🤌",tagline:"Big Mamma's over-the-top Italian — massive pastas, wood-fired pizzas",
     highlights:["Giant truffle pasta","Wood-fired pizzas","Party atmosphere"],
     gradient:["#5F0F40","#E36414"],bestFor:"fun Italian feasts that don't take themselves seriously",
     dietary:["vegetarian"],
-    lat:53.3404,lng:-6.2586},
+    lat:53.3457,lng:-6.2603},
 
   // ─── BARS ──────────────────────────────────────────────────
   {id:119,name:"Bar 1661",type:"bar",cuisine:"Cocktail Bar",neighborhood:"Green Street",price:3,rating:4.7,
@@ -259,13 +259,13 @@ export const DUBLIN_VENUES: Venue[] = [
     gradient:["#2D6A4F","#95D5B2"],bestFor:"cocktails with a view and a sense of theatre",
     lat:53.3385,lng:-6.2586},
 
-  {id:131,name:"Token",type:"bar",cuisine:"Arcade Bar",neighborhood:"Smithfield",price:2,rating:4.3,
+  {id:131,name:"Token",type:"bar",cuisine:"Arcade Bar",neighborhood:"IFSC",price:2,rating:4.3,
     vibe:["fun","casual","quirky"],
     tags:["arcade","fun","casual","quirky","craft-beer","budget","games"],
     emoji:"🕹️",tagline:"Retro arcade games, craft beer, and fried chicken",
     highlights:["Classic arcade machines","Craft beer selection","Fried chicken menu"],
     gradient:["#00B4D8","#023E8A"],bestFor:"nostalgic gaming nights with cheap drinks",
-    lat:53.3494,lng:-6.2789},
+    lat:53.3489,lng:-6.2505},
 
   {id:132,name:"Toner's",type:"bar",cuisine:"Traditional Pub",neighborhood:"Baggot Street",price:1,rating:4.5,
     vibe:["classic","warm","neighbourhood"],

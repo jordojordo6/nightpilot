@@ -38,6 +38,8 @@ const NEARBY: Record<string, string[]> = {
   "South Circular Road": ["Camden Street", "Wexford Street"],
   "Nassau Street": ["College Green", "Dawson Street"],
   "South Great Georges Street": ["Dame Street", "Fade Street", "Aungier Street"],
+  "Westmoreland Street": ["College Green", "Temple Bar", "Dame Street"],
+  "IFSC": ["Poolbeg Street", "College Green"],
   // Amsterdam
   "Centrum": ["Grachtengordel", "Jordaan", "Reguliersdwarsstraat", "Nine Streets"],
   "Jordaan": ["Centrum", "Grachtengordel", "Nine Streets", "Oud-West"],
@@ -56,6 +58,7 @@ const NEARBY: Record<string, string[]> = {
   "Central 9th": ["Downtown", "9th & 9th", "Sugar House"],
   "9th & 9th": ["Central 9th", "Sugar House", "Downtown"],
   "Sugar House": ["9th & 9th", "Central 9th"],
+  "Murray": [],
   "Millcreek Canyon": [],
 };
 
