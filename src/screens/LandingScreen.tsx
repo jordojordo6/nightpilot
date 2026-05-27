@@ -130,7 +130,7 @@ export function LandingScreen({ onStart, onWineLens, onChangeCity, swipeCount, c
             letterSpacing: "0.3px",
           }}
         >
-          Wine Lens 🍷
+          Wine Radar 🍷
         </button>
       </div>
 

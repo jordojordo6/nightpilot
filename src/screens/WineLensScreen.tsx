@@ -369,7 +369,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
         </button>
         <div style={{ flex: 1, textAlign: "center" }}>
           <span style={{ fontSize: 15, fontWeight: 600, color: "#c084fc" }}>
-            Wine Lens
+            Wine Radar
           </span>
         </div>
         <div style={{ width: 32 }} />
@@ -399,7 +399,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
                 marginBottom: 8,
               }}
             >
-              Snap the wine list
+              Scan a wine list
             </h2>
             <p
               style={{
@@ -409,8 +409,8 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
                 marginBottom: 24,
               }}
             >
-              Take a photo of any wine list and get personalized
-              recommendations based on your taste profile.
+              NightPilot will find the best picks for your taste,
+              meal, and budget.
             </p>
 
             {/* Taste profile indicator */}
@@ -791,7 +791,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
                     color: "rgba(255,255,255,.4)",
                   }}
                 >
-                  Reading the wine list and matching to your taste...
+                  Scanning the wine list and matching to your taste...
                 </p>
               </div>
             )}
