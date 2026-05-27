@@ -450,7 +450,7 @@ export function SwipeScreen({
               willChange: "transform, opacity",
             }}
           >
-            <VenueCard venue={nextVenue} />
+            <VenueCard venue={nextVenue} cityKey={cityKey} />
           </div>
         )}
 
@@ -476,7 +476,7 @@ export function SwipeScreen({
           <div ref={saveRef} className="swipe-indicator save" style={{ opacity: 0 }}>
             SUPER LIKE ★
           </div>
-          <VenueCard venue={currentVenue} />
+          <VenueCard venue={currentVenue} cityKey={cityKey} />
         </div>
       </div>
 

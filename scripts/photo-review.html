@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NightPilot — Vancouver Photo Review</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; color: #fff; font-family: -apple-system, system-ui, sans-serif; padding: 24px; }
+  h1 { font-size: 24px; margin-bottom: 8px; }
+  .subtitle { color: #888; margin-bottom: 32px; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 2px solid transparent; }
+  .card.bad { border-color: #ef4444; }
+  .card.good { border-color: #22c55e; }
+  .card.none { border-color: #666; }
+  .img-wrap { width: 100%; height: 200px; background: #222; position: relative; display: flex; align-items: center; justify-content: center; }
+  .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .img-wrap .no-img { color: #666; font-size: 14px; }
+  .info { padding: 12px 16px; }
+  .venue-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .venue-meta { font-size: 12px; color: #888; margin-bottom: 4px; }
+  .venue-id { font-size: 11px; color: #555; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-top: 6px; }
+  .badge.needs-fix { background: #ef444430; color: #ef4444; }
+  .badge.ok { background: #22c55e30; color: #22c55e; }
+  .badge.missing { background: #66666630; color: #999; }
+  .source { font-size: 11px; color: #666; margin-top: 4px; }
+  .legend { display: flex; gap: 16px; margin-bottom: 24px; font-size: 13px; }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .legend .dot { width: 12px; height: 12px; border-radius: 50%; }
+</style>
+</head>
+<body>
+<h1>Vancouver Venue Photo Review</h1>
+<p class="subtitle">Review each photo. Red border = likely needs replacement. Green = looks usable.</p>
+<div class="legend">
+  <span><span class="dot" style="background:#22c55e"></span> Looks good</span>
+  <span><span class="dot" style="background:#ef4444"></span> Needs better photo</span>
+  <span><span class="dot" style="background:#666"></span> No photo (gradient fallback)</span>
+</div>
+<div class="grid" id="grid"></div>
+
+<script>
+const venues = [
+  {id:1, name:"Hawksworth", type:"restaurant", cuisine:"West Coast Fine Dining", ogImage:"https://hawksworthrestaurant.com/wp-content/uploads/2023/04/a.png", source:"og:image", quality:"suspect"},
+  {id:2, name:"Maenam", type:"restaurant", cuisine:"Thai", ogImage:"https://static1.squarespace.com/static/6410f0a956f5cc78c2dd9b78/t/642f0861a64de036f48e6ba8/1772774091694/", source:"schema.org", quality:"suspect"},
+  {id:3, name:"Savio Volpe", type:"restaurant", cuisine:"Italian", ogImage:"https://static1.squarespace.com/static/651dc459ef9b6d0a2e634f4f/t/651dc4a774d02a122382bad5/1708478312523/", source:"schema.org", quality:"suspect"},
+  {id:4, name:"Miku", type:"restaurant", cuisine:"Japanese", ogImage:null, source:null, quality:"missing"},
+  {id:5, name:"Vij's", type:"restaurant", cuisine:"Indian", ogImage:"http://static1.squarespace.com/static/664bced31838885ded9799eb/t/6661a9e55a8d874c7647ca3c/1717676517435/unnamed.png?format=1500w", source:"og:image", quality:"suspect"},
+  {id:6, name:"Tojo's", type:"restaurant", cuisine:"Japanese", ogImage:"http://static1.squarespace.com/static/5bc4dc8a8d974035890abc99/t/68d18aaaf67bf3067f62cf70/1758562986192/20180817-Tojo%27s-5865-LeilaKwok.jpg?format=1500w", source:"og:image", quality:"good"},
+  {id:7, name:"AnnaLena", type:"restaurant", cuisine:"West Coast", ogImage:"http://static1.squarespace.com/static/5480d9cbe4b0e3ea019971a8/t/54a8ffdfe4b0243cdd54e363/1420361778402/annalenawhite.jpg?format=1500w", source:"og:image", quality:"suspect"},
+  {id:8, name:"Phnom Penh", type:"restaurant", cuisine:"Vietnamese-Cambodian", ogImage:null, source:null, quality:"missing"},
+  {id:9, name:"Nightingale", type:"restaurant", cuisine:"Pacific Northwest", ogImage:"https://hawknightingale.com/wp-content/themes/nightingale/images/hero1.jpg", source:"chrome-hero", quality:"good"},
+  {id:10, name:"Bao Bei", type:"restaurant", cuisine:"Chinese Brasserie", ogImage:"http://static1.squarespace.com/static/590a751f893fc0d31896f71e/t/590a8048ff7c500c50f401fa/1493860424746/Asset+6.png?format=1500w", source:"og:image", quality:"suspect"},
+  {id:11, name:"Published on Main", type:"restaurant", cuisine:"Farm-to-Table", ogImage:"https://publishedonmain.com/wp-content/uploads/elementor/thumbs/gold-01-rmqnab9bgj8dwc2ub4lfg0dx7mgdl1ob9nor1z4qaw.png", source:"img-tag", quality:"suspect"},
+  {id:12, name:"La Quercia", type:"restaurant", cuisine:"Italian", ogImage:"https://images.squarespace-cdn.com/content/v1/5fa3614e11c6922521efe0af/1604870448166-LO04ST8AW4W63APMQJ15/LaQuercia-pasta1.jpg?format=100w", source:"hero-image", quality:"good"},
+  {id:13, name:"Tacofino", type:"restaurant", cuisine:"Mexican", ogImage:"https://images.squarespace-cdn.com/content/v1/696559eeb2270933e9839fd5/acf96a56-0553-4e1f-b613-37a3f5150747/landingpage_hero_v04.webp?format=100w", source:"hero-image", quality:"suspect"},
+  {id:14, name:"Ask for Luigi", type:"restaurant", cuisine:"Italian", ogImage:"http://static1.squarespace.com/static/624f5630bf354869b36f3bca/t/62571315dbd0622402dc50af/1737657876264/4V1A3085.jpg?format=1500w", source:"og:image", quality:"good"},
+  {id:15, name:"Anh and Chi", type:"restaurant", cuisine:"Vietnamese", ogImage:"http://anhandchi.com/cdn/shop/files/Anh_and_Chi_Family_Style_Dinner_Photographed_by_Leila_Kwok_1200x1200.jpg?v=1772611785", source:"og:image", quality:"good"},
+  {id:16, name:"Masayoshi", type:"restaurant", cuisine:"Japanese", ogImage:"https://static1.squarespace.com/static/5ca3017d3a01c7000125145f/t/64499f9cd3427d5e855e0120/1779162566590/", source:"schema.org", quality:"suspect"},
+  {id:17, name:"The Acorn", type:"restaurant", cuisine:"Plant-Based", ogImage:"http://static1.squarespace.com/static/5fa9d1da2f5c0e204137e48f/t/5fd3f1409a52ec0c0f61a90c/1607725396739/Acorn_2_TYSON_FAST+%281%29.jpg?format=1500w", source:"og:image", quality:"good"},
+  {id:18, name:"Kissa Tanto", type:"restaurant", cuisine:"Japanese-Italian", ogImage:"http://static1.squarespace.com/static/56d73fcda3360cdd16fc1491/t/572d10f737013b94d83a8c38/1462571256210/Kissa-01.png?format=1500w", source:"og:image", quality:"suspect"},
+  {id:19, name:"Keefer Bar", type:"bar", cuisine:"Cocktail Bar", ogImage:"https://thekeeferbar.com/wp-content/uploads/2024/10/the-keefer-bar-picture-1.jpeg", source:"hero-image", quality:"good"},
+  {id:20, name:"Prophecy", type:"bar", cuisine:"Cocktail Bar", ogImage:"https://images.squarespace-cdn.com/content/v1/6596f072da1b421bb16aaafd/450c37b2-49bc-46c8-8ae9-a9c670037ccd/IMG_3187.jpg", source:"chrome-hero", quality:"good"},
+  {id:21, name:"The Shameful Tiki Room", type:"bar", cuisine:"Tiki Bar", ogImage:null, source:null, quality:"missing"},
+  {id:22, name:"Brassneck Brewery", type:"bar", cuisine:"Brewery", ogImage:"https://brassneck.ca/app/uploads/2021/02/brssnck_015.jpg", source:"img-tag", quality:"suspect"},
+  {id:23, name:"Alibi Room", type:"bar", cuisine:"Craft Beer", ogImage:"https://alibi.ca/wp-content/uploads/2024/07/353569204_1635737276940022_6581303432115868905_n.jpg", source:"og:image", quality:"good"},
+  {id:24, name:"Pourhouse", type:"bar", cuisine:"Cocktail & Whiskey Bar", ogImage:"http://static1.squarespace.com/static/5db9f5cc0e8af224964d841a/t/5e45e75a78bd103b8b528dc8/1581639527237/Pourhouse-Restaurant-Cocktail-Bar-Gastown-Vancouver.jpg?format=1500w", source:"og:image", quality:"good"},
+  {id:25, name:"Roof at Black+Blue", type:"bar", cuisine:"Rooftop Bar", ogImage:"https://blackandbluesteakhouse.ca/wp-content/uploads/2022/08/2J6A9092@2x.jpg", source:"chrome-bg", quality:"good"},
+  {id:26, name:"Narrow Lounge", type:"bar", cuisine:"Speakeasy-Style Bar", ogImage:"https://narrowgroup.ca/2020baby/wp-content/uploads/2020/05/Narrow-Banner-2.jpg", source:"hero-image", quality:"suspect"},
+  {id:27, name:"Grapes & Soda", type:"bar", cuisine:"Wine Bar", ogImage:"https://grapesandsoda.ca/cdn/shop/files/D3T_4463.jpg", source:"chrome-img", quality:"good"},
+  {id:28, name:"Reflections at Rosewood", type:"bar", cuisine:"Hotel Cocktail Bar", ogImage:"https://images.rosewoodhotels.com/is/image/rwhg/DAYREFLECTIONS-4", source:"og:image", quality:"good"},
+  {id:29, name:"Nomo Nomo", type:"bar", cuisine:"Japanese Cocktail Bar", ogImage:"https://nomonomo.ca/wp-content/uploads/2025/09/Photo-Background-Desktop-scaled-1.jpg", source:"chrome-bg", quality:"good"},
+  {id:30, name:"Bar Corso", type:"bar", cuisine:"Italian Wine Bar", ogImage:"https://static.wixstatic.com/media/ae468d_4c44e75bc3fb439d8e3e6be7af43182d%7Emv2.png/v1/fit/w_2500,h_1330,al_c/ae468d_4c44e75bc3fb439d8e3e6be7af43182d%7Emv2.png", source:"og:image", quality:"suspect"},
+  {id:31, name:"Back and Forth Bar", type:"bar", cuisine:"Neighbourhood Bar & Games", ogImage:"https://images.squarespace-cdn.com/content/v1/5892b875d2b857d223033974/1486011572209-4YULIABISINCLKM52F7A/IMG_3308-1.JPG", source:"chrome-hero", quality:"suspect"},
+  {id:32, name:"UVA Wine & Cocktail Bar", type:"bar", cuisine:"Wine & Cocktail Bar", ogImage:"https://static.wixstatic.com/media/8385f7_3cd9e32630b740779e65b5013db80aaf.jpg/v1/fit/w_2500,h_1330,al_c/8385f7_3cd9e32630b740779e65b5013db80aaf.jpg", source:"og:image", quality:"good"},
+  {id:33, name:"33 Acres Brewing", type:"bar", cuisine:"Brewery", ogImage:"https://33acresbrewing.com/app/uploads/2020/02/Web-scaled-e1581460162825.jpg", source:"og:image", quality:"good"},
+  {id:34, name:"The Cambie", type:"bar", cuisine:"Dive Bar", ogImage:"https://cdn.prod.website-files.com/62fea9f2f542729be727d1af/62fea9f2f54272f93427d228_cambie-background.jpg", source:"chrome-bg", quality:"suspect"},
+  {id:35, name:"Botanist", type:"bar", cuisine:"Cocktail Bar & Garden", ogImage:"https://images.getbento.com/accounts/fbd4f23e4af26f19900eba4a0162bf4a/media/images/23721botanist-cabbage-roll-2.jpg?w=5400&fit=max&auto=compress,format&cs=origin", source:"hero-image", quality:"good"},
+];
+
+const grid = document.getElementById('grid');
+
+venues.forEach(v => {
+  const card = document.createElement('div');
+  card.className = 'card ' + (v.quality === 'missing' ? 'none' : v.quality === 'suspect' ? 'bad' : 'good');
+
+  const qualityBadge = v.quality === 'missing'
+    ? '<span class="badge missing">No photo</span>'
+    : v.quality === 'suspect'
+    ? '<span class="badge needs-fix">Needs review</span>'
+    : '<span class="badge ok">Looks good</span>';
+
+  card.innerHTML = `
+    <div class="img-wrap">
+      ${v.ogImage ? `<img src="${v.ogImage}" onerror="this.parentElement.innerHTML='<span class=no-img>Failed to load</span>'" />` : '<span class="no-img">No image — gradient fallback</span>'}
+    </div>
+    <div class="info">
+      <div class="venue-name">${v.name}</div>
+      <div class="venue-meta">${v.cuisine} · ${v.type}</div>
+      <div class="venue-id">#${v.id}</div>
+      ${qualityBadge}
+      ${v.source ? `<div class="source">Source: ${v.source}</div>` : ''}
+    </div>
+  `;
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>

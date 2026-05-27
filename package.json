@@ -10,7 +10,9 @@
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "audit-images": "node scripts/audit-images.mjs",
+    "inject-images": "node scripts/inject-og-images.mjs"
   },
   "dependencies": {
     "react": "^19.1.0",

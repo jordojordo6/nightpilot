@@ -166,7 +166,7 @@ function extractBestImage(html, baseUrl) {
   return found.length > 0 ? found[0] : null;
 }
 
-async function fetchWithTimeout(url, timeoutMs = 10000) {
+async function fetchWithTimeout(url, timeoutMs = 10000, acceptHeader = "text/html,application/xhtml+xml") {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -175,7 +175,7 @@ async function fetchWithTimeout(url, timeoutMs = 10000) {
       redirect: "follow",
       headers: {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        Accept: "text/html,application/xhtml+xml",
+        Accept: acceptHeader,
       },
     });
     clearTimeout(timeout);
@@ -183,6 +183,97 @@ async function fetchWithTimeout(url, timeoutMs = 10000) {
   } catch (err) {
     clearTimeout(timeout);
     throw err;
+  }
+}
+
+/**
+ * Validate that a discovered image URL actually resolves to a real image.
+ * Uses HEAD first (lightweight), falls back to GET with Range header.
+ * Returns { ok, error?, warning?, contentType?, contentLength? }
+ */
+async function validateImageUrl(url, timeoutMs = 8000) {
+  if (!url) return { ok: false, error: "No URL" };
+
+  // Normalize http → https
+  const testUrl = url.replace(/^http:\/\//, "https://");
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    let res;
+    try {
+      res = await fetch(testUrl, {
+        method: "HEAD",
+        signal: controller.signal,
+        redirect: "follow",
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+          Accept: "image/*,*/*;q=0.8",
+        },
+      });
+    } catch {
+      // HEAD failed — try GET with Range header
+      const controller2 = new AbortController();
+      const timeout2 = setTimeout(() => controller2.abort(), timeoutMs);
+      try {
+        res = await fetch(testUrl, {
+          method: "GET",
+          signal: controller2.signal,
+          redirect: "follow",
+          headers: {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+            Accept: "image/*,*/*;q=0.8",
+            Range: "bytes=0-1023",
+          },
+        });
+        clearTimeout(timeout2);
+      } catch (e2) {
+        clearTimeout(timeout2);
+        throw e2;
+      }
+    }
+
+    clearTimeout(timeout);
+
+    const status = res.status;
+    const contentType = res.headers.get("content-type") || "unknown";
+    const contentLength = res.headers.get("content-length");
+    const size = contentLength ? parseInt(contentLength) : null;
+
+    if (status === 403) return { ok: false, error: "403 Forbidden (hotlink protection?)", contentType };
+    if (status === 404) return { ok: false, error: "404 Not Found", contentType };
+    if (status >= 400) return { ok: false, error: `HTTP ${status}`, contentType };
+
+    // Reject HTML responses masquerading as images (redirects to pages)
+    if (contentType.startsWith("text/html")) {
+      return { ok: false, error: "Returns HTML, not an image (redirect to page?)", contentType };
+    }
+
+    // Check content type is actually an image
+    const isImage = contentType.startsWith("image/") ||
+      contentType.includes("octet-stream") ||
+      contentType.includes("avif") ||
+      contentType.includes("webp");
+    if (!isImage) {
+      return { ok: false, error: `Non-image content-type: ${contentType}`, contentType };
+    }
+
+    // Reject tiny images (likely icons/favicons)
+    if (size && size < 1000) {
+      return { ok: false, error: `Tiny image (${size} bytes) — likely icon/placeholder`, contentType, contentLength: size };
+    }
+
+    // Warn about small images
+    if (size && size < 5000) {
+      return { ok: true, warning: `Small image (${size} bytes)`, contentType, contentLength: size };
+    }
+
+    return { ok: true, contentType, contentLength: size };
+  } catch (err) {
+    clearTimeout(timeout);
+    if (err.name === "AbortError") return { ok: false, error: "Timeout (>8s)" };
+    return { ok: false, error: err.message };
   }
 }
 
@@ -237,9 +328,19 @@ for (const cityKey of citiesToProcess) {
       const img = extractBestImage(html, venue.websiteUrl);
 
       if (img && !looksLikeLogo(img.url)) {
-        console.log(`  ✓ #${venue.id} ${venue.name}`);
-        console.log(`    ${img.source}: ${img.url.substring(0, 90)}${img.url.length > 90 ? "..." : ""}`);
-        results.updated.push({ ...venue, city: cityKey, ogImage: img.url, source: img.source });
+        // Validate the image URL actually resolves to a real image
+        const validation = await validateImageUrl(img.url);
+
+        if (validation.ok) {
+          const extra = validation.warning ? ` ⚠ ${validation.warning}` : "";
+          console.log(`  ✓ #${venue.id} ${venue.name}${extra}`);
+          console.log(`    ${img.source}: ${img.url.substring(0, 90)}${img.url.length > 90 ? "..." : ""}`);
+          results.updated.push({ ...venue, city: cityKey, ogImage: img.url, source: img.source });
+        } else {
+          console.log(`  ✗ #${venue.id} ${venue.name} — image found but failed validation: ${validation.error}`);
+          console.log(`    ${img.source}: ${img.url.substring(0, 90)}${img.url.length > 90 ? "..." : ""}`);
+          results.failed.push({ ...venue, city: cityKey, reason: `image validation: ${validation.error}`, ogImage: img.url });
+        }
       } else if (img) {
         console.log(`  ~ #${venue.id} ${venue.name} — logo only: ${img.url.substring(0, 70)}...`);
         results.logoOnly.push({ ...venue, city: cityKey, ogImage: img.url, source: img.source });
@@ -248,8 +349,9 @@ for (const cityKey of citiesToProcess) {
         results.failed.push({ ...venue, city: cityKey, reason: "no images in HTML" });
       }
     } catch (err) {
-      console.log(`  ✗ #${venue.id} ${venue.name} — ${err.message}`);
-      results.failed.push({ ...venue, city: cityKey, reason: err.message });
+      const reason = err.name === "AbortError" ? "Timeout fetching website" : err.message;
+      console.log(`  ✗ #${venue.id} ${venue.name} — ${reason}`);
+      results.failed.push({ ...venue, city: cityKey, reason });
     }
 
     await new Promise((r) => setTimeout(r, 300));

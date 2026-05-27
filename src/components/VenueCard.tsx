@@ -1,13 +1,53 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { Venue } from "../types";
+import { logEvent } from "../engine/analytics";
 
 interface Props {
   venue: Venue;
+  cityKey?: string;
 }
 
-export function VenueCard({ venue }: Props) {
-  const [imgError, setImgError] = useState(false);
-  const hasPhoto = !!venue.ogImage && !imgError;
+/** Normalize ogImage URL: upgrade http→https */
+function normalizeImageUrl(url: string): string {
+  return url.replace(/^http:\/\//, "https://");
+}
+
+export function VenueCard({ venue, cityKey }: Props) {
+  const [imgStatus, setImgStatus] = useState<"loading" | "loaded" | "failed">(
+    venue.ogImage ? "loading" : "failed"
+  );
+
+  const hasPhoto = !!venue.ogImage && imgStatus === "loaded";
+
+  const handleLoad = useCallback(() => {
+    setImgStatus("loaded");
+    if (import.meta.env.DEV) {
+      console.log(`[img:ok] #${venue.id} ${venue.name}`);
+    }
+    logEvent("venue_image_loaded", {
+      venueId: venue.id,
+      venueName: venue.name,
+      city: cityKey,
+    });
+  }, [venue.id, venue.name, cityKey]);
+
+  const handleError = useCallback(() => {
+    setImgStatus("failed");
+    if (import.meta.env.DEV) {
+      console.warn(
+        `[img:FAIL] #${venue.id} ${venue.name}`,
+        venue.ogImage?.substring(0, 80)
+      );
+    }
+    logEvent("venue_image_failed", {
+      venueId: venue.id,
+      venueName: venue.name,
+      city: cityKey,
+      ogImageUrl: venue.ogImage,
+      timestamp: new Date().toISOString(),
+      errorReason: "img_onerror",
+    });
+  }, [venue.id, venue.name, cityKey, venue.ogImage]);
 
   return (
     <div
@@ -23,12 +63,13 @@ export function VenueCard({ venue }: Props) {
       }}
     >
       {/* Background photo (if available) */}
-      {venue.ogImage && !imgError && (
+      {venue.ogImage && imgStatus !== "failed" && (
         <img
-          src={venue.ogImage.replace(/^http:\/\//, "https://")}
+          src={normalizeImageUrl(venue.ogImage)}
           alt=""
           referrerPolicy="no-referrer"
-          onError={() => setImgError(true)}
+          onLoad={handleLoad}
+          onError={handleError}
           style={{
             position: "absolute",
             inset: 0,
@@ -36,6 +77,9 @@ export function VenueCard({ venue }: Props) {
             height: "100%",
             objectFit: "cover",
             zIndex: 0,
+            // Hide while loading to prevent flash of broken icon
+            opacity: imgStatus === "loaded" ? 1 : 0,
+            transition: "opacity 0.3s ease-in",
           }}
         />
       )}

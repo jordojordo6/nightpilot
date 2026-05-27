@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { ScoredVenue } from "../types";
 import { logEvent } from "../engine/analytics";
 
@@ -10,9 +10,48 @@ interface Props {
   cityName?: string;
 }
 
+/** Normalize ogImage URL: upgrade http→https */
+function normalizeImageUrl(url: string): string {
+  return url.replace(/^http:\/\//, "https://");
+}
+
 export function RecommendationCard({ venue, explanation, showToast, cityKey, cityName }: Props) {
-  const [imgError, setImgError] = useState(false);
-  const hasPhoto = !!venue.ogImage && !imgError;
+  const [imgStatus, setImgStatus] = useState<"loading" | "loaded" | "failed">(
+    venue.ogImage ? "loading" : "failed"
+  );
+  const hasPhoto = !!venue.ogImage && imgStatus === "loaded";
+
+  const handleLoad = useCallback(() => {
+    setImgStatus("loaded");
+    if (import.meta.env.DEV) {
+      console.log(`[img:ok] rec #${venue.id} ${venue.name}`);
+    }
+    logEvent("venue_image_loaded", {
+      venueId: venue.id,
+      venueName: venue.name,
+      city: cityKey,
+      source: "recommendation",
+    });
+  }, [venue.id, venue.name, cityKey]);
+
+  const handleError = useCallback(() => {
+    setImgStatus("failed");
+    if (import.meta.env.DEV) {
+      console.warn(
+        `[img:FAIL] rec #${venue.id} ${venue.name}`,
+        venue.ogImage?.substring(0, 80)
+      );
+    }
+    logEvent("venue_image_failed", {
+      venueId: venue.id,
+      venueName: venue.name,
+      city: cityKey,
+      ogImageUrl: venue.ogImage,
+      timestamp: new Date().toISOString(),
+      errorReason: "img_onerror",
+      source: "recommendation",
+    });
+  }, [venue.id, venue.name, cityKey, venue.ogImage]);
 
   const handleSearch = () => {
     logEvent("search_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
@@ -74,12 +113,13 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
         }}
       >
         {/* Background photo */}
-        {venue.ogImage && !imgError && (
+        {venue.ogImage && imgStatus !== "failed" && (
           <img
-            src={venue.ogImage.replace(/^http:\/\//, "https://")}
+            src={normalizeImageUrl(venue.ogImage)}
             alt=""
             referrerPolicy="no-referrer"
-            onError={() => setImgError(true)}
+            onLoad={handleLoad}
+            onError={handleError}
             style={{
               position: "absolute",
               inset: 0,
@@ -87,6 +127,8 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
               height: "100%",
               objectFit: "cover",
               zIndex: 0,
+              opacity: imgStatus === "loaded" ? 1 : 0,
+              transition: "opacity 0.3s ease-in",
             }}
           />
         )}
