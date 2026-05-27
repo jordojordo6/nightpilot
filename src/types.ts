@@ -21,6 +21,8 @@ export interface Venue {
   michelin?: MichelinLevel;
   lat: number;
   lng: number;
+  ogImage?: string;       // OG image URL from venue's website
+  websiteUrl?: string;    // Venue's own website
 }
 
 export type MichelinLevel = "1-star" | "2-star" | "3-star" | "bib-gourmand";

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Venue } from "../types";
 
 interface Props {
@@ -5,6 +6,9 @@ interface Props {
 }
 
 export function VenueCard({ venue }: Props) {
+  const [imgError, setImgError] = useState(false);
+  const hasPhoto = !!venue.ogImage && !imgError;
+
   return (
     <div
       style={{
@@ -14,10 +18,39 @@ export function VenueCard({ venue }: Props) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
-        padding: 28,
         position: "relative",
+        overflow: "hidden",
       }}
     >
+      {/* Background photo (if available) */}
+      {venue.ogImage && !imgError && (
+        <img
+          src={venue.ogImage}
+          alt=""
+          onError={() => setImgError(true)}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+          }}
+        />
+      )}
+
+      {/* Dark overlay for readability when photo is present */}
+      {hasPhoto && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.7) 70%, rgba(0,0,0,.85) 100%)",
+            zIndex: 1,
+          }}
+        />
+      )}
+
       {/* Top badges */}
       <div
         style={{
@@ -27,6 +60,7 @@ export function VenueCard({ venue }: Props) {
           display: "flex",
           gap: 8,
           flexWrap: "wrap",
+          zIndex: 2,
         }}
       >
         <Badge label={venue.type === "restaurant" ? "Restaurant" : "Bar"} />
@@ -34,27 +68,30 @@ export function VenueCard({ venue }: Props) {
       </div>
 
       {/* Price badge */}
-      <div style={{ position: "absolute", top: 20, right: 20 }}>
+      <div style={{ position: "absolute", top: 20, right: 20, zIndex: 2 }}>
         <Badge label={"$".repeat(venue.price)} bold />
       </div>
 
-      {/* Background emoji */}
-      <div
-        style={{
-          position: "absolute",
-          top: "28%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-          fontSize: 90,
-          opacity: 0.12,
-          pointerEvents: "none",
-        }}
-      >
-        {venue.emoji}
-      </div>
+      {/* Background emoji (only when no photo) */}
+      {!hasPhoto && (
+        <div
+          style={{
+            position: "absolute",
+            top: "28%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            fontSize: 90,
+            opacity: 0.12,
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        >
+          {venue.emoji}
+        </div>
+      )}
 
       {/* Content */}
-      <div>
+      <div style={{ position: "relative", zIndex: 2, padding: 28 }}>
         <div style={{ fontSize: 48, marginBottom: 8 }}>{venue.emoji}</div>
         <h2
           style={{

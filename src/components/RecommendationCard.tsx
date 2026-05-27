@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ScoredVenue } from "../types";
 import { logEvent } from "../engine/analytics";
 
@@ -10,6 +11,9 @@ interface Props {
 }
 
 export function RecommendationCard({ venue, explanation, showToast, cityKey, cityName }: Props) {
+  const [imgError, setImgError] = useState(false);
+  const hasPhoto = !!venue.ogImage && !imgError;
+
   const handleSearch = () => {
     logEvent("search_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
     window.open(
@@ -25,6 +29,12 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
       `https://www.google.com/maps/search/${encodeURIComponent(venue.name + " " + (cityName ?? cityKey ?? ""))}`,
       "_blank"
     );
+  };
+
+  const handleWebsite = () => {
+    if (!venue.websiteUrl) return;
+    logEvent("website_clicked", { venueId: venue.id, venueName: venue.name, city: cityKey });
+    window.open(venue.websiteUrl, "_blank");
   };
 
   const handleCopy = () => {
@@ -50,19 +60,49 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
         overflow: "hidden",
       }}
     >
-      {/* Color header */}
+      {/* Color header with optional photo */}
       <div
         style={{
-          height: 80,
+          height: hasPhoto ? 120 : 80,
           background: `linear-gradient(135deg, ${venue.gradient[0]}, ${venue.gradient[1]})`,
           display: "flex",
-          alignItems: "center",
-          padding: "0 20px",
+          alignItems: "flex-end",
+          padding: "0 20px 12px",
           gap: 12,
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <span style={{ fontSize: 36 }}>{venue.emoji}</span>
-        <div style={{ flex: 1, minWidth: 0 }}>
+        {/* Background photo */}
+        {venue.ogImage && !imgError && (
+          <img
+            src={venue.ogImage}
+            alt=""
+            onError={() => setImgError(true)}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              zIndex: 0,
+            }}
+          />
+        )}
+        {/* Dark overlay for text readability */}
+        {hasPhoto && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to bottom, rgba(0,0,0,.1) 0%, rgba(0,0,0,.65) 100%)",
+              zIndex: 1,
+            }}
+          />
+        )}
+
+        <span style={{ fontSize: 36, position: "relative", zIndex: 2 }}>{venue.emoji}</span>
+        <div style={{ flex: 1, minWidth: 0, position: "relative", zIndex: 2 }}>
           <h3
             style={{
               fontSize: 18,
@@ -83,6 +123,8 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
             background: "rgba(0,0,0,.3)",
             padding: "3px 10px",
             borderRadius: 8,
+            position: "relative",
+            zIndex: 2,
           }}
         >
           {"$".repeat(venue.price)}
@@ -165,7 +207,11 @@ export function RecommendationCard({ venue, explanation, showToast, cityKey, cit
 
         {/* Actions */}
         <div style={{ display: "flex", gap: 8 }}>
-          <ActionButton label="🔍 Search" primary onClick={handleSearch} />
+          {venue.websiteUrl ? (
+            <ActionButton label="🌐 See website" primary onClick={handleWebsite} />
+          ) : (
+            <ActionButton label="🔍 Search" primary onClick={handleSearch} />
+          )}
           <ActionButton label="📍 Map" onClick={handleMap} />
           <ActionButton label="📋 Copy" onClick={handleCopy} />
         </div>
