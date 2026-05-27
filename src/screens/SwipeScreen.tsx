@@ -4,41 +4,6 @@ import { VenueCard } from "../components/VenueCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { logEvent } from "../engine/analytics";
 
-/**
- * Preload the next few venue images into browser cache.
- * Uses a sliding window — only the upcoming images are kept alive,
- * old preload objects are released so we don't exhaust connections.
- */
-function useImagePreloader(venues: Venue[], count = 3) {
-  const liveRef = useRef<Map<string, HTMLImageElement>>(new Map());
-
-  useEffect(() => {
-    const wanted = new Set<string>();
-    // Only preload the next `count` venues that have images
-    for (const v of venues.slice(0, count)) {
-      if (v.ogImage) wanted.add(v.ogImage.replace(/^http:\/\//, "https://"));
-    }
-
-    // Remove images no longer in the window
-    for (const [url, img] of liveRef.current) {
-      if (!wanted.has(url)) {
-        img.src = ""; // cancel any in-flight request
-        liveRef.current.delete(url);
-      }
-    }
-
-    // Start loading new ones
-    for (const url of wanted) {
-      if (!liveRef.current.has(url)) {
-        const img = new Image();
-        img.referrerPolicy = "no-referrer";
-        img.src = url;
-        liveRef.current.set(url, img);
-      }
-    }
-  }, [venues, count]);
-}
-
 const THRESHOLD = 55; // px distance to trigger swipe
 const VELOCITY_THRESHOLD = 0.4; // px/ms — fast flick triggers even below distance threshold
 const MIN_SWIPES = 8;
@@ -95,9 +60,6 @@ export function SwipeScreen({
   const currentVenue = venues[0] as Venue | undefined;
   const nextVenue = venues[1] as Venue | undefined;
   const nightReady = swipeCount >= MIN_SWIPES;
-
-  // Preload upcoming venue images so they're cached before the card mounts
-  useImagePreloader(venues);
 
   // Log card_viewed
   useEffect(() => {
@@ -488,7 +450,7 @@ export function SwipeScreen({
               willChange: "transform, opacity",
             }}
           >
-            <VenueCard venue={nextVenue} cityKey={cityKey} />
+            <VenueCard key={nextVenue.id} venue={nextVenue} cityKey={cityKey} />
           </div>
         )}
 
@@ -514,7 +476,7 @@ export function SwipeScreen({
           <div ref={saveRef} className="swipe-indicator save" style={{ opacity: 0 }}>
             SUPER LIKE ★
           </div>
-          <VenueCard venue={currentVenue} cityKey={cityKey} />
+          <VenueCard key={currentVenue.id} venue={currentVenue} cityKey={cityKey} />
         </div>
       </div>
 
