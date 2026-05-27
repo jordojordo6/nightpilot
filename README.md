@@ -54,10 +54,10 @@ src/
     analytics.ts       — localStorage event logging
     storage.ts         — state persistence helpers
     wine.ts            — wine taste profile storage
-  screens/             — LandingScreen, SwipeScreen, NightModeScreen, ResultsScreen, WineLensScreen
+  screens/             — LandingScreen, SwipeScreen, NightModeScreen, ResultsScreen, WineLensScreen (Wine Radar)
   components/          — VenueCard, RecommendationCard, SettingsModal, Toast, ProgressBar, DebugPanel
 api/
-  wine-lens.ts         — Vercel serverless function (Claude vision API)
+  wine-lens.ts         — Vercel serverless function for Wine Radar (Claude vision API)
 ```
 
 ## Scripts
