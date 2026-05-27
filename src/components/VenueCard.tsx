@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import type { Venue } from "../types";
 import { logEvent } from "../engine/analytics";
 
@@ -13,11 +13,22 @@ function normalizeImageUrl(url: string): string {
 }
 
 export function VenueCard({ venue, cityKey }: Props) {
+  // Track whether image was already cached on mount (skip fade-in)
+  const wasCachedRef = useRef(false);
+
   const [imgStatus, setImgStatus] = useState<"loading" | "loaded" | "failed">(
     venue.ogImage ? "loading" : "failed"
   );
 
   const hasPhoto = !!venue.ogImage && imgStatus === "loaded";
+
+  /** Ref callback: if the image is already cached, show it instantly */
+  const imgRef = useCallback((el: HTMLImageElement | null) => {
+    if (el && el.complete && el.naturalWidth > 0) {
+      wasCachedRef.current = true;
+      setImgStatus("loaded");
+    }
+  }, []);
 
   const handleLoad = useCallback(() => {
     setImgStatus("loaded");
@@ -65,6 +76,7 @@ export function VenueCard({ venue, cityKey }: Props) {
       {/* Background photo (if available) */}
       {venue.ogImage && imgStatus !== "failed" && (
         <img
+          ref={imgRef}
           src={normalizeImageUrl(venue.ogImage)}
           alt=""
           referrerPolicy="no-referrer"
@@ -77,9 +89,9 @@ export function VenueCard({ venue, cityKey }: Props) {
             height: "100%",
             objectFit: "cover",
             zIndex: 0,
-            // Hide while loading to prevent flash of broken icon
             opacity: imgStatus === "loaded" ? 1 : 0,
-            transition: "opacity 0.3s ease-in",
+            // Skip fade-in if image was already cached (instant reveal)
+            transition: wasCachedRef.current ? "none" : "opacity 0.3s ease-in",
           }}
         />
       )}

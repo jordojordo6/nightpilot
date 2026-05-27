@@ -4,6 +4,24 @@ import { VenueCard } from "../components/VenueCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { logEvent } from "../engine/analytics";
 
+/** Preload the next N venue images into browser cache so they're instant on mount */
+function useImagePreloader(venues: Venue[], count = 3) {
+  const preloadedRef = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    const upcoming = venues.slice(0, count);
+    for (const v of upcoming) {
+      if (!v.ogImage) continue;
+      const url = v.ogImage.replace(/^http:\/\//, "https://");
+      if (preloadedRef.current.has(url)) continue;
+      preloadedRef.current.add(url);
+      const img = new Image();
+      img.referrerPolicy = "no-referrer";
+      img.src = url;
+    }
+  }, [venues, count]);
+}
+
 const THRESHOLD = 55; // px distance to trigger swipe
 const VELOCITY_THRESHOLD = 0.4; // px/ms — fast flick triggers even below distance threshold
 const MIN_SWIPES = 8;
@@ -60,6 +78,9 @@ export function SwipeScreen({
   const currentVenue = venues[0] as Venue | undefined;
   const nextVenue = venues[1] as Venue | undefined;
   const nightReady = swipeCount >= MIN_SWIPES;
+
+  // Preload upcoming venue images so they're cached before the card mounts
+  useImagePreloader(venues);
 
   // Log card_viewed
   useEffect(() => {
