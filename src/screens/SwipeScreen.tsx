@@ -4,20 +4,37 @@ import { VenueCard } from "../components/VenueCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { logEvent } from "../engine/analytics";
 
-/** Preload the next N venue images into browser cache so they're instant on mount */
+/**
+ * Preload the next few venue images into browser cache.
+ * Uses a sliding window — only the upcoming images are kept alive,
+ * old preload objects are released so we don't exhaust connections.
+ */
 function useImagePreloader(venues: Venue[], count = 3) {
-  const preloadedRef = useRef<Set<string>>(new Set());
+  const liveRef = useRef<Map<string, HTMLImageElement>>(new Map());
 
   useEffect(() => {
-    const upcoming = venues.slice(0, count);
-    for (const v of upcoming) {
-      if (!v.ogImage) continue;
-      const url = v.ogImage.replace(/^http:\/\//, "https://");
-      if (preloadedRef.current.has(url)) continue;
-      preloadedRef.current.add(url);
-      const img = new Image();
-      img.referrerPolicy = "no-referrer";
-      img.src = url;
+    const wanted = new Set<string>();
+    // Only preload the next `count` venues that have images
+    for (const v of venues.slice(0, count)) {
+      if (v.ogImage) wanted.add(v.ogImage.replace(/^http:\/\//, "https://"));
+    }
+
+    // Remove images no longer in the window
+    for (const [url, img] of liveRef.current) {
+      if (!wanted.has(url)) {
+        img.src = ""; // cancel any in-flight request
+        liveRef.current.delete(url);
+      }
+    }
+
+    // Start loading new ones
+    for (const url of wanted) {
+      if (!liveRef.current.has(url)) {
+        const img = new Image();
+        img.referrerPolicy = "no-referrer";
+        img.src = url;
+        liveRef.current.set(url, img);
+      }
     }
   }, [venues, count]);
 }
