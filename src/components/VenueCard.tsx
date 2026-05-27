@@ -25,8 +25,9 @@ export function VenueCard({ venue }: Props) {
       {/* Background photo (if available) */}
       {venue.ogImage && !imgError && (
         <img
-          src={venue.ogImage}
+          src={venue.ogImage.replace(/^http:\/\//, "https://")}
           alt=""
+          referrerPolicy="no-referrer"
           onError={() => setImgError(true)}
           style={{
             position: "absolute",

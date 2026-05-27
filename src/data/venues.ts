@@ -64,7 +64,7 @@ export const VENUES: Venue[] = [
     gradient:["#0F3460","#E94560"],bestFor:"omakase purists and sushi connoisseurs",
     dietary:["pescatarian","gluten-free"],
     lat:49.2645,lng:-123.1298,
-    ogImage:"http://static1.squarespace.com/static/5bc4dc8a8d974035890abc99/t/68d18aaaf67bf3067f62cf70/1758562986192/20180817-Tojo%27s-5865-LeilaKwok.jpg?format=1500w",
+    ogImage:"https://static1.squarespace.com/static/5bc4dc8a8d974035890abc99/t/68d18aaaf67bf3067f62cf70/1758562986192/20180817-Tojo%27s-5865-LeilaKwok.jpg?format=1500w",
     websiteUrl:"http://www.tojos.com/"},
 
   {id:7,name:"AnnaLena",type:"restaurant",cuisine:"West Coast",neighborhood:"Kitsilano",price:3,rating:4.6,
@@ -150,7 +150,7 @@ export const VENUES: Venue[] = [
     gradient:["#5F0F40","#E36414"],bestFor:"a cozy, unforgettable pasta dinner worth queuing for",
     dietary:["vegetarian"],michelin:"bib-gourmand",
     lat:49.2843,lng:-123.0984,
-    ogImage:"http://static1.squarespace.com/static/624f5630bf354869b36f3bca/t/62571315dbd0622402dc50af/1737657876264/4V1A3085.jpg?format=1500w",
+    ogImage:"https://static1.squarespace.com/static/624f5630bf354869b36f3bca/t/62571315dbd0622402dc50af/1737657876264/4V1A3085.jpg?format=1500w",
     websiteUrl:"http://www.askforluigi.com/"},
 
   {id:15,name:"Anh and Chi",type:"restaurant",cuisine:"Vietnamese",neighborhood:"Main Street",price:2,rating:4.5,
@@ -161,7 +161,7 @@ export const VENUES: Venue[] = [
     gradient:["#1B4965","#CAE9FF"],bestFor:"stylish Vietnamese with a modern twist",
     dietary:["vegetarian","vegan","gluten-free"],michelin:"bib-gourmand",
     lat:49.2612,lng:-123.1030,
-    ogImage:"http://anhandchi.com/cdn/shop/files/Anh_and_Chi_Family_Style_Dinner_Photographed_by_Leila_Kwok_1200x1200.jpg?v=1772611785",
+    ogImage:"https://anhandchi.com/cdn/shop/files/Anh_and_Chi_Family_Style_Dinner_Photographed_by_Leila_Kwok_1200x1200.jpg?v=1772611785",
     websiteUrl:"http://www.anhandchi.com/"},
 
   {id:16,name:"Masayoshi",type:"restaurant",cuisine:"Japanese",neighborhood:"Fairview",price:4,rating:4.8,
@@ -183,7 +183,7 @@ export const VENUES: Venue[] = [
     gradient:["#4A4E69","#9A8C98"],bestFor:"plant-forward dining that doesn't compromise",
     dietary:["vegetarian","vegan","gluten-free","dairy-free"],
     lat:49.2622,lng:-123.1013,
-    ogImage:"http://static1.squarespace.com/static/5fa9d1da2f5c0e204137e48f/t/5fd3f1409a52ec0c0f61a90c/1607725396739/Acorn_2_TYSON_FAST+%281%29.jpg?format=1500w",
+    ogImage:"https://static1.squarespace.com/static/5fa9d1da2f5c0e204137e48f/t/5fd3f1409a52ec0c0f61a90c/1607725396739/Acorn_2_TYSON_FAST+%281%29.jpg?format=1500w",
     websiteUrl:"http://www.theacornrestaurant.ca/"},
 
   {id:18,name:"Kissa Tanto",type:"restaurant",cuisine:"Japanese-Italian",neighborhood:"Chinatown",price:3,rating:4.7,
@@ -254,7 +254,7 @@ export const VENUES: Venue[] = [
     highlights:["200+ whiskeys","Live bands weekly","Heritage 1910 bar"],
     gradient:["#774936","#D4A373"],bestFor:"whiskey lovers and live music fans",
     lat:49.2855,lng:-123.1061,
-    ogImage:"http://static1.squarespace.com/static/5db9f5cc0e8af224964d841a/t/5e45e75a78bd103b8b528dc8/1581639527237/Pourhouse-Restaurant-Cocktail-Bar-Gastown-Vancouver.jpg?format=1500w",
+    ogImage:"https://static1.squarespace.com/static/5db9f5cc0e8af224964d841a/t/5e45e75a78bd103b8b528dc8/1581639527237/Pourhouse-Restaurant-Cocktail-Bar-Gastown-Vancouver.jpg?format=1500w",
     websiteUrl:"https://www.pourhousevancouver.com/"},
 
   {id:25,name:"Roof at Black+Blue",type:"bar",cuisine:"Rooftop Bar",neighborhood:"Downtown",price:3,rating:4.3,
