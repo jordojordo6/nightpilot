@@ -10,7 +10,7 @@ export const VENUES: Venue[] = [
     gradient:["#722F37","#C9A96E"],bestFor:"special occasion dinners and impressing someone",
     dietary:["vegetarian","gluten-free"],michelin:"bib-gourmand",
     lat:49.2834,lng:-123.1189,
-    ogImage:"https://hawksworthrestaurant.com/wp-content/uploads/2023/04/a.png",
+    ogImage:"https://hawksworthrestaurant.com/wp-content/uploads/2022/12/about_img.jpg",
     websiteUrl:"https://hawksworthrestaurant.com/"},
 
   {id:2,name:"Maenam",type:"restaurant",cuisine:"Thai",neighborhood:"Kitsilano",price:3,rating:4.7,
@@ -21,7 +21,7 @@ export const VENUES: Venue[] = [
     gradient:["#E85D04","#FFBA08"],bestFor:"adventurous eaters who love bold spice",
     dietary:["vegetarian","vegan","gluten-free"],michelin:"bib-gourmand",
     lat:49.2699,lng:-123.1668,
-    ogImage:"https://static1.squarespace.com/static/6410f0a956f5cc78c2dd9b78/t/642f0861a64de036f48e6ba8/1772774091694/",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/6410f0a956f5cc78c2dd9b78/c5672bb8-5677-4b8f-8b71-6e4ac4b5b211/CKA08131.jpg?format=2500w",
     websiteUrl:"http://www.maenam.ca/"},
 
   {id:3,name:"Savio Volpe",type:"restaurant",cuisine:"Italian",neighborhood:"Main Street",price:3,rating:4.7,
@@ -32,7 +32,7 @@ export const VENUES: Venue[] = [
     gradient:["#BC4749","#F2E8CF"],bestFor:"a warm date night with hand-made pasta and wine",
     dietary:["vegetarian"],
     lat:49.2627,lng:-123.1003,
-    ogImage:"https://static1.squarespace.com/static/651dc459ef9b6d0a2e634f4f/t/651dc4a774d02a122382bad5/1708478312523/",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/651dc459ef9b6d0a2e634f4f/8d7a722d-61e6-44af-9d57-9f561ab6a7bd/bgd.jpeg",
     websiteUrl:"http://www.saviovolpe.com/"},
 
   {id:4,name:"Miku",type:"restaurant",cuisine:"Japanese",neighborhood:"Waterfront",price:4,rating:4.7,
@@ -53,7 +53,7 @@ export const VENUES: Venue[] = [
     gradient:["#9B2226","#EE9B00"],bestFor:"iconic Vancouver food experiences",
     dietary:["vegetarian","vegan","gluten-free","halal"],michelin:"bib-gourmand",
     lat:49.2622,lng:-123.1137,
-    ogImage:"http://static1.squarespace.com/static/664bced31838885ded9799eb/t/6661a9e55a8d874c7647ca3c/1717676517435/unnamed.png?format=1500w",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/664bced31838885ded9799eb/b56285c7-2b9d-4693-afc2-503f211800c2/1000031039.jpg?format=2500w",
     websiteUrl:"https://vijs.ca/vijs-restaurant/"},
 
   {id:6,name:"Tojo's",type:"restaurant",cuisine:"Japanese",neighborhood:"Fairview",price:4,rating:4.8,
@@ -75,7 +75,7 @@ export const VENUES: Venue[] = [
     gradient:["#2D6A4F","#95D5B2"],bestFor:"creative food lovers who appreciate art and design",
     dietary:["vegetarian"],michelin:"1-star",
     lat:49.2675,lng:-123.1667,
-    ogImage:"http://static1.squarespace.com/static/5480d9cbe4b0e3ea019971a8/t/54a8ffdfe4b0243cdd54e363/1420361778402/annalenawhite.jpg?format=1500w",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/5480d9cbe4b0e3ea019971a8/1439494659451-IXLE9SRNLSCDXW4WERF9/heart-2-taller.jpg?format=2500w",
     websiteUrl:"http://www.annalena.ca/"},
 
   {id:8,name:"Phnom Penh",type:"restaurant",cuisine:"Vietnamese-Cambodian",neighborhood:"Chinatown",price:1,rating:4.5,
@@ -106,7 +106,7 @@ export const VENUES: Venue[] = [
     gradient:["#DC2F02","#FFBA08"],bestFor:"late-night bites in an intimate, buzzy room",
     dietary:["vegetarian"],
     lat:49.2791,lng:-123.0981,
-    ogImage:"http://static1.squarespace.com/static/590a751f893fc0d31896f71e/t/590a8048ff7c500c50f401fa/1493860424746/Asset+6.png?format=1500w",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/590a751f893fc0d31896f71e/1493859538598-XUQFT01EREPTODC0Y2O3/pig.jpg?format=2500w",
     websiteUrl:"https://www.bao-bei.ca/"},
 
   {id:11,name:"Published on Main",type:"restaurant",cuisine:"Farm-to-Table",neighborhood:"Main Street",price:4,rating:4.7,
@@ -117,7 +117,7 @@ export const VENUES: Venue[] = [
     gradient:["#606C38","#DDA15E"],bestFor:"serious foodies who love seasonal tasting menus",
     dietary:["vegetarian"],michelin:"1-star",
     lat:49.2622,lng:-123.0998,
-    ogImage:"https://publishedonmain.com/wp-content/uploads/elementor/thumbs/gold-01-rmqnab9bgj8dwc2ub4lfg0dx7mgdl1ob9nor1z4qaw.png",
+    ogImage:"https://publishedonmain.com/wp-content/uploads/Banner2-scaled.jpg",
     websiteUrl:"https://publishedonmain.com/"},
 
   {id:12,name:"La Quercia",type:"restaurant",cuisine:"Italian",neighborhood:"Commercial Drive",price:3,rating:4.6,
@@ -128,7 +128,7 @@ export const VENUES: Venue[] = [
     gradient:["#BB3E03","#F4A261"],bestFor:"romantic Italian dinners with real soul",
     dietary:["vegetarian"],
     lat:49.2709,lng:-123.0704,
-    ogImage:"https://images.squarespace-cdn.com/content/v1/5fa3614e11c6922521efe0af/1604870448166-LO04ST8AW4W63APMQJ15/LaQuercia-pasta1.jpg?format=100w",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/5fa3614e11c6922521efe0af/1604870448166-LO04ST8AW4W63APMQJ15/LaQuercia-pasta1.jpg?format=2500w",
     websiteUrl:"http://laquercia.ca/"},
 
   {id:13,name:"Tacofino",type:"restaurant",cuisine:"Mexican",neighborhood:"Gastown",price:2,rating:4.4,
@@ -139,7 +139,7 @@ export const VENUES: Venue[] = [
     gradient:["#38B000","#FF6D00"],bestFor:"a quick, fun, no-fuss meal before drinks",
     dietary:["vegetarian","vegan","gluten-free"],
     lat:49.2841,lng:-123.1076,
-    ogImage:"https://images.squarespace-cdn.com/content/v1/696559eeb2270933e9839fd5/acf96a56-0553-4e1f-b613-37a3f5150747/landingpage_hero_v04.webp?format=100w",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/696559eeb2270933e9839fd5/acf96a56-0553-4e1f-b613-37a3f5150747/landingpage_hero_v04.webp?format=2500w",
     websiteUrl:"http://tacofino.com/"},
 
   {id:14,name:"Ask for Luigi",type:"restaurant",cuisine:"Italian",neighborhood:"Railtown",price:3,rating:4.7,
@@ -172,7 +172,7 @@ export const VENUES: Venue[] = [
     gradient:["#3D405B","#E07A5F"],bestFor:"the ultimate intimate sushi experience",
     dietary:["pescatarian","gluten-free"],michelin:"1-star",
     lat:49.2649,lng:-123.1298,
-    ogImage:"https://static1.squarespace.com/static/5ca3017d3a01c7000125145f/t/64499f9cd3427d5e855e0120/1779162566590/",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/5ca3017d3a01c7000125145f/1689533627121-Y46QC59T4ZFX8ICPYUTY/DSC06584.jpg?format=2500w",
     websiteUrl:"http://www.masayoshi.ca/"},
 
   {id:17,name:"The Acorn",type:"restaurant",cuisine:"Plant-Based",neighborhood:"Main Street",price:3,rating:4.5,
@@ -194,7 +194,7 @@ export const VENUES: Venue[] = [
     gradient:["#240046","#C77DFF"],bestFor:"creative date nights with jazz and cocktails",
     dietary:["vegetarian","pescatarian"],michelin:"1-star",
     lat:49.2809,lng:-123.0993,
-    ogImage:"http://static1.squarespace.com/static/56d73fcda3360cdd16fc1491/t/572d10f737013b94d83a8c38/1462571256210/Kissa-01.png?format=1500w",
+    ogImage:"https://images.squarespace-cdn.com/content/v1/56d73fcda3360cdd16fc1491/1462572753396-ESI5PUU3XK1UR0NCT305/Home-1-01.jpg?format=2500w",
     websiteUrl:"http://www.kissatanto.com/"},
 
   // ─── BARS ──────────────────────────────────────────────────
@@ -234,7 +234,7 @@ export const VENUES: Venue[] = [
     highlights:["Passive Aggressive pale ale","Rotating small-batch taps","Local crowd"],
     gradient:["#A68A64","#582F0E"],bestFor:"casual craft beer hangs with a local feel",
     lat:49.2619,lng:-123.0997,
-    ogImage:"https://brassneck.ca/app/uploads/2021/02/brssnck_015.jpg",
+    ogImage:"https://brassneck.ca/app/uploads/2014/05/brssnck15_146_052.jpg",
     websiteUrl:"http://brassneck.ca/"},
 
   {id:23,name:"Alibi Room",type:"bar",cuisine:"Craft Beer",neighborhood:"Railtown",price:2,rating:4.5,
@@ -317,7 +317,7 @@ export const VENUES: Venue[] = [
     gradient:["#FF006E","#8338EC"],bestFor:"relaxed evening wine and Italian bites on the Drive",
     dietary:["vegetarian"],
     lat:49.2780,lng:-123.0700,
-    ogImage:"https://static.wixstatic.com/media/ae468d_4c44e75bc3fb439d8e3e6be7af43182d%7Emv2.png/v1/fit/w_2500,h_1330,al_c/ae468d_4c44e75bc3fb439d8e3e6be7af43182d%7Emv2.png",
+    ogImage:"https://static.wixstatic.com/media/ae468d_d937d43f297f465fa6aaf2e5b5dcd3aef000.jpg/v1/fill/w_1920,h_536,al_c,q_85,usm_0.33_1.00_0.00,enc_avif,quality_auto/ae468d_d937d43f297f465fa6aaf2e5b5dcd3aef000.jpg",
     websiteUrl:"http://www.barcorso.ca/"},
 
   {id:31,name:"Back and Forth Bar",type:"bar",cuisine:"Neighbourhood Bar & Games",neighborhood:"Main Street",price:2,rating:4.3,
@@ -337,7 +337,7 @@ export const VENUES: Venue[] = [
     highlights:["300+ wine list","Candlelit Hotel Georgia","Classic cocktail craft"],
     gradient:["#B5179E","#F72585"],bestFor:"wine-forward evenings in an elegant setting",
     lat:49.2825,lng:-123.1222,
-    ogImage:"https://static.wixstatic.com/media/8385f7_3cd9e32630b740779e65b5013db80aaf.jpg/v1/fit/w_2500,h_1330,al_c/8385f7_3cd9e32630b740779e65b5013db80aaf.jpg",
+    ogImage:"https://static.wixstatic.com/media/8385f7_3cba50ff9fb44a36b27abd2f19a63440~mv2_d_3904_2320_s_2.jpg/v1/fill/w_1920,h_1158,al_c,q_85,enc_avif,quality_auto/8385f7_3cba50ff9fb44a36b27abd2f19a63440~mv2_d_3904_2320_s_2.jpg",
     websiteUrl:"http://www.uvavancouver.com/"},
 
   {id:33,name:"33 Acres Brewing",type:"bar",cuisine:"Brewery",neighborhood:"Main Street",price:2,rating:4.4,
