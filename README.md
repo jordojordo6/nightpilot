@@ -16,7 +16,7 @@ npm run dev          # opens at localhost:5173
 1. Push this repo to GitHub.
 2. Go to [vercel.com/new](https://vercel.com/new) and import the repo.
 3. In **Settings > Environment Variables**, add:
-   - `ANTHROPIC_API_KEY` — your Anthropic API key (required for Wine Lens)
+   - `ANTHROPIC_API_KEY` — your Anthropic API key (required for Wine Radar)
 4. Click **Deploy**. Vercel auto-detects the Vite config and the `api/` serverless function.
 5. Every `git push` to `main` triggers a new deploy automatically.
 
@@ -26,7 +26,7 @@ npm run dev          # opens at localhost:5173
 2. Open the URL in Safari on your iPhone.
 3. Tap **Share > Add to Home Screen** to install as a PWA-style app.
 4. Test the full flow: pick a city, swipe 8+ venues, build your night, tap Share/Map/Search on results.
-5. For Wine Lens: take a photo of any wine list and tap Analyze.
+5. For Wine Radar: take a photo of any wine list and tap Analyze.
 
 ## How It Works
 
@@ -34,7 +34,7 @@ npm run dev          # opens at localhost:5173
 
 **Build My Night** — Pick your occasion, budget, neighborhood, and plan type (dinner only, drinks only, or both). The engine scores every venue against your profile and pairs complementary restaurants + bars.
 
-**Wine Lens** — Photograph a wine list at a restaurant. The app sends the image + your taste profile to Claude, which returns personalized wine picks ranked by match confidence.
+**Wine Radar** — Scan a wine list. NightPilot will find the best picks for your taste, meal, and budget. The app sends the image + your taste profile to Claude, which returns personalized wine picks ranked by match confidence.
 
 ## Project Structure
 
@@ -76,10 +76,10 @@ npm run test:watch # watch mode
 The app collects two types of feedback:
 
 - **Quick feedback** — inline buttons after results ("Yes, surprisingly accurate" / "Kind of" / "Not really"), sent to Google Sheets via Apps Script
-- **Detailed feedback** — links to Google Forms (separate forms for Night Mode and Wine Lens)
+- **Detailed feedback** — links to Google Forms (separate forms for Night Mode and Wine Radar)
 
 All analytics events are also logged to localStorage for debugging (open DevTools > Application > Local Storage > look for `nightpilot_events`).
 
 ## Tech Stack
 
-React 19, TypeScript, Vite, Vercel (hosting + serverless), Claude API (Wine Lens vision)
+React 19, TypeScript, Vite, Vercel (hosting + serverless), Claude API (Wine Radar vision)

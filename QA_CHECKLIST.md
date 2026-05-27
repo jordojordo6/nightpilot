@@ -15,7 +15,7 @@
 
 ## Landing Screen
 - [ ] "Start Swiping" button navigates to Swipe Screen
-- [ ] "Wine Lens" button navigates to Wine Lens
+- [ ] "Wine Radar" button navigates to Wine Radar
 - [ ] "Change City" option returns to city picker
 - [ ] Swipe count displays correctly
 - [ ] City name appears in header
@@ -77,7 +77,7 @@
 - [ ] "Keep Swiping" returns to swipe screen
 - [ ] "Start Over" shows confirmation dialog mentioning memory/swipes, then resets
 
-## Wine Lens
+## Wine Radar
 - [ ] Take Photo button opens camera (mobile)
 - [ ] From Photos button opens gallery / file picker
 - [ ] Photo thumbnails appear after capture
@@ -94,8 +94,8 @@
 - [ ] "I ordered this" button opens star rating UI
 - [ ] Star rating saves to wine profile
 - [ ] Wine profile summary shows after rating wines
-- [ ] Quick feedback sends to Google Sheets (check wine_lens tab)
-- [ ] "Share detailed feedback →" opens Wine Lens Google Form (separate from Night Mode)
+- [ ] Quick feedback sends to Google Sheets (check wine_radar tab)
+- [ ] "Share detailed feedback →" opens Wine Radar Google Form (separate from Night Mode)
 - [ ] "Scan Another List" resets and returns to capture UI
 - [ ] Back button returns to Landing
 
@@ -106,9 +106,9 @@
 - [ ] Verify `nightpilot_city` persists selected city
 - [ ] Google Sheets receives data in correct tabs:
   - `quick_feedback` — Night Mode quick feedback with city
-  - `wine_lens` — Wine Lens quick feedback with city
+  - `wine_radar` — Wine Radar quick feedback with city
   - `Night Mode Detailed` — Night Mode Google Form responses
-  - `Wine Lens Detailed` — Wine Lens Google Form responses
+  - `Wine Radar Detailed` — Wine Radar Google Form responses
 
 ## Cross-City Regression
 - [ ] Taste profile persists across city switches (tags carry over)
@@ -145,7 +145,7 @@
 - [ ] Click 🔍 Search → venue + "Salt Lake City" + correct type (restaurant/bar)
 - [ ] Click 📍 Map → opens Google Maps in SLC
 - [ ] Neighborhood selector shows SLC neighborhoods (Downtown, Sugar House, etc.)
-- [ ] Wine Lens works with SLC taste profile
+- [ ] Wine Radar works with SLC taste profile
 - [ ] Michelin filter OFF shows all 35 venues
 - [ ] Michelin filter ON shows 0 restaurants (SLC has no Michelin venues) + 15 bars
 
@@ -162,15 +162,15 @@
 - [ ] No horizontal scroll / content overflow
 - [ ] Touch swipe gestures work smoothly
 - [ ] Safe area padding at top/bottom
-- [ ] Keyboard doesn't break layout (Wine Lens mood input)
+- [ ] Keyboard doesn't break layout (Wine Radar mood input)
 - [ ] Camera/photo upload works on mobile
 - [ ] "Add to Home Screen" works as standalone PWA
 
 ## Edge Cases
 - [ ] 0 swipes → "Build My Night" button disabled
 - [ ] All venues swiped → empty swipe deck state
-- [ ] Wine Lens with no API key → error message displayed
-- [ ] Wine Lens with unreadable photo → graceful error
+- [ ] Wine Radar with no API key → error message displayed
+- [ ] Wine Radar with unreadable photo → graceful error
 - [ ] Corrupted localStorage → app recovers gracefully (try/catch fallbacks)
 - [ ] Michelin filter on in SLC → shows only bars (0 Michelin restaurants)
 

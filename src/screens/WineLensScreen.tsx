@@ -236,7 +236,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
       const data = (await res.json()) as WineResult;
       setResult(data);
 
-      logEvent("wine_lens_scan", {
+      logEvent("wine_radar_scan", {
         wineCount: data.wines.length,
         photoCount: photos.length,
         listSummary: data.listSummary,
@@ -303,7 +303,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
     const wineNames = result?.wines.map((w) => w.name) ?? [];
     const avoidNames = result?.avoid.map((w) => w.name) ?? [];
 
-    logEvent("wine_lens_feedback", {
+    logEvent("wine_radar_feedback", {
       response: value,
       wineNames,
       avoidNames,
@@ -320,7 +320,7 @@ export function WineLensScreen({ onBack, tasteProfile, dietary = [], cityKey }: 
         mode: "no-cors",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
-          feature: "wine_lens",
+          feature: "wine_radar",
           response: value,
           wineNames,
           avoidNames,

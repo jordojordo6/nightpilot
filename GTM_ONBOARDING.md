@@ -29,7 +29,7 @@ Users see venue cards (name, cuisine, vibe, price, tagline) and swipe right (lik
 **3. Build My Night**
 Users pick an occasion (date night, friends, solo, group, fancy, casual), optionally set a budget and neighborhood preference, and choose whether they want dinner, drinks, or both. NightPilot generates 3 personalized plans — each a restaurant + bar pairing with a match score, walk time between them, and an explanation of why it fits.
 
-**4. Wine Lens**
+**4. Wine Radar**
 Users photograph a wine menu at a restaurant and NightPilot's AI reads it, then recommends specific wines based on their taste profile, what they're eating, their mood, and their budget. This is the highest-engagement feature — it solves a real moment of anxiety (staring at a wine list you don't understand) and delivers value instantly.
 
 ## The Taste Engine — What Makes Us Different
@@ -47,8 +47,8 @@ The profile is **portable across cities**. If you build your taste in SLC, Night
 
 - **Live and deployed** on Vercel
 - **4 cities**, 138 total venues, all verified open as of May 2026
-- **Core features complete:** Swipe flow, taste engine, Night Mode recommendations, Wine Lens, location filtering, dietary restrictions, Michelin filtering, settings, feedback collection
-- **Tech stack:** React 19 + TypeScript + Vite (frontend), Vercel serverless functions (Wine Lens API)
+- **Core features complete:** Swipe flow, taste engine, Night Mode recommendations, Wine Radar, location filtering, dietary restrictions, Michelin filtering, settings, feedback collection
+- **Tech stack:** React 19 + TypeScript + Vite (frontend), Vercel serverless functions (Wine Radar API)
 - **No backend/database yet** — taste profiles live in the user's browser (localStorage). This means we can't track users across devices or see aggregate usage data yet.
 
 ## What's Missing (And What We're Not Building Yet)
@@ -67,7 +67,7 @@ These are the numbers that tell us if the product is working:
 |--------|-----------------|--------|
 | **Swipe completion rate** | Do people finish the swipe deck or drop off? | >60% complete 10+ swipes |
 | **Night Mode conversion** | After swiping, do they build a night? | >40% of swipe completers |
-| **Wine Lens usage** | Are people using the flashiest feature? | Track total scans per city |
+| **Wine Radar usage** | Are people using the flashiest feature? | Track total scans per city |
 | **Return rate (7-day)** | Do people come back next weekend? | >30% weekly return |
 | **Cross-city usage** | Does someone who built a profile in one city open the app in another? | Any signal here is gold |
 | **Share rate** | Do people send their plan to friends? | Track share button taps |
@@ -84,7 +84,7 @@ The person who:
 - Is 25-40, has disposable income, uses their phone for everything
 - Currently asks friends, checks Instagram, or reads Eater/Infatuation lists
 
-**The sharpest wedge:** Someone sitting at a restaurant right now, staring at a wine list. Wine Lens solves that in 10 seconds.
+**The sharpest wedge:** Someone sitting at a restaurant right now, staring at a wine list. Wine Radar solves that in 10 seconds.
 
 ## GTM Priorities
 
@@ -92,7 +92,7 @@ The person who:
 
 We don't need awareness — we need people to actually open the app in a real going-out moment. Tactics that work for this:
 
-- **Wine Lens demos:** Film yourself scanning a wine menu and getting a recommendation. This is inherently shareable content — it looks like magic.
+- **Wine Radar demos:** Film yourself scanning a wine menu and getting a recommendation. This is inherently shareable content — it looks like magic.
 - **"Let AI pick my night"** content: TikTok/Reels format. Go through the full flow on camera — swipe, build a night, go to the recommended spot, show the experience.
 - **Direct seeding:** Text the link to 20 people in each city who go out frequently. Ask them to use it next time they're choosing a restaurant. Personal outreach > broadcast.
 - **Restaurant/bar partnerships:** If a venue owner sees their place being recommended by an AI that actually understands taste, that's a compelling pitch. Start conversations, not deals.
@@ -120,7 +120,7 @@ Why Amsterdam:
 Every conversation with an early user is data. What we want to learn:
 - Did they trust the recommendation enough to actually go?
 - Was the recommendation good?
-- Did they use Wine Lens? When and where?
+- Did they use Wine Radar? When and where?
 - Would they use it again unprompted?
 - What would make them tell a friend?
 

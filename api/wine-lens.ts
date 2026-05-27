@@ -140,7 +140,7 @@ export default async function handler(req: any, res: any) {
       return res.status(500).json({ error: "Failed to parse wine recommendations" });
     }
   } catch (err: any) {
-    console.error("Wine lens error:", err);
+    console.error("Wine radar error:", err);
     return res.status(500).json({ error: `Server error: ${err?.message || String(err)}` });
   }
 }
