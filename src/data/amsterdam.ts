@@ -9,7 +9,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["2 Michelin stars","Conscious fine dining","Herbivore menu available"],
     gradient:["#2D6A4F","#95D5B2"],bestFor:"the ultimate Amsterdam dining experience",
     dietary:["vegetarian","gluten-free"],michelin:"2-star",
-    lat:52.3653,lng:4.8994},
+    lat:52.3653,lng:4.8994,
+    websiteUrl:"https://restaurantflore.com/",
+    ogImage:"https://restaurantflore.com/wp-content/uploads/2025/10/Flore-2.0-Interior-2.jpg"},
 
   {id:202,name:"Choux",type:"restaurant",cuisine:"Modern European",neighborhood:"Centrum",price:3,rating:4.7,
     vibe:["creative","casual","seasonal"],
@@ -18,7 +20,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Five-course set menu","Veg-forward","Behind Centraal Station"],
     gradient:["#606C38","#DDA15E"],bestFor:"creative seasonal dining without the pretension",
     dietary:["vegetarian","vegan"],michelin:"1-star",
-    lat:52.3691,lng:4.8945},
+    lat:52.3691,lng:4.8945,
+    websiteUrl:"https://choux.nl/",
+    ogImage:"https://choux.nl/wp-content/uploads/home.gif"},
 
   {id:203,name:"Troef",type:"restaurant",cuisine:"Modern Dutch",neighborhood:"De Pijp",price:3,rating:4.7,
     vibe:["creative","warm","intimate"],
@@ -27,7 +31,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Dutch classics elevated","French technique","Great value fine dining"],
     gradient:["#1A1A2E","#E6B325"],bestFor:"affordable fine dining that punches above its weight",
     dietary:["vegetarian"],
-    lat:52.3547,lng:4.8917},
+    lat:52.3547,lng:4.8917,
+    websiteUrl:"https://troefamsterdam.nl/",
+    ogImage:"https://troefamsterdam.nl/wp-content/uploads/2024/04/Schets-Troef-website-1024x573-1.jpg"},
 
   {id:204,name:"Entrepot",type:"restaurant",cuisine:"Modern European",neighborhood:"Plantage",price:3,rating:4.6,
     vibe:["warm","refined","seasonal"],
@@ -36,7 +42,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Canal-side terrace","Natural wine list","Seasonal four-course menu"],
     gradient:["#264653","#E9C46A"],bestFor:"a waterfront dinner with natural wines",
     dietary:["vegetarian","pescatarian","gluten-free"],
-    lat:52.3666,lng:4.9134},
+    lat:52.3666,lng:4.9134,
+    websiteUrl:"https://restaurantentrepot.nl/"},
 
   {id:205,name:"Singel 101",type:"restaurant",cuisine:"Modern European",neighborhood:"Grachtengordel",price:3,rating:4.6,
     vibe:["intimate","classic","warm"],
@@ -45,7 +52,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Three sisters run it","17th-century building","Chef's choice menu from €37.50"],
     gradient:["#BC4749","#F2E8CF"],bestFor:"an intimate canal-house dinner date",
     dietary:["vegetarian"],
-    lat:52.3665,lng:4.8877},
+    lat:52.3665,lng:4.8877,
+    websiteUrl:"https://www.singel101.nl/"},
 
   {id:206,name:"Christiaan Smit",type:"restaurant",cuisine:"Fine Dining",neighborhood:"Jordaan",price:4,rating:4.7,
     vibe:["upscale","intimate","refined"],
@@ -54,7 +62,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Anjou pigeon","Langoustines with boudin noir","Intimate setting"],
     gradient:["#3D405B","#E07A5F"],bestFor:"a refined tasting menu in the Jordaan",
     dietary:["gluten-free"],
-    lat:52.3766,lng:4.8806},
+    lat:52.3766,lng:4.8806,
+    websiteUrl:"https://www.christiaansmit.amsterdam/",
+    ogImage:"https://c-p.rmcdn.net/64e7509c3316c20036b092a5/4885270/Screenshot-4f307009-8bb1-47bc-9a79-d5c55bf05b31_readyscr_1024.jpg"},
 
   {id:207,name:"Kop van Oost",type:"restaurant",cuisine:"Modern International",neighborhood:"Oost",price:2,rating:4.5,
     vibe:["casual","lively","social"],
@@ -63,7 +73,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Waterfront terrace","Sharing plates","Brouwerij 't IJ windmill views"],
     gradient:["#48CAE4","#0096C7"],bestFor:"casual waterside sharing plates with a group",
     dietary:["vegetarian","gluten-free"],
-    lat:52.3616,lng:4.9257},
+    lat:52.3616,lng:4.9257,
+    websiteUrl:"https://dekopvanoost.com/",
+    ogImage:"https://usercontent.one/wp/dekopvanoost.com/wp-content/uploads/april282026ninaslagmolentete18-1920x1280.jpg?media=1754575624"},
 
   {id:208,name:"La Perla",type:"restaurant",cuisine:"Italian",neighborhood:"Jordaan",price:2,rating:4.5,
     vibe:["casual","vibrant","fun"],
@@ -72,7 +84,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Wood-fired oven","Thin crispy crust","Jordaan neighbourhood gem"],
     gradient:["#DC2F02","#FFBA08"],bestFor:"the best pizza in Amsterdam, no contest",
     dietary:["vegetarian"],
-    lat:52.3746,lng:4.8823},
+    lat:52.3746,lng:4.8823,
+    websiteUrl:"https://pizzaperla.nl/"},
 
   {id:209,name:"Gifu",type:"restaurant",cuisine:"Japanese",neighborhood:"Jordaan",price:3,rating:4.6,
     vibe:["trendy","intimate","creative"],
@@ -81,7 +94,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Rich ramen","Izakaya grilled dishes","Sake selection"],
     gradient:["#0F3460","#E94560"],bestFor:"a cozy Japanese dinner in the Jordaan",
     dietary:["pescatarian"],
-    lat:52.3751,lng:4.8839},
+    lat:52.3751,lng:4.8839,
+    websiteUrl:"https://www.gifuramenbar.com/",
+    ogImage:"https://static1.squarespace.com/static/67cb18c91b0a00514a5ca4ac/t/68010642de31be6f2b18d9a9/1744897602414/dry.png?format=1500w"},
 
   {id:210,name:"Warung Spang Makandra",type:"restaurant",cuisine:"Surinamese",neighborhood:"De Pijp",price:1,rating:4.5,
     vibe:["casual","vibrant","authentic"],
@@ -90,7 +105,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Roti and rice plates","Under €15","Beloved local institution"],
     gradient:["#E85D04","#FAA307"],bestFor:"authentic Surinamese soul food on a budget",
     dietary:["vegetarian","halal"],
-    lat:52.3521,lng:4.8952},
+    lat:52.3521,lng:4.8952,
+    websiteUrl:"https://www.spangmakandra.nl/"},
 
   {id:211,name:"Meatless District",type:"restaurant",cuisine:"Vegan",neighborhood:"Oud-West",price:2,rating:4.4,
     vibe:["trendy","creative","casual"],
@@ -99,7 +115,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["100% vegan","Korean fried cauliflower","Lion's mane steak"],
     gradient:["#2D6A4F","#40916C"],bestFor:"creative plant-based meals that convert carnivores",
     dietary:["vegetarian","vegan","gluten-free","dairy-free"],
-    lat:52.3651,lng:4.8741},
+    lat:52.3651,lng:4.8741,
+    websiteUrl:"https://meatlessdistrict.nl/",
+    ogImage:"https://meatlessdistrict.nl/wp-content/uploads/2025/03/IMG_3932-scaled.jpg"},
 
   {id:212,name:"Café Parlotte",type:"restaurant",cuisine:"French Bistro",neighborhood:"Jordaan",price:3,rating:4.5,
     vibe:["warm","intimate","classic"],
@@ -108,7 +126,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Bistro-style cooking","Award-winning wine list","Jordaan charmer"],
     gradient:["#7B2CBF","#E0AAFF"],bestFor:"a candlelit bistro dinner with great wine",
     dietary:["vegetarian"],
-    lat:52.3738,lng:4.8838},
+    lat:52.3738,lng:4.8838,
+    websiteUrl:"https://www.parlotte.nl/"},
 
   {id:213,name:"Senayan",type:"restaurant",cuisine:"Indonesian",neighborhood:"Nine Streets",price:2,rating:4.5,
     vibe:["warm","vibrant","authentic"],
@@ -117,7 +136,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Best satay outside Indonesia","Rijsttafel","Sarirasa Group"],
     gradient:["#FF6B6B","#FFE66D"],bestFor:"an authentic Indonesian feast with friends",
     dietary:["vegetarian","halal"],
-    lat:52.3700,lng:4.8842},
+    lat:52.3700,lng:4.8842,
+    websiteUrl:"https://satehousesenayan.nl/"},
 
   {id:214,name:"Leo Bistro",type:"restaurant",cuisine:"French Bistro",neighborhood:"Oost",price:2,rating:4.4,
     vibe:["casual","warm","social"],
@@ -126,7 +146,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["No reservations needed","Affordable 3-course menu","Large terrace"],
     gradient:["#F4A261","#E76F51"],bestFor:"a relaxed affordable dinner with no fuss",
     dietary:["vegetarian"],
-    lat:52.3601,lng:4.9274},
+    lat:52.3601,lng:4.9274,
+    websiteUrl:"https://leo.goudvisch.nl/"},
 
   {id:215,name:"De Tokoman",type:"restaurant",cuisine:"Surinamese",neighborhood:"Centrum",price:1,rating:4.4,
     vibe:["casual","authentic","quick"],
@@ -144,7 +165,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Opened late 2025","Sharing format","Accomplished cooking"],
     gradient:["#264653","#2A9D8F"],bestFor:"trendy small plates at one of Amsterdam's newest spots",
     dietary:["vegetarian","gluten-free"],
-    lat:52.3608,lng:4.9276},
+    lat:52.3608,lng:4.9276,
+    websiteUrl:"https://roef-amsterdam.nl/"},
 
   {id:217,name:"Wilhelmina",type:"restaurant",cuisine:"Modern European",neighborhood:"Oud-West",price:2,rating:4.3,
     vibe:["casual","warm","social"],
@@ -153,7 +175,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Morning to dinner","Low-key atmosphere","Local crowd"],
     gradient:["#E9C46A","#F4A261"],bestFor:"a laid-back meal at any time of day",
     dietary:["vegetarian","vegan"],
-    lat:52.3656,lng:4.8741},
+    lat:52.3656,lng:4.8741,
+    websiteUrl:"https://www.wilhelminacafe.nl/"},
 
   {id:218,name:"Dèsa",type:"restaurant",cuisine:"Indonesian",neighborhood:"De Pijp",price:2,rating:4.4,
     vibe:["warm","authentic","intimate"],
@@ -162,7 +185,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Rijsttafel from €20.90","Authentic flavours","Intimate room"],
     gradient:["#774936","#D4A373"],bestFor:"an affordable rijsttafel date night",
     dietary:["vegetarian","vegan","halal"],
-    lat:52.3545,lng:4.8930},
+    lat:52.3545,lng:4.8930,
+    websiteUrl:"https://www.restaurantdesa.com/"},
 
   // ─── BARS ─────────────────────────────────────────────────
   {id:251,name:"Door 74",type:"bar",cuisine:"Cocktails",neighborhood:"Reguliersdwarsstraat",price:3,rating:4.8,
@@ -171,7 +195,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🚪",tagline:"Amsterdam's original speakeasy — World's 50 Best Bars",
     highlights:["Hidden entrance","World's 50 Best Bars","Reservation only"],
     gradient:["#1A1A2E","#C9A96E"],bestFor:"an unforgettable speakeasy cocktail experience",
-    lat:52.3640,lng:4.8944},
+    lat:52.3640,lng:4.8944,
+    websiteUrl:"https://www.finddoor74.com/",
+    ogImage:"https://finddoor74.yourhotelwebsite.com/upload/heading/image-700x700.jpg"},
 
   {id:252,name:"Flying Dutchmen",type:"bar",cuisine:"Cocktails",neighborhood:"Centrum",price:3,rating:4.7,
     vibe:["cozy","creative","intimate"],
@@ -179,7 +205,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🍸",tagline:"World-class cocktails in a cozy brown café shell",
     highlights:["Brown café atmosphere","Top-tier cocktails","Dutch spirits"],
     gradient:["#7B2CBF","#E0AAFF"],bestFor:"serious cocktails in a deceptively casual setting",
-    lat:52.3696,lng:4.8964},
+    lat:52.3696,lng:4.8964,
+    websiteUrl:"https://www.flyingdutchmencocktails.shop/"},
 
   {id:253,name:"Fitz's Bar",type:"bar",cuisine:"Cocktails",neighborhood:"Centrum",price:3,rating:4.6,
     vibe:["upscale","intimate","classic"],
@@ -187,7 +214,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🎩",tagline:"1920s glamour meets contemporary cocktail craft",
     highlights:["Dark wood panelling","Plush speakeasy seating","Classic cocktails"],
     gradient:["#3D405B","#81B29A"],bestFor:"a glamorous 1920s-style cocktail date",
-    lat:52.3709,lng:4.8951},
+    lat:52.3709,lng:4.8951,
+    websiteUrl:"https://www.fitzsbaramsterdam.com/",
+    ogImage:"https://static1.squarespace.com/static/633c32dd66813243372e77a2/t/635fa3dfbf6485031a5c6f4c/1682344530325/Fitzs-Bar-01.jpg?format=1500w"},
 
   {id:254,name:"Vault Bar",type:"bar",cuisine:"Cocktails",neighborhood:"Grachtengordel",price:4,rating:4.6,
     vibe:["upscale","unique","intimate"],
@@ -195,7 +224,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🏦",tagline:"Cocktails in the Waldorf Astoria's original bank vaults",
     highlights:["Actual bank vaults","Waldorf Astoria","Gin-focused menu"],
     gradient:["#722F37","#C9A96E"],bestFor:"drinking cocktails in a literal bank vault",
-    lat:52.3690,lng:4.8866},
+    lat:52.3690,lng:4.8866,
+    websiteUrl:"https://www.hilton.com/en/hotels/amswawa-waldorf-astoria-amsterdam/dining/"},
 
   {id:255,name:"Café 't Smalle",type:"bar",cuisine:"Brown Café",neighborhood:"Jordaan",price:2,rating:4.6,
     vibe:["cozy","classic","warm"],
@@ -203,7 +233,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🍺",tagline:"Historic brown café with a canal-side terrace since 1786",
     highlights:["Canal-side terrace","Since 1786","Classic Jordaan atmosphere"],
     gradient:["#774936","#D4A373"],bestFor:"a classic Dutch beer on the canal in the Jordaan",
-    lat:52.3764,lng:4.8811},
+    lat:52.3764,lng:4.8811,
+    websiteUrl:"https://t-smalle.nl/",
+    ogImage:"https://t-smalle.nl/wp-content/uploads/2024/11/3a6ec91d-3690-4b84-b021-65c799a1f67a.jpg"},
 
   {id:256,name:"Café 't Papeneiland",type:"bar",cuisine:"Brown Café",neighborhood:"Jordaan",price:2,rating:4.5,
     vibe:["cozy","classic","authentic"],
@@ -211,7 +243,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🏠",tagline:"A Jordaan institution since 1642 — famous for apple pie",
     highlights:["Since 1642","Best apple pie in Amsterdam","Secret tunnel to church"],
     gradient:["#BC6C25","#DDA15E"],bestFor:"the most authentic brown café experience in Amsterdam",
-    lat:52.3742,lng:4.8825},
+    lat:52.3742,lng:4.8825,
+    websiteUrl:"https://www.papeneiland.nl/"},
 
   {id:257,name:"GlouGlou",type:"bar",cuisine:"Wine Bar",neighborhood:"De Pijp",price:2,rating:4.5,
     vibe:["trendy","casual","social"],
@@ -219,7 +252,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🍇",tagline:"Natural wine and snacks on a flower-lined De Pijp terrace",
     highlights:["100% natural wine","Outdoor terrace","Small snack menu"],
     gradient:["#6A0572","#AB83A1"],bestFor:"afternoon natural wine on a sunny terrace",
-    lat:52.3544,lng:4.8947},
+    lat:52.3544,lng:4.8947,
+    websiteUrl:"https://glouglou.nl/"},
 
   {id:258,name:"Shakerato",type:"bar",cuisine:"Cocktails",neighborhood:"Centrum",price:3,rating:4.7,
     vibe:["trendy","creative","upscale"],
@@ -227,7 +261,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🌎",tagline:"From the co-owner of the world's best bar — opened late 2025",
     highlights:["Handshake Speakeasy pedigree","World-class cocktails","New hotspot"],
     gradient:["#0F3460","#E94560"],bestFor:"cocktails from the team behind the world's #1 bar",
-    lat:52.3698,lng:4.8948},
+    lat:52.3698,lng:4.8948,
+    websiteUrl:"https://shakerato.bar/"},
 
   {id:259,name:"Café Chris",type:"bar",cuisine:"Brown Café",neighborhood:"Jordaan",price:1,rating:4.4,
     vibe:["casual","authentic","lively"],
@@ -243,7 +278,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🎤",tagline:"Party café with singalongs and pure Jordaan energy",
     highlights:["Singalong nights","Party from 9pm","Classic Jordaan chaos"],
     gradient:["#E85D04","#FFBA08"],bestFor:"a wild sing-along night in a proper Amsterdam pub",
-    lat:52.3749,lng:4.8831},
+    lat:52.3749,lng:4.8831,
+    websiteUrl:"https://cafenol.amsterdam/"},
 
   {id:261,name:"Pilsvogel",type:"bar",cuisine:"Craft Beer",neighborhood:"Oost",price:2,rating:4.4,
     vibe:["casual","social","lively"],
@@ -251,7 +287,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🐦",tagline:"Beloved neighbourhood beer bar in Amsterdam Oost",
     highlights:["Craft beer selection","Big terrace","Local crowd"],
     gradient:["#2A9D8F","#264653"],bestFor:"craft beers on a big terrace with locals",
-    lat:52.3609,lng:4.9273},
+    lat:52.3609,lng:4.9273,
+    websiteUrl:"https://pilsvogel.nl/"},
 
   {id:262,name:"Café Thijssen",type:"bar",cuisine:"Brown Café",neighborhood:"Jordaan",price:2,rating:4.4,
     vibe:["warm","social","classic"],
@@ -259,7 +296,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"☕",tagline:"Local Jordaan hangout with a canalside terrace",
     highlights:["Lindengracht terrace","Local crowd","Perfect borrel spot"],
     gradient:["#606C38","#FEFAE0"],bestFor:"a relaxed afternoon borrel on the canal",
-    lat:52.3752,lng:4.8838},
+    lat:52.3752,lng:4.8838,
+    websiteUrl:"https://cafethijssen.nl/"},
 
   {id:263,name:"Odeon",type:"bar",cuisine:"Cocktails",neighborhood:"Grachtengordel",price:3,rating:4.5,
     vibe:["trendy","lively","upscale"],
@@ -267,7 +305,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🎵",tagline:"Cocktails and late-night in a historic canal-house venue",
     highlights:["Tess Posthumous venture","Historic Odeon Building","Late-night dancing"],
     gradient:["#7B2CBF","#FF6B6B"],bestFor:"cocktails that turn into a late night out",
-    lat:52.3686,lng:4.8874},
+    lat:52.3686,lng:4.8874,
+    websiteUrl:"https://www.flyingdutchmencocktails.shop/"},
 
   {id:264,name:"Brouwerij 't IJ",type:"bar",cuisine:"Brewery",neighborhood:"Oost",price:1,rating:4.5,
     vibe:["casual","fun","authentic"],
@@ -275,7 +314,9 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🍺",tagline:"Craft beer under the windmill — Amsterdam's beloved brewery",
     highlights:["Brewed on-site","Windmill setting","Outdoor terrace"],
     gradient:["#E9C46A","#F4A261"],bestFor:"afternoon beers under the windmill with friends",
-    lat:52.3614,lng:4.9272},
+    lat:52.3614,lng:4.9272,
+    websiteUrl:"https://www.brouwerijhetij.nl/",
+    ogImage:"https://cms.brouwerijhetij.nl/storage/transforms/images/De-brouwerij/_1200x630_crop_center-center_82_none/Brouwerij-t-IJ.jpg?mtime=1770885270"},
 
   {id:265,name:"BAR Centraal",type:"bar",cuisine:"Wine Bar",neighborhood:"Oud-West",price:2,rating:4.4,
     vibe:["trendy","casual","social"],
@@ -283,5 +324,6 @@ export const AMSTERDAM_VENUES: Venue[] = [
     emoji:"🥂",tagline:"Oud-West natural wine bar with a local feel",
     highlights:["Natural wine focus","Small plates","Neighbourhood vibe"],
     gradient:["#6A0572","#C77DFF"],bestFor:"casual wine and bites in Oud-West",
-    lat:52.3664,lng:4.8768},
+    lat:52.3664,lng:4.8768,
+    websiteUrl:"https://www.barcentraal.nl/"},
 ];
