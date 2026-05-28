@@ -34,7 +34,7 @@ NightPilot is a personal AI taste agent for going out. The core thesis: own the 
 ## Current State (May 2026)
 
 - **Live at:** nightpilot.vercel.app
-- **4 cities:** Vancouver (35 venues), Dublin (35), Amsterdam (33), Salt Lake City (35) — 138 total
+- **4 cities:** Vancouver (35 venues, 30 with photos), Dublin (35), Amsterdam (33, 11 with photos), Salt Lake City (35) — 138 total
 - **Tech stack:** React 19 + TypeScript + Vite, Vercel serverless functions, Claude API (Wine Radar)
 - **No backend/database** — taste profiles in localStorage. No user accounts, no cross-device sync.
 - **All venues audited** for closures as of May 2026
@@ -106,6 +106,7 @@ Internal code names (WineLensScreen, /api/wine-lens, onWineLens props) stay as-i
 
 ## Recent Work Log
 
+- **2026-05-28:** Amsterdam OG image pipeline — added websiteUrl to 31/33 venues, ogImage to 11/33 venues (real photos only, logos/TOS violations/broken URLs rejected). Created CLAUDE_CONTEXT.md as cloud-backed memory. Saved TOS compliance rule to persistent memory.
 - **2026-05-27:** Fixed VenueCard keying bug (images breaking after ~25 swipes), improved image loading (three-state, cache detection), renamed Wine Lens → Wine Radar (user-facing only), logo sketch render
 - **2026-05-26:** Venue closure audit across 4 cities, replaced 8 closed venues, wrote GTM onboarding doc, venue photo pipeline (OG images for Vancouver)
 - **2026-05-25:** SLC city launch, location filter with haversine distance, walk/bike/drive radius, multi-neighborhood selection
