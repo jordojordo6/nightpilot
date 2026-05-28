@@ -53,7 +53,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     gradient:["#BC4749","#F2E8CF"],bestFor:"an intimate canal-house dinner date",
     dietary:["vegetarian"],
     lat:52.3665,lng:4.8877,
-    websiteUrl:"https://www.singel101.nl/"},
+    websiteUrl:"https://www.singel101.nl/",
+    ogImage:"https://www.singel101.nl/wp-content/uploads/2021/08/94A9012-scaled.jpg"},
 
   {id:206,name:"Christiaan Smit",type:"restaurant",cuisine:"Fine Dining",neighborhood:"Jordaan",price:4,rating:4.7,
     vibe:["upscale","intimate","refined"],
@@ -85,7 +86,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     gradient:["#DC2F02","#FFBA08"],bestFor:"the best pizza in Amsterdam, no contest",
     dietary:["vegetarian"],
     lat:52.3746,lng:4.8823,
-    websiteUrl:"https://pizzaperla.nl/"},
+    websiteUrl:"https://pizzaperla.nl/",
+    ogImage:"https://pizzaperla.nl/wp-content/uploads/2014/11/pizza-1blaadje0000.jpg"},
 
   {id:209,name:"Gifu",type:"restaurant",cuisine:"Japanese",neighborhood:"Jordaan",price:3,rating:4.6,
     vibe:["trendy","intimate","creative"],
@@ -106,7 +108,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     gradient:["#E85D04","#FAA307"],bestFor:"authentic Surinamese soul food on a budget",
     dietary:["vegetarian","halal"],
     lat:52.3521,lng:4.8952,
-    websiteUrl:"https://www.spangmakandra.nl/"},
+    websiteUrl:"https://www.spangmakandra.nl/",
+    ogImage:"https://static.wixstatic.com/media/a0673b_0779ccb8c0a144cfa569252cba2adbf9~mv2.jpg/v1/fill/w_1500,h_455,al_c,q_85,enc_avif,quality_auto/a0673b_0779ccb8c0a144cfa569252cba2adbf9~mv2.jpg"},
 
   {id:211,name:"Meatless District",type:"restaurant",cuisine:"Vegan",neighborhood:"Oud-West",price:2,rating:4.4,
     vibe:["trendy","creative","casual"],
@@ -137,7 +140,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     gradient:["#FF6B6B","#FFE66D"],bestFor:"an authentic Indonesian feast with friends",
     dietary:["vegetarian","halal"],
     lat:52.3700,lng:4.8842,
-    websiteUrl:"https://satehousesenayan.nl/"},
+    websiteUrl:"https://satehousesenayan.nl/",
+    ogImage:"https://satehousesenayan.nl/bgHero.jpg"},
 
   {id:214,name:"Leo Bistro",type:"restaurant",cuisine:"French Bistro",neighborhood:"Oost",price:2,rating:4.4,
     vibe:["casual","warm","social"],
@@ -225,7 +229,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Actual bank vaults","Waldorf Astoria","Gin-focused menu"],
     gradient:["#722F37","#C9A96E"],bestFor:"drinking cocktails in a literal bank vault",
     lat:52.3690,lng:4.8866,
-    websiteUrl:"https://www.hilton.com/en/hotels/amswawa-waldorf-astoria-amsterdam/dining/"},
+    websiteUrl:"https://www.hilton.com/en/hotels/amswawa-waldorf-astoria-amsterdam/dining/",
+    ogImage:"https://assets.hiltonstatic.com/hilton-asset-cache/image/upload/c_fill,w_1110,h_886,q_80,f_auto,g_auto/Imagery/Team%20Member%20Photography/Waldorf%20Astoria/A/AMSWAWA/WaldorfAstoriaAmsterdamFlareDept-191.jpg"},
 
   {id:255,name:"Café 't Smalle",type:"bar",cuisine:"Brown Café",neighborhood:"Jordaan",price:2,rating:4.6,
     vibe:["cozy","classic","warm"],
@@ -244,7 +249,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Since 1642","Best apple pie in Amsterdam","Secret tunnel to church"],
     gradient:["#BC6C25","#DDA15E"],bestFor:"the most authentic brown café experience in Amsterdam",
     lat:52.3742,lng:4.8825,
-    websiteUrl:"https://www.papeneiland.nl/"},
+    websiteUrl:"https://www.papeneiland.nl/",
+    ogImage:"https://www.papeneiland.nl/images/BackgroundPapeneiland100.png"},
 
   {id:257,name:"GlouGlou",type:"bar",cuisine:"Wine Bar",neighborhood:"De Pijp",price:2,rating:4.5,
     vibe:["trendy","casual","social"],
@@ -262,7 +268,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Handshake Speakeasy pedigree","World-class cocktails","New hotspot"],
     gradient:["#0F3460","#E94560"],bestFor:"cocktails from the team behind the world's #1 bar",
     lat:52.3698,lng:4.8948,
-    websiteUrl:"https://shakerato.bar/"},
+    websiteUrl:"https://shakerato.bar/",
+    ogImage:"https://www.shakerato.bar/wp-content/uploads/2026/05/FRC01989.jpg"},
 
   {id:259,name:"Café Chris",type:"bar",cuisine:"Brown Café",neighborhood:"Jordaan",price:1,rating:4.4,
     vibe:["casual","authentic","lively"],
@@ -297,7 +304,8 @@ export const AMSTERDAM_VENUES: Venue[] = [
     highlights:["Lindengracht terrace","Local crowd","Perfect borrel spot"],
     gradient:["#606C38","#FEFAE0"],bestFor:"a relaxed afternoon borrel on the canal",
     lat:52.3752,lng:4.8838,
-    websiteUrl:"https://cafethijssen.nl/"},
+    websiteUrl:"https://cafethijssen.nl/",
+    ogImage:"https://cafethijssen.nl/buiten.jpg"},
 
   {id:263,name:"Odeon",type:"bar",cuisine:"Cocktails",neighborhood:"Grachtengordel",price:3,rating:4.5,
     vibe:["trendy","lively","upscale"],
